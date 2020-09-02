@@ -22,6 +22,7 @@ import ReposView from './components/views/Repos.vue'
 */ 
 // Routes
 const routes = [    
+  /*
   {
     path: '/',
     component: Principal,
@@ -34,12 +35,12 @@ const routes = [
         meta: {description: ''}
       }
     ]
-  },
-  /*
-  ,{
+  },*/
+  
+  {
     path: '/',
     component: FueraServicio
-  },*/
+  },
   {
     path: '/Ofertas',
     component: PrincipalMenu,
