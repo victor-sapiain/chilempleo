@@ -1,6 +1,6 @@
 {
     "auth": {
-        "web55f5f02f": {
+        "web2b08d94a": {
             "service": "Cognito",
             "providerPlugin": "awscloudformation",
             "dependsOn": [],
@@ -10,8 +10,7 @@
     "hosting": {
         "amplifyhosting": {
             "service": "amplifyhosting",
-            "providerPlugin": "awscloudformation",
-            "type": "manual"
+            "type": "cicd"
         }
     }
 }

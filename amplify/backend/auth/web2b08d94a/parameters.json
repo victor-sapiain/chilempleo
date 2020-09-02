@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "web55f5f02f_identitypool_55f5f02f",
+    "identityPoolName": "web2b08d94a_identitypool_2b08d94a",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "web55f5f02f",
-    "userPoolName": "web55f5f02f_userpool_55f5f02f",
+    "resourceNameTruncated": "web2b08d94a",
+    "userPoolName": "web2b08d94a_userpool_2b08d94a",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "web55f55f5f02f_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "web2b02b08d94a_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "55f5f02f",
-    "resourceName": "web55f5f02f",
+    "sharedId": "2b08d94a",
+    "resourceName": "web2b08d94a",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -47,10 +47,10 @@
     },
     "useDefault": "defaultSocial",
     "hostedUI": true,
-    "hostedUIDomainName": "web55f5f02f-55f5f02f",
+    "hostedUIDomainName": "web2b08d94a-2b08d94a",
     "authProvidersUserPool": [],
     "hostedUIProviderMeta": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:8080/\"],\"LogoutURLs\":[\"http://localhost:8080/\"]}",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.chilempleo.cl/signin/callback/\"],\"LogoutURLs\":[\"https://www.chilempleo.cl/signout/\"]}",
     "userPoolGroupList": [],
     "dependsOn": []
 }
