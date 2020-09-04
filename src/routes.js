@@ -21,7 +21,7 @@ import ServerView from './components/views/Server.vue'
 import ReposView from './components/views/Repos.vue'
 */ 
 // Routes
-const routes = [    
+const routes = [      
   /*
   {
     path: '/',
@@ -35,8 +35,8 @@ const routes = [
         meta: {description: ''}
       }
     ]
-  },*/
-  
+  },
+  */
   {
     path: '/',
     component: FueraServicio

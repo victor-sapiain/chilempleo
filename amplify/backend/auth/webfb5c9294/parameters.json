@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "web2b08d94a_identitypool_2b08d94a",
+    "identityPoolName": "webfb5c9294_identitypool_fb5c9294",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "web2b08d94a",
-    "userPoolName": "web2b08d94a_userpool_2b08d94a",
+    "resourceNameTruncated": "webfb5c9294",
+    "userPoolName": "webfb5c9294_userpool_fb5c9294",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "web2b02b08d94a_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "webfb5fb5c9294_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "2b08d94a",
-    "resourceName": "web2b08d94a",
+    "sharedId": "fb5c9294",
+    "resourceName": "webfb5c9294",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -47,7 +47,7 @@
     },
     "useDefault": "defaultSocial",
     "hostedUI": true,
-    "hostedUIDomainName": "web2b08d94a-2b08d94a",
+    "hostedUIDomainName": "webfb5c9294-fb5c9294",
     "authProvidersUserPool": [],
     "hostedUIProviderMeta": "[]",
     "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.chilempleo.cl/signin/callback/\"],\"LogoutURLs\":[\"https://www.chilempleo.cl/signout/\"]}",
