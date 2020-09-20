@@ -11,6 +11,7 @@ import PrincipalView from './components/views/PrincipalView.vue'
 import OfertaView from './components/views/OfertaView.vue'
 
 import FueraServicio from './components/FueraServicio.vue'
+//import config from '../config'
 
 /*
 import TablesView from './components/views/Tables.vue'
@@ -22,7 +23,6 @@ import ReposView from './components/views/Repos.vue'
 */ 
 // Routes
 const routes = [      
-  /*
   {
     path: '/',
     component: Principal,
@@ -32,13 +32,17 @@ const routes = [
         alias: '',
         component: PrincipalView,
         name: 'Principal',
-        meta: {description: ''}
+        meta: {description: '',mantencion:false}
       }
     ]
   },
-  */
+  /*
   {
     path: '/',
+    component: FueraServicio
+  },*/
+  {
+    path: '/enmantencion',
     component: FueraServicio
   },
   {

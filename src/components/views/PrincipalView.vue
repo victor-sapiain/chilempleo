@@ -1,13 +1,16 @@
 <template>
   <!-- Main content -->
+
 <section class="find-job section">
     <!-- GitHub hint -->
     <div class="container">
-        <h2 class="section-title">Perfiles destacados</h2>
-        <div class="row col-md-12 margin_bottom">
-            <button class="btn btn-primary btn-principal-head pull-right"><i class="fa fa-star" aria-hidden="true"></i> Crear Perfil<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+        <div v-show="mode==1">
+            <h2 class="section-title">Perfiles destacados</h2>
+            <div class="row col-md-12 margin_bottom">
+                <button class="btn btn-primary btn-principal-head pull-right"><i class="fa fa-star" aria-hidden="true"></i> Crear Perfil<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+            </div>
         </div>
-        <div class="row">
+        <div v-show="mode==1" class="row">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="our-team">
                     <a href="#">
@@ -115,19 +118,18 @@
             </div>
         </div>
         <h2 class="section-title">Últimas ofertas</h2>
-    
         <div class="content">
-            <div class="row col-md-12 margin_bottom">
+            <div v-show="mode==1" class="row col-md-12 margin_bottom">
                 <button class="btn btn-primary btn-principal-head pull-right"><i class="fa fa-pencil" aria-hidden="true"></i> Publicar Oferta<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
             </div>           
             <div>
             <form action="/ofertas/" method="get">
-                <div class="row">
+                <div v-if ="mode==1" class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                            <input id="txtSearch" name="txtSearch" class="form-control-search" type="text" placeholder="EMPLEO A BUSCAR" />
+                            <input  name="txtSearch" v-model = "txtSearch" class="form-control-search" type="text" placeholder="EMPLEO A BUSCAR" />
                         </div>
-                    </div>
+                    </div>                  
                     <div class="col-md-5 col-sm-6">
                         <div class="form-group selFrom-search" >
                             <select id="selFrom" class="dropdown-product selectpicker btn-default" data-live-search="true">
@@ -151,15 +153,46 @@
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-6">
-                        <button id="btnSearch" type="submit" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button id="btnSearch" type="submit" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i></button>                        
                     </div>
                 </div>
+                <div v-else class="row">
+                   <div class="col-md-6">
+                        <div class="form-group">
+                            <input name="txtSearch"  v-model = "txtSearch" class="form-control-search" type="text" placeholder="EMPLEO A BUSCAR" />
+                        </div>
+                    </div>    
+                    <div class="col-md-2">
+                        <button id="btnSearch" v-on:click="buscar" type="button" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button id="btnClean" v-on:click="limpiar" type="button" class="btn-sm btn-primary ">Limpiar </button>
+                    </div>
+                    <div class="col-md-4">
+                        <nav aria-label="Page navigation" class="row text-right">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" style="background-color:#808080;color:#fff;" aria-label="Previous" v-show="pag != 1" @click.prevent="pag -= 1">
+                                        <span aria-hidden="true"><i class="fa fa-chevron-left" aria-hidden="true"></i> Anterior</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" style="background-color:#808080;color:#fff;" aria-label="Next" v-show="pag * NUM_RESULTS / ofertas.length < 1" @click.prevent="pag += 1">
+                                        <span aria-hidden="true">Siguiente <i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+
             </form>
             </div>
         </div>      
-        
-        <div  class="row" v-for="index in TotalOfertas" :key="index" >
-            <div class="col-md-12">
+        <div style="text-align:right;">
+            <h5>Página {{pag}} de {{Math.ceil(ofertas.length/NUM_RESULTS)}}</h5>
+        </div>
+        <div  class="row" v-for="(item, index) in ofertas" :key="index" v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index">
+            <div v-show="item.EstadoRegistro==1" class="col-md-12">
                 <div class="card-flat card-block">
                     <div class="col-md-1">
                       <div class="gc_ si39"
@@ -195,18 +228,15 @@
                                   align-items: center;
                               "
                           >                             
-                            <img src="https://logomaster.ai/static/media/gallery002.936afb9d.png" />
+                            <img :src="item.empresa.UrlLogotipo" />
                           </div>
-                      </div>
-                      <div class="calendar-label margin_button margin-left">                       
-                           12/08/2020 
-                      </div>
+                      </div>                    
                     </div>
                     <div class="col-md-11">
                       <div class="margin-left">
                         <div class="col-md-12">            
                           <div class="row">              
-                            <a href="#"> <h3 class="col-md-9">CÓD 100: Titulo</h3></a>
+                            <a :href="item.oferta.UrlOferta" target="_blank"> <h3 class="col-md-9">{{item.oferta.titulo}}</h3></a>
                             <div class="col-md-3">                               
                                 <div class="pull-right"><a class="facebookBtn smGlobalBtn" href="#" ></a>
                                     <a class="twitterBtn smGlobalBtn" href="#" ></a>
@@ -216,41 +246,62 @@
                           </div>
                           <div class="row">
                             <h4 class="col-md-12">
-                              Importante empresa del sector Logístico - Ciudad Real, Spain
+                                {{item.empresa.nombre}} - {{item.oferta.ubicacion.comuna}}, {{item.oferta.ubicacion.region}} <span class="badge badge-danger" style="font-size: 14px;margin-top:-5px;background-color:#0084BF;"> {{item.FechaCreacion}} </span>
                             </h4>
                           </div>
                         </div>                       
                         <h5 class="contenido-card">
-                            Se requiere Educadora de párvulos con mínimo 5 años de experiencia, que se haya desempeñado en todos los niveles tanto de sala cuna como de jardín infantil. Con domicilio en la comuna de Las Condes.
+                            {{substr(item.oferta.descripcion)}}
                         </h5>
                       </div>                                         
                     </div>                   
                     <div style="width:100%;text-align:right;">                       
-                        <a href="#" class="margin-left">
+                        <a v-show="mode==1" href="#" class="margin-left">
                           <span class="link-detalle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Guardar</span> 
                         </a>
-                        <a href="#" class="margin-left">
+                        <a :href="item.oferta.UrlOferta" target="_blank" class="margin-left">
                           <span class="link-detalle">❯ Ver Detalle</span> 
                         </a>
                     </div>
                 </div>
             </div>
         </div>      <!--Fin empleos-->  
-        <div style="width:100%;text-align:center;">
+        <div v-if="mode==1" style="width:100%;text-align:center;">
             <button class="btn btn-secondary btn btn-principal-head margin-top" style="width:50%">Ver más Ofertas de Trabajo </button>
+        </div>
+        <div v-else>
+             <div style="text-align:right;">
+                <h5>Página {{pag}} de {{Math.ceil(ofertas.length/NUM_RESULTS)}}</h5>
+            </div>
+            <div>&nbsp;</div>
+             <nav aria-label="Page navigation" class="row text-right">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" style="background-color:#808080;color:#fff;" aria-label="Previous" v-show="pag != 1" @click.prevent="pag -= 1">
+                            <span aria-hidden="true"><i class="fa fa-chevron-left" aria-hidden="true"></i> Anterior</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" style="background-color:#808080;color:#fff;" aria-label="Next" v-show="pag * NUM_RESULTS / ofertas.length < 1" @click.prevent="pag += 1">
+                            <span aria-hidden="true">Siguiente <i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>            
         </div>
     </div>
 </section>
- 
 <!-- /.content -->
-
 </template>
-
+<style>
+    input:focus{outline: none;}
+</style>
 <script>
 import Alert from '../widgets/Alert'
 import InfoBox from '../widgets/InfoBox'
 import ProcessInfoBox from '../widgets/ProcessInfoBox'
-
+import api from '../../api'
+import config from '../../../src/config'
 export default {
   name: 'Principal',
   components: {
@@ -260,14 +311,61 @@ export default {
   },
   data () {
     return {
-      TotalOfertas : 15,
+        TotalOfertas:10,
+        ofertas : [],
+        mode:-1,
+        txtSearch : '',
+        NUM_RESULTS: 20, // Numero de resultados por página
+        pag: 1, // Página inicial
     }
   },
   computed: {
     
   },
+  methods: {
+      substr(text){
+        let txtFin = text
+        let max=140
+        if (text.length>max)
+            txtFin = text.substr(1,max) + '....'
+        return (txtFin)
+      },
+      buscar(event) {      
+        let ofertas_aux = []
+        let entrada = false
+        if (this.txtSearch.trim()!=''){
+            for(let i=0;i<this.ofertas.length;i++){
+                if (this.ofertas[i].oferta.titulo.toLowerCase().indexOf(this.txtSearch)>-1){
+                    ofertas_aux.push(this.ofertas[i])
+                    entrada = true
+                }
+            }
+            if (entrada)
+                this.ofertas = ofertas_aux
+        }else{
+            this.cargarOfertas()
+        }
+      },
+      limpiar(){
+        this.txtSearch = ""  
+        this.cargarOfertas()
+      },
+      cargarOfertas(){
+        let f = new Date()
+        let fAux = new Date()
+        fAux.setDate(f.getDate()-3)
+        let fechaHoy = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()  
+        let  fechaAnt =  (fAux.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear())
+        api.getOffer(fechaAnt,fechaHoy) 
+        .then(response=> {                   
+            this.ofertas = response.data
+        })
+        .catch((err) => console.log(err));      
+      },
+  },
   mounted () {
-     
+    this.mode = config.mode  
+    this.cargarOfertas()
   }
 }
 </script>

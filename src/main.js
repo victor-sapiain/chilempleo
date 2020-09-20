@@ -8,14 +8,19 @@ import VueRouter from 'vue-router'
 import { sync } from 'vuex-router-sync'
 import routes from './routes'
 import store from './store'
+import VueAnalytics from 'vue-analytics'
  
-
 // Import Helpers for filters
 import { domain, count, prettyDate, pluralize } from './filters'
 
 // Import Views - Top level
 import AppView from './components/App.vue'
  
+import config from '../../web/src/config'
+
+Vue.use(VueAnalytics, {
+  id: 'UA-85162196-1'
+})
 
 // Import Install and register helper items
 Vue.filter('count', count)
@@ -35,22 +40,27 @@ var router = new VueRouter({
   }
 })
 
-// Some middleware to help us ensure the user is authenticated.
 router.beforeEach((to, from, next) => {
-  if (
-    to.matched.some(record => record.meta.requiresAuth) &&
-    (!router.app.$store.state.token || router.app.$store.state.token === 'null')
-  ) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    window.console.log('Not authenticated')
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    })
-  } else {
+  if (to.meta.mantencion) {
+    next('/enmantencion')
+  }    
+  else {
     next()
-  }
+  }    
+  /*
+    if (
+      to.matched.some(record => record.meta.requiresAuth) &&
+      (!router.app.$store.state.token || router.app.$store.state.token === 'null')
+    ) {     
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  */
+    
 })
 
 sync(store, router)

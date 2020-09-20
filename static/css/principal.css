@@ -482,11 +482,19 @@ h5 {
     -webkit-justify-content: center;
     justify-content: center;
 }
+/*
 .gc_  img {
     margin-top: 10px;
     border: none;
     max-width: 100%;
     max-height: 100%;
+}
+*/
+.gc_ img {
+  margin-top: 25px;
+  border: none;
+  max-width: 80%;
+  max-height: 80%;
 }
 /* fin logo empresa */
 

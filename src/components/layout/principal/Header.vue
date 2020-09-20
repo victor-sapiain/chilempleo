@@ -22,19 +22,18 @@
                                     Inicio
                                 </a>
                             </li>
-                            <li class="drop">
+                            <li v-show="mode==1" class="drop">
                                 <a href="#">
                                     Publicar oferta
                                 </a>
                             </li>
-                            <li class="drop">
+                            <li v-show="mode==1" class="drop">
                                 <a href="#">
                                     Crear CV
                                 </a>
                             </li>
-   
                         </ul>
-                        <ul class="nav navbar-nav navbar-right float-right">
+                        <ul v-show="mode==1" class="nav navbar-nav navbar-right float-right">
                             <li class="right">
                                 <button class="btn btn-primary btn-sm btn-principal-head">Ingresar / Registrar</button>
                             </li>                          
@@ -113,7 +112,7 @@
                             <br />
                             <h2 class="headline-span-small">Encuentra tu empleo de forma rápida y sencilla.</h2>
                         </div>
-                        <div class="content">
+                        <div v-show="mode==1" class="content">
                             <form action="/ofertas/" method="get">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
@@ -150,9 +149,8 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>                                 
-                            
-                        <div class="row">
+                        </div>                                                             
+                        <div v-show="mode==1" class="row">
                             <div class="col-md-12">                               
                                     <div class="col-md-12">
                                         <h4 class="titulo2">OFERTAS DESTACADAS</h4>  
@@ -181,19 +179,22 @@
     </section>
 </div>   
 </template>
-
- 
-
 <script>
 import { mapState } from 'vuex' 
 import $ from 'jquery'
-
+import config from '../../../../src/config'
 export default {
   name: 'PrincipalHeader',
+  data(){
+      return{
+          mode : 0,
+      }
+  },
   mounted(){
+        this.mode = config.mode
         $(document).ready(function () {
-            
- 
+            if (config.mode==2)
+                $('#intro').css('height','500px');
         })
 
   },
