@@ -31,7 +31,7 @@
                     </div>
                    <ul class="social">
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>
-              <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a></li>
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-linkedin" aria-hidden="true"></a></li>
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-at" aria-hidden="true"></a></li>
                     </ul>
@@ -166,7 +166,7 @@
                         <button id="btnSearch" v-on:click="buscar" type="button" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
                         <button id="btnClean" v-on:click="limpiar" type="button" class="btn-sm btn-primary ">Limpiar </button>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-show="!isLoading">
                         <nav aria-label="Page navigation" class="row text-right">
                             <ul class="pagination">
                                 <li>
@@ -188,9 +188,13 @@
             </form>
             </div>
         </div>      
+        <div v-if="isLoading">
+        <square></square>
+        </div>
+        <div v-else>
         <div v-show="mode==2" style="text-align:right;">
             <h5>Página {{pag}} de {{Math.ceil(ofertas.length/NUM_RESULTS)}}</h5>
-        </div>
+        </div>        
         <div  class="row" v-for="(item, index) in ofertas" :key="index" v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index">
             <div v-show="item.EstadoRegistro==1" class="col-md-12">
                 <div class="card-flat card-block">
@@ -289,6 +293,7 @@
                 </ul>
             </nav>            
         </div>
+        </div>
     </div>
 </section>
 <!-- /.content -->
@@ -318,7 +323,7 @@ export default {
         txtSearch : '',
         NUM_RESULTS: 20, // Numero de resultados por página
         pag: 1, // Página inicial
-        title: 'My Title'
+        isLoading: true
 
     }
   },
@@ -367,6 +372,7 @@ export default {
         this.cargarOfertas()
       },
       cargarOfertas(){
+        this.isLoading = true
         let f = new Date()
         let fAux = new Date()
         fAux.setDate(f.getDate()-3)
@@ -374,10 +380,10 @@ export default {
         let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((f.getMonth() ),2) + "/" + f.getFullYear())     
         console.log(fechaAnt)
         console.log(fechaHoy)
-
         api.getOffer(fechaAnt,fechaHoy) 
         .then(response=> {                   
             this.ofertas = response.data
+            this.isLoading = false
         })
         .catch((err) => console.log(err));      
       },

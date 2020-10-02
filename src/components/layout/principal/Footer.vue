@@ -5,7 +5,7 @@
         <a class="logo" href="/">
             &nbsp;
         </a>
-        <div class="row m-top-xl">
+        <div class="row m-top-xl" v-show="mode==1">
             <div class="col">
                 <ul class="unstyled text xsmall black">
                     <li><div class="text xsmall title bold">CANDIDATO</div></li>
@@ -33,20 +33,36 @@
                 </ul>
             </div>
         </div>
+        <div class="row m-top-xl" v-show="mode==2">
+            <div class="col">
+                <ul class="unstyled text xsmall">
+                    <li><div class="text xsmall title bold">SIGUENOS</div></li>                    
+                    <li>
+                        <a href="#" class="fa fa-facebook" aria-hidden="true"></a>  
+                        <a href="#" class="fa fa-twitter" aria-hidden="true"></a>  
+                        <a href="#" class="fa fa-linkedin" aria-hidden="true"></a>  
+                    </li>
+                    <li>contacto@chilempleo.cl</li> 
+                </ul>
+            </div>
+        </div>
     </div>
+  
 </footer>
 </div>
 </template>
 <script>
+import config from '../../../../src/config'
+
 export default {
   name: 'Footer',
   data(){
       return{
-          mode : 0,
+          mode:-1
       }
   },
   mounted(){
-
+      this.mode = config.mode  
   },
   components: {
    

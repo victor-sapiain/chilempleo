@@ -9,6 +9,8 @@ import { sync } from 'vuex-router-sync'
 import routes from './routes'
 import store from './store'
 import VueHead from 'vue-head'
+import VueSpinners from 'vue-spinners'
+ 
 
 // Import Helpers for filters
 import { domain, count, prettyDate, pluralize } from './filters'
@@ -17,8 +19,8 @@ import { domain, count, prettyDate, pluralize } from './filters'
 import AppView from './components/App.vue'
  
 Vue.use(VueHead)
-
-
+Vue.use(VueSpinners)
+ 
 // Import Install and register helper items
 Vue.filter('count', count)
 Vue.filter('domain', domain)
