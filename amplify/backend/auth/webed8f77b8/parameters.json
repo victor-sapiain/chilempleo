@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "webfb5c9294_identitypool_fb5c9294",
+    "identityPoolName": "webed8f77b8_identitypool_ed8f77b8",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "webfb5c9294",
-    "userPoolName": "webfb5c9294_userpool_fb5c9294",
+    "resourceNameTruncated": "webed8f77b8",
+    "userPoolName": "webed8f77b8_userpool_ed8f77b8",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "webfb5fb5c9294_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "webed8ed8f77b8_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "fb5c9294",
-    "resourceName": "webfb5c9294",
+    "sharedId": "ed8f77b8",
+    "resourceName": "webed8f77b8",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -47,10 +47,15 @@
     },
     "useDefault": "defaultSocial",
     "hostedUI": true,
-    "hostedUIDomainName": "webfb5c9294-fb5c9294",
-    "authProvidersUserPool": [],
-    "hostedUIProviderMeta": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.chilempleo.cl/signin/callback/\"],\"LogoutURLs\":[\"https://www.chilempleo.cl/signout/\"]}",
+    "usernameAttributes": [
+        "email"
+    ],
+    "hostedUIDomainName": "webed8f77b8-ed8f77b8",
+    "authProvidersUserPool": [
+        "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.chilempleo.cl/signin/callback/\",\"http://localhost:8080/signin/callback/\"],\"LogoutURLs\":[\"https://www.chilempleo.cl/signout/\",\"http://localhost:8080/signout/\"]}",
     "userPoolGroupList": [],
     "dependsOn": []
 }

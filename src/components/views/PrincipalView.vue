@@ -123,7 +123,7 @@
                 <button class="btn btn-primary btn-principal-head pull-right"><i class="fa fa-pencil" aria-hidden="true"></i> Publicar Oferta<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
             </div>           
             <div>
-            <form action="/ofertas/" method="get">
+            <form  action="/ofertas/" method="get">
                 <div v-if ="mode==1" class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
@@ -157,16 +157,16 @@
                     </div>
                 </div>
                 <div v-else class="row">
-                   <div class="col-md-6">
+                   <div class="col-md-8">
                         <div class="form-group">
                             <input name="txtSearch"  v-model = "txtSearch" class="form-control-search" type="text" placeholder="EMPLEO A BUSCAR" />
                         </div>
                     </div>    
-                    <div class="col-md-2">
-                        <button id="btnSearch" v-on:click="buscar" type="button" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <div class="col-md-4">
+                        <button id="btnSearch" v-on:click="buscar" type="button" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
                         <button id="btnClean" v-on:click="limpiar" type="button" class="btn-sm btn-primary ">Limpiar </button>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <nav aria-label="Page navigation" class="row text-right">
                             <ul class="pagination">
                                 <li>
@@ -188,13 +188,13 @@
             </form>
             </div>
         </div>      
-        <div style="text-align:right;">
+        <div v-show="mode==2" style="text-align:right;">
             <h5>Página {{pag}} de {{Math.ceil(ofertas.length/NUM_RESULTS)}}</h5>
         </div>
         <div  class="row" v-for="(item, index) in ofertas" :key="index" v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index">
             <div v-show="item.EstadoRegistro==1" class="col-md-12">
                 <div class="card-flat card-block">
-                    <div class="col-md-1">
+                    <div id="logo-card" class="col-md-1">
                       <div class="gc_ si39"
                           style="
                               -ms-flex-direction: row;
@@ -238,7 +238,7 @@
                           <div class="row">              
                             <a :href="item.oferta.UrlOferta" target="_blank"> <h3 class="col-md-9">{{item.oferta.titulo}}</h3></a>
                             <div class="col-md-3">                               
-                                <div class="pull-right"><a class="facebookBtn smGlobalBtn" href="#" ></a>
+                                <div id="social-shared" class="pull-right"><a class="facebookBtn smGlobalBtn" href="#" ></a>
                                     <a class="twitterBtn smGlobalBtn" href="#" ></a>
                                     <a class="linkedinBtn smGlobalBtn" href="#" ></a>                                
                                 </div>
@@ -260,7 +260,7 @@
                           <span class="link-detalle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Guardar</span> 
                         </a>
                         <a :href="item.oferta.UrlOferta" target="_blank" class="margin-left">
-                          <span class="link-detalle">❯ Ver Detalle</span> 
+                          <span class="link-detalle"><i class="fa fa-arrow-right" aria-hidden="true"></i>  Ver Detalle</span> 
                         </a>
                     </div>
                 </div>
@@ -309,6 +309,7 @@ export default {
     InfoBox,
     ProcessInfoBox
   },
+
   data () {
     return {
         TotalOfertas:10,
@@ -317,7 +318,22 @@ export default {
         txtSearch : '',
         NUM_RESULTS: 20, // Numero de resultados por página
         pag: 1, // Página inicial
+        title: 'My Title'
+
     }
+  },
+   head: {
+    title: {
+        inner: 'Chilempleo',
+        separator: '-',
+        complement: 'Inicio'
+    },      
+    meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'application-name', content: 'Chilempleo' },
+        { name: 'robots', content: 'index,follow'},
+        { name: 'keywords', content: 'chile empleos, empleos, trabajo, profesor, profesores,'},
+        { name: 'description', content: 'Chilempleo. Cientos de Empleos. Empleos todo Chile.', id: 'desc' }]
   },
   computed: {
     
@@ -354,14 +370,26 @@ export default {
         let f = new Date()
         let fAux = new Date()
         fAux.setDate(f.getDate()-3)
-        let fechaHoy = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()  
-        let  fechaAnt =  (fAux.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear())
+        let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
+        let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((f.getMonth() ),2) + "/" + f.getFullYear())     
+        console.log(fechaAnt)
+        console.log(fechaHoy)
+
         api.getOffer(fechaAnt,fechaHoy) 
         .then(response=> {                   
             this.ofertas = response.data
         })
         .catch((err) => console.log(err));      
       },
+      zeroFill( number, width )
+      {
+        width -= number.toString().length;
+        if ( width > 0 )
+        {
+            return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+        }
+        return number + ""; // siempre devuelve tipo cadena
+      }
   },
   mounted () {
     this.mode = config.mode  
@@ -369,4 +397,3 @@ export default {
   }
 }
 </script>
- 

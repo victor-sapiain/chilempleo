@@ -7,7 +7,7 @@
     }
   },
   "auth": {
-    "webfb5c9294": {
+    "webed8f77b8": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],

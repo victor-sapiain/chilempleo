@@ -8,19 +8,16 @@ import VueRouter from 'vue-router'
 import { sync } from 'vuex-router-sync'
 import routes from './routes'
 import store from './store'
-import VueAnalytics from 'vue-analytics'
- 
+import VueHead from 'vue-head'
+
 // Import Helpers for filters
 import { domain, count, prettyDate, pluralize } from './filters'
 
 // Import Views - Top level
 import AppView from './components/App.vue'
  
-import config from '../../web/src/config'
+Vue.use(VueHead)
 
-Vue.use(VueAnalytics, {
-  id: 'UA-85162196-1'
-})
 
 // Import Install and register helper items
 Vue.filter('count', count)

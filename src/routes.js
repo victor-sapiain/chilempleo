@@ -1,6 +1,8 @@
 import DashView from './components/dashboard/Dash.vue'
 import Principal from './components/Principal/Principal.vue'
-import PrincipalMenu from './components/principalmenu/PrincipalMenu.vue'
+import OfertaPostulacion from './components/oferta/Postulacion.vue'
+import Acceso from './components/cuenta/Login.vue'
+
 
 //import LoginView from './components/Login.vue'
 import NotFoundView from './components/404.vue'
@@ -8,7 +10,8 @@ import NotFoundView from './components/404.vue'
 // Import Views - Dash
 import DashboardView from './components/views/Dashboard.vue'
 import PrincipalView from './components/views/PrincipalView.vue'
-import OfertaView from './components/views/OfertaView.vue'
+import OfertaPostulacionView from './components/views/OfertaPostulacionView.vue'
+import AccesoView from './components/views/LoginView.vue'
 
 import FueraServicio from './components/FueraServicio.vue'
 //import config from '../config'
@@ -28,11 +31,14 @@ const routes = [
     component: Principal,
     children: [
       {
-        path: 'principalview',
+        path: 'Principal',
         alias: '',
         component: PrincipalView,
         name: 'Principal',
-        meta: {description: '',mantencion:false}
+        meta: {
+          description: '',
+          mantencion:false,          
+        }
       }
     ]
   },
@@ -46,18 +52,32 @@ const routes = [
     component: FueraServicio
   },
   {
-    path: '/Ofertas',
-    component: PrincipalMenu,
+    path: '/ofertas',
+    component:OfertaPostulacion,
     children: [
       {
-        path: 'ofertaview',
+        path: 'ofertas',
         alias: '',
-        component: OfertaView,
+        component: OfertaPostulacionView,
         name: 'Oferta',
         meta: {description: ''}
       }
     ]
   },
+  {
+    path: '/acceso',
+    component: Acceso,
+    children: [
+      {
+        path: ' ',
+        alias: '',
+        component: AccesoView,
+        name: 'acceso',
+        meta: {description: ''}
+      }
+    ]
+  },
+  /*
   {
     path: '/dashboard',
     component: DashView,
@@ -70,7 +90,8 @@ const routes = [
         meta: {description: ''}
       }
     ]
-  }, {
+  }*/
+  , {
     // not found handler
     path: '*',
     component: NotFoundView

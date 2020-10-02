@@ -1,295 +1,133 @@
-@media (min-width: 768px) and (max-width: 1024px) {
-  .medium-title {
-    font-size: 18px;
-  }
-  .float-right {
-    display: none;
-  }
-  .navbar-default.affix .navbar-brand {
-    padding: 3px 0px;
-  }
-  .navbar-default .navbar-nav {
-    margin: 15px 0 5px 20px;
-  }
-  .navbar-default .navbar-nav > li > a {
-    padding: 10px 5px;
-  }
-  .navbar-default.affix .navbar-nav > li > a,
-  .navbar-default.affix .navbar-nav > li > a:focus {
-    padding: 10px 5px;
-  }
-  .navbar .navbar-brand {
-    padding: 10px 0;
-  }
-  .search-container h1 {
-    font-size: 40px;
-  }
-  .search-container h2 {
-    font-size: 22px;
-  }
-  .search-container .form-group {
-    margin-bottom: 10px !important;
-  }
-  .search-container .btn {
-    width: 100%;
-  }
-  .f-category h3 {
-    font-size: 14px;
-  }
-  .manager-resumes-item .manager-content .manager-info .manager-name {
-    float: none;
-  }
-  .manager-resumes-item .manager-content .manager-info .manager-meta {
-    float: left;
-    text-align: left;
-  }
-  .manager-resumes-item .manager-content .manager-info .manager-meta span {
-    font-size: 13px;
-    display: inline-block;
-  }
-  .full-time {
-    margin-left: 10px;
-  }
-  .manager-resumes-item .manager-content .manager-info .manager-name h4 {
-    font-size: 18px;
-  }
-  .bottom-social-icons a {
-    width: 32px;
-    height: 32px;
-    line-height: 34px;
-  }
-  .subscribe-box input[type="text"] {
-    margin-bottom: 10px;
+/* 
+  Desktops
+  1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  
+  .search-container{
+    /*sacar para mode 1 */
+    padding:110px 0;
   }
 }
-@media (mxn-width: 1242px) {
-  .navbar-right {
-    display: none;
+
+/* 
+ Laptops, Desktops
+ 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .search-container{
+    /*sacar para mode 1 */
+    padding:110px 0;
   }
 }
-@media (max-width: 640px) {   
-  .navbar-default.affix .navbar-brand {
-    padding: 7px 15px;
-  }
-  .navbar .navbar-brand {
-    padding: 7px 15px;
-  }
-  .section-title {
-    font-size: 20px;
-  }
-  .medium-title {
-    font-size: 18px;
+
+/* 
+  Tablets, Ipads (portrait)
+  768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {      
+  .search-container{
+    padding:70px 0;
   }
   .search-container h1 {
     font-size: 20px;
-    line-height: 36px;
+    line-height:10px
   }
   .search-container h2 {
     font-size: 15px;
-    line-height: 26px;
-  }
-  .search-container .form-group {
-    margin-bottom: 10px !important;
-  }
-  .search-container .btn {
-    width: 100%;
-  }
-  .search-category-container {
-    margin-bottom: 10px !important;
-  }
-  .popular-jobs {
-    display: none;
-  }
-  .job-list .thumb {
-    float: none;
-    margin-bottom: 20px;
-  }
-  .job-list .job-list-content {
-    margin-left: 0;
-  }
-  .job-list .job-list-content h4 {
-    font-size: 16px;
-    line-height: 28px;
-  }
-  .job-list .job-tag .meta-tag span {
-    font-size: 11px;
-    margin-right: 5px;
-  }
-  .job-list .job-tag .meta-tag {
-    margin-bottom: 10px;
-  }
-  .job-list .job-tag .pull-right {
-    float: left!important;
-  }
-  .find-job .pagination > li > a,
-  .find-job .pagination > li > span {
-    margin-right: 4px;
+    line-height:20px;
   }
 }
-@media (min-width: 320px) and (max-width: 480px) {
-  .navbar-default.affix .navbar-brand {
-    padding: 7px 15px;
+
+/* 
+  Tablets, Ipads
+  768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  .search-container{
+    padding:70px 0;
   }
-  .navbar .navbar-brand {
-    padding: 7px 15px;
-  }
-  .section-title {
+  .search-container h1 {
     font-size: 20px;
-  }
-  .medium-title {
-    font-size: 18px;
-  }
-  .search-container {
-    padding: 30px 0;
-  }
-  /*.search-container h1 {
-    font-size: 24px;
-    line-height: 36px;
+    line-height:10px
   }
   .search-container h2 {
-    font-size: 20px;
-    line-height: 26px;
-  }*/
-  .search-container .form-group {
-    margin-bottom: 10px !important;
+    font-size: 15px;
+    line-height:20px;
   }
-  .search-container .btn {
-    width: 100%;
-  }
-  .search-category-container {
-    margin-bottom: 10px !important;
-  }
-  .popular-jobs {
-    display: none;
-  }
-  .job-list .thumb {
-    float: none;
-    margin-bottom: 20px;
-  }
-  .job-list .job-list-content {
-    margin-left: 0;
-  }
-  .job-list .job-list-content h4 {
-    font-size: 16px;
-    line-height: 28px;
-  }
-  .job-list .job-tag .meta-tag span {
-    font-size: 11px;
-    margin-right: 5px;
-  }
-  .job-list .job-tag .meta-tag {
-    margin-bottom: 10px;
-  }
-  .job-list .job-tag .pull-right {
-    float: left!important;
-  }
-  .find-job .pagination > li > a,
-  .find-job .pagination > li > span {
-    margin-right: 4px;
-  }
-  .pagination > li > a,
-  .pagination > li > span {
-    max-width: 58px;
-    padding: 0px 7px;
-    margin: 0 -1px;
-    text-align: center;
-  }
-  .purchase .title-text {
-    font-size: 22px;
-  }
-  .purchase p {
-    font-size: 18px;
-  }
-  #testimonial .client-info {
-    margin: 7px auto;
-  }
-  #testimonial .client-info .client-name {
-    font-size: 12px;
-  }
-  #testimonial p {
-    margin: 2px;
-  }
-  #testimonial p .quote-left,
-  #testimonial p .quote-right {
-    display: none;
-  }
-  .infobox .info-text h2 {
-    font-size: 16px;
-  }
-  .infobox .btn {
-    float: left;
-  }
-  .job-detail .text-left {
-    margin-top: 15px;
-  }
-  .job-detail .text-left .btn {
-    margin: 10px 0;
-  }
-  .my-resume .author-resume .thumb {
-    float: none;
-    margin-bottom: 15px;
-  }
-  .my-resume .author-resume .author-info {
-    margin-left: 0;
-  }
-  .my-resume .item h4 {
-    font-size: 14px;
-    line-height: 22px;
-  }
-  .panel-default .panel-heading {
-    padding: 0px 10px;
-  }
-  .add-post-btn .btn-added {
-    font-size: 11px;
-  }
-  .manager-resumes-item .manager-content .resume-thumb {
-    float: none;
-    margin-bottom: 10px;
-  }
-  .manager-resumes-item .manager-content .manager-info .manager-name {
-    float: none;
-  }
-  .manager-resumes-item .manager-content .manager-info .manager-meta {
-    float: none;
-    text-align: left;
-  }
-  .manager-resumes-item .update-date {
-    padding: 5px 10px;
-  }
-  .manager-resumes-item .update-date .action-btn {
-    float: left;
-  }
-  .full-time {
+}
+
+/* 
+  Low Resolution Tablets, Mobiles (Landscape)
+  481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+ 
+  .logo img {
+    max-width: 85%;
     margin-left: 10px;
+  }  
+  .section-intro {
+    background: url(../img/bg/bg-intro_3.jpg) center center no-repeat;
+    background-size: cover;
+    position: relative;
+    max-width: 500px;
+    height: 250px;
   }
-  .job-alerts-item {
-    padding: 15px;
+  .search-container{
+    padding:40px 0;
   }
-  .applications-content .thums {
-    float: none;
-  }
-  .manager-resumes-item .manager-content {
-    padding: 20px 15px;
-  }
-  .manager-resumes-item .item-body {
-    padding: 20px 15px;
-  }
-  .blog-post .blog-author {
-    margin-right: 10px;
-  }
-  .blog-post .post-content {
-    padding: 30px 0px;
-  }
-  .post-title {
+  .search-container h1 {
     font-size: 20px;
+    line-height:10px
   }
-  .blog-post .post-content .meta .meta-part {
-    margin-right: 5px;
+  .search-container h2 {
+    font-size: 15px;
+    line-height:20px;
   }
-  #comments h3 {
-    font-size: 16px;
+  #social-shared,#logo-card{
+    display: none;
   }
-  #comments .comments-list li ul {
-    padding-left: 0px;
+  
+}
+
+/* 
+  Most of the Smartphones Mobiles
+  320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+  .logo img {
+    max-width: 85%;
+    margin-left: 10px;
+  }  
+  .section-intro {
+    background: url(../img/bg/bg-intro_3.jpg) center center no-repeat;
+    background-size: cover;
+    position: relative;
+    max-width: 500px;
+    height: 250px;
   }
+  .search-container{
+    padding:40px 0;
+  }
+  .search-container h1 {
+    font-size: 20px;
+    line-height:10px
+  }
+  .search-container h2 {
+    font-size: 15px;
+    line-height:20px;
+  }
+  #social-shared,#logo-card{
+    display: none;
+  } 
+  
 }

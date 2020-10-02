@@ -4,18 +4,16 @@
       <div>
           <router-view></router-view>
       </div>          
-      <principal-footer></principal-footer>       
   </div>  
 </template>
+
 <script>
 import config from '../../config'
-import PrincipalHeader from '../../components/layout/principal/Header'
-import PrincipalFooter from '../../components/layout/principal/Footer'
+import PrincipalHeader from '../../components/layout/principal/HeaderMenu'
 export default {
   name: 'Principal',
   components: {
     PrincipalHeader,
-    PrincipalFooter
   },
   data: function () {
     return {

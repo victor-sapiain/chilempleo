@@ -12,15 +12,14 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand logo" href="index.html"><img src="/static/img/logochev2.png" alt="" /></a>
+                        <a class="navbar-brand logo" href="/"><img src="/static/img/logochev2.png" alt="" /></a>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar">
                         <!-- Start Navigation List -->
                         <ul class="nav navbar-nav">
                             <li class="drop">
-                                <a class="active" href="index.html">
-                                    Inicio
-                                </a>
+                                <!--<router-link to="/" active-class="active">Inicio</router-link>-->
+                                <a class="active" v-bind:href="'/'">Inicio</a>
                             </li>
                             <li v-show="mode==1" class="drop">
                                 <a href="#">
@@ -35,24 +34,20 @@
                         </ul>
                         <ul v-show="mode==1" class="nav navbar-nav navbar-right float-right">
                             <li class="right">
-                                <button class="btn btn-primary btn-sm btn-principal-head">Ingresar / Registrar</button>
+                                <button v-on:click="login" class="btn btn-primary btn-sm btn-principal-head">Ingresar / Registrar</button>
                             </li>                          
                         </ul>
                     </div>
                 </div>
 
                 <!-- Mobile Menu Start -->
-                <ul class="wpb-mobile-menu">
-                    <li>
-                        <a class="active" href="index.html">Home</a>
-                        <ul>
-                            <li><a class="active" href="index.html">Home 1</a></li>
-                            <li><a href="index-02.html">Home 2</a></li>
-                            <li><a href="index-03.html">Home 3</a></li>
-                            <li><a href="index-04.html">Home 4</a></li>
-                        </ul>
+                <ul class="wpb-mobile-menu">                    
+                   <li>
+                        <a class="active" href="index.html">
+                            Inicio
+                        </a>
                     </li>
-                    <li>
+                    <li v-show="mode==1">
                         <a href="about.html">Pages</a>
                         <ul>
                             <li><a href="about.html">About</a></li>
@@ -65,7 +60,7 @@
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li v-show="mode==1">
                         <a href="#">For Candidates</a>
                         <ul>
                             <li><a href="browse-jobs.html">Browse Jobs</a></li>
@@ -75,7 +70,7 @@
                             <li><a href="job-alerts.html">Job Alerts</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li v-show="mode==1">
                         <a href="#">For Employers</a>
                         <ul>
                             <li><a href="post-job.html">Add Job</a></li>
@@ -84,7 +79,7 @@
                             <li><a href="browse-resumes.html">Browse Resumes</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li v-show="mode==1">
                         <a href="blog.html">Blog</a>
                         <ul class="dropdown">
                             <li><a href="blog.html">Blog - Right Sidebar</a></li>
@@ -93,10 +88,10 @@
                             <li><a href="single-post.html">Blog Single Post</a></li>
                         </ul>
                     </li>
-                    <li class="btn-m">
+                    <li v-show="mode==1" class="btn-m">
                         <a href="post-job.html"><i class="ti-pencil-alt"></i> Publicar aviso</a>
                     </li>
-                    <li class="btn-m">
+                    <li v-show="mode==1"  class="btn-m">
                         <a href="my-account.html"><i class="ti-lock"></i> Ingresar a cuenta</a>
                     </li>
                 </ul>
@@ -193,8 +188,8 @@ export default {
   mounted(){
         this.mode = config.mode
         $(document).ready(function () {
-            if (config.mode==2)
-                $('#intro').css('height','500px');
+            //if (config.mode==1)
+            //    $('#intro').css('height','500px');
         })
 
   },
@@ -204,6 +199,12 @@ export default {
    
   computed: {
    
+  },
+  methods: {
+    login(evt){
+        evt.preventDefault();
+        this.$router.push({ name: "acceso" });
+    }
   }
 }
 </script>

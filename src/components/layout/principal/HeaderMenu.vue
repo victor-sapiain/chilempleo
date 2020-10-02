@@ -18,9 +18,7 @@
                         <!-- Start Navigation List -->
                         <ul class="nav navbar-nav">
                             <li class="drop">
-                                <a class="active" href="index.html">
-                                    Inicio
-                                </a>
+                                <a  v-bind:href="'/'">Inicio</a>
                             </li>
                             <li class="drop">
                                 <a href="#">
