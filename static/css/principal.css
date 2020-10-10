@@ -22,6 +22,9 @@
     margin-top:12px;
     width:100%;
 }
+.margin-top-30 {
+  margin-top:30px;
+}
 .margin-top {
     margin-top:12px;
 }
@@ -33,6 +36,12 @@
 }
 .margin-left {
     margin-left:8px;    
+}
+.margin-left-25 {
+  margin-left:25px;    
+}
+.margin-left-35 {
+  margin-left:35px;    
 }
 .margin-left-50 {
     margin-left:-50px;    
@@ -98,6 +107,7 @@
   color:#E84C3D;
   font-weight: bold;
 }
+
 .label-contenido1{
   font-family: Sans-serif,arial,sans-serif !important;
   font-size: 14px;
@@ -307,7 +317,11 @@ h5 {
   padding: 1px 6px;
   border-radius: 50em;
 }
-
+.nota{
+  text-align: justify !important;
+  font-size: x-small !important;
+  font-weight: 700 !important;
+}
 
 /*  card profiles  */
   .our-team {

@@ -5,22 +5,34 @@ import 'es6-promise/auto'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+
+import Amplify from '@aws-amplify/core'
+import awsExports from './aws-exports';
+
+Amplify.configure(awsExports);
+Vue.prototype.$Amplify = Amplify // <- This line is important
+
 import { sync } from 'vuex-router-sync'
 import routes from './routes'
 import store from './store'
 import VueHead from 'vue-head'
 import VueSpinners from 'vue-spinners'
- 
+import ToggleSwitch from 'vuejs-toggle-switch'
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 // Import Helpers for filters
 import { domain, count, prettyDate, pluralize } from './filters'
 
 // Import Views - Top level
 import AppView from './components/App.vue'
- 
+
+
 Vue.use(VueHead)
 Vue.use(VueSpinners)
- 
+Vue.use(ToggleSwitch)
+Vue.use(VueSweetalert2);
+
 // Import Install and register helper items
 Vue.filter('count', count)
 Vue.filter('domain', domain)

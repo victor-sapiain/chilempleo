@@ -327,7 +327,7 @@ export default {
 
     }
   },
-   head: {
+  head: {
     title: {
         inner: 'Chilempleo',
         separator: '-',
@@ -377,7 +377,7 @@ export default {
         let fAux = new Date()
         fAux.setDate(f.getDate()-3)
         let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
-        let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((f.getMonth() ),2) + "/" + f.getFullYear())     
+        let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((f.getMonth()+1 ),2) + "/" + f.getFullYear())     
         console.log(fechaAnt)
         console.log(fechaHoy)
         api.getOffer(fechaAnt,fechaHoy) 

@@ -1,34 +1,48 @@
 <template>
 <div class="margen row">      
-    <div class="login_wrapper">
-      <div class="container">
+    <div class="login_wrapper" style="background-image: url('/static/img/login-background.jpg');">
+      <div v-show="VerLogin"  class="container">
           <div class="col-md-12 pad-0">
-              <div class="row login-box-12">
-                <div class="col-md-6" >
-                    <div class="login-inner-form">
-                        <div class="details">
-                              <h3> <span>Crea tu cuenta</span></h3>
-                              <div class="form-group">
-                                  <input type="email" v-model="TxtEmailRegistro" class="input-text" placeholder="Corréo Electrónico">
-                              </div>
-                              <div class="form-group">
-                                  <input type="password"  v-model="TxtClaveRegistro"  class="input-text" placeholder="Contraseña">
-                              </div> 
-                            <div class="form-group">
-                                  <input type="text"  v-model="TxtNombreRegistro"  class="input-text" placeholder="Nombre">
-                              </div>                              
-                              <div class="form-group">
-                                  <button id="btnSearch" type="submit" class="btn btn-block btn-lg btn-secondary"> REGISTRAR</button>
-                              </div>
-                          </div>
-                    </div>
+              <div class="row login-box-12">          
+                  <div class="col-md-12">
+                      <!--<div class="margin-top-30" >-->
+                      <div style="margin-left:-25px;">    
+                            <toggle-switch
+                                :options="SwitchOptions"
+                                :disabled="false" 
+                                @selected="SeleccionarOpcion()" 
+                                 v-model="OpcionTipo" 
+                                :value="OpcionTipo"                                  
+                                /> 
+                      </div>
                   </div>
+                  <!--
+                  <div class="col-md-12">
+                        <div class="alert alert-success">
+                            <p>
+							<span v-if="OpcionTipo=='Candidato'"> Ingresa tus credenciales como <strong> candidato </strong> y podras postular a ofertas, subir tu CV, destacar tu perfil, participar en entrevistas.</span>
+                            <span v-else><i class="fa fa-info-circle fa-lg fa-li" aria-hidden="true"></i> Ingresa tus credenciales como <strong> anunciante </strong> y podras publicar una oferta, destacar una oferta, acceder a base de datos de CVs, buscar perfiles postulantes, acceder a estadísticas.</span>
+                            </p>
+						</div>
+                  </div>
+                  -->
                   <div class="col-md-6">
                       <div class="login-inner-form">
                           <div class="details">
-                              <h3> <span>Ingresa tus credenciales</span></h3>
+                              <div v-if="OpcionTipo=='Candidato'">
+                                <h3> <span>Ingreso candidato</span></h3>                              
+                              </div>  
+                              <div v-else>
+                                <h3> <span>Ingreso empleador</span></h3>                              
+                              </div>                 
+                              <div style="min-height:200px;">            
                               <div class="form-group">
-                                  <input type="email" v-model="TxtEmailIngreso" class="input-text" placeholder="Corréo Electrónico">
+                                    <div v-if="OpcionTipo=='Candidato'">
+                                        <input type="email" v-model="TxtEmailIngreso" class="input-text" placeholder="Correo electrónico candidato">
+                                    </div>
+                                    <div v-else>
+                                        <input type="email" v-model="TxtEmailIngreso" class="input-text" placeholder="Correo electrónico empleador">
+                                    </div>
                               </div>
                               <div class="form-group">
                                   <input type="password"  v-model="TxtClaveIngreso"  class="input-text" placeholder="Contraseña">
@@ -36,34 +50,211 @@
                               <div class="checkbox clearfix">                                      
                                   <a href="forgot-password.html">¿ Olvidó su contraseña ?</a>
                               </div>
-                              <div class="form-group">
-                                    <!--<button type="submit" class="btn-md btn-theme btn-block" v-on:click="Login()">Entrar</button>-->
-                                    <button id="btnSearch" type="submit" class="btn btn-block btn-lg btn-primary"> ENTRAR</button>
+                              </div>
+                              <div class="form-group row">
+                                    <div class="col-md-12 margin_bottom">
+                                        <button  type="submit" v-on:click="AccesoLogin" class="btn btn-block btn-lg btn-primary"><i class="fa fa-user margin-left-25" aria-hidden="true" style="color:#fff"></i> ENTRAR</button>
+                                    </div>                                                                                    
                               </div>
                           </div>
                       </div>
                   </div>                  
-              </div>
+                  <div class="col-md-6" >
+                    <div class="login-inner-form">
+                        <div class="details">
+                              <div v-if="OpcionTipo=='Candidato'">
+                                <h3> <span>Crear cuenta candidato</span></h3>                                                       
+                              </div>
+                              <div v-else>
+                                <h3> <span>Crear cuenta empleador</span></h3>                                                       
+                              </div>
+                              <div style="min-height:200px;"> 
+                              <div class="form-group">
+                                    <div v-if="OpcionTipo=='Candidato'">
+                                        <input type="email" v-model="TxtEmailRegistro" class="input-text" placeholder="Correo electrónico candidato">
+                                    </div>
+                                    <div v-else>
+                                        <input type="email" v-model="TxtEmailRegistro" class="input-text" placeholder="Correo electrónico empleador">
+                                    </div>
+                              </div>
+                              <div class="form-group">
+                                  <input type="password"  v-model="TxtClaveRegistro"  class="input-text" placeholder="Contraseña">
+                              </div> 
+                              <div class="form-group">
+                                    <div v-if="OpcionTipo=='Candidato'">
+                                        <input type="text"  v-model="TxtNombreRegistro"  class="input-text" placeholder="Nombre">
+                                    </div>
+                                    <div v-else>
+                                        <input type="text"  v-model="TxtNombreRegistro"  class="input-text" placeholder="Nombre o Razón social">
+                                    </div>    
+                              </div>                              
+                              </div>
+                              <div class="form-group">
+                                  <button type="submit" v-on:click="CrearCuenta" class="btn btn-block btn-lg btn-secondary"><i class="fa fa-pencil margin-left" aria-hidden="true" style="color:#fff"></i> REGISTRAR</button>
+                              </div>
+                          </div>
+                    </div>                  
+                  </div>            
+                  <span v-if="OpcionTipo=='Candidato'" class="FormDivider__LineThrough-sc-1mk5332-0 dHVBa-D">o inicia con</span>                
+                  <div v-if="OpcionTipo=='Candidato'" class="col-md-12" style="margin:10px;">
+                        <div class="col-md-6">
+                        <a class="btn btn-block btn-social btn-google" v-on:click="AccesoGoogle">
+                            <span class="fa fa-google"></span> <span class="margin-left-35">Acceso por Google</span>
+                        </a>
+                        </div>
+                        <div class="col-md-6">
+                        <a class="btn btn-block btn-social btn-facebook">
+                            <span class="fa fa-facebook"></span> <span class="margin-left-35">Acceso por Facebook</span>
+                        </a>
+                        </div>
+                        <div class="col-md-6 margin-top">
+                        <a class="btn btn-block btn-social btn-twitter">
+                            <span class="fa fa-twitter"></span> <span class="margin-left-35">Acceso por Twitter</span>
+                        </a>
+                        </div>
+                        <div class="col-md-6 margin-top">
+                        <a class="btn btn-block btn-social btn-linkedin">
+                            <span class="fa fa-linkedin"></span> <span class="margin-left-35">Acceso por Linkedin</span>
+                        </a>
+                        </div>
+                  </div>
+               </div>
           </div>
       </div>
     </div>
 </div>
 </template>
 <script>
+import Auth from '@aws-amplify/auth';
 export default {
     name: 'LoginView',
-     data () {
+    data () {
         return {
             TxtEmailRegistro:'',
+            TxtCandidato : '',
             TxtEmailIngreso:'',
             TxtClaveRegistro:'',
             TxtClaveIngreso:'',
             TxtNombreRegistro:'',
-            Authenticated:false,
+            OpcionTipo : '',
+            VerLogin : false,
+            SwitchOptions:{
+                 layout: {
+                    color: '#fff',
+                    backgroundColor: '#BDC3C7',
+                    selectedColor: 'white',
+                    selectedBackgroundColor: 'green',
+                    borderColor: '#cccccc',
+                    fontFamily: 'Arial',
+                    fontWeight: '400',
+                    fontWeightSelected: '400',
+                    squareCorners: true,
+                    noBorder: false,
+                },
+                size: {
+                    fontSize: 1.5,
+                    height: 3.3,
+                    padding: 0.3,
+                    width: 80
+                },
+                items: {
+                    delay: .4,
+                    preSelected: 'Candidato',
+                    disabled: false,
+                    labels: [
+                    {name: 'Candidato', color: 'white', backgroundColor: '#61CD73'}, 
+                    {name: 'Empleador', color: 'white', backgroundColor: '#61CD73'}
+                    ]
+                }
+            }
         }
     },
+    head: {
+        title: {
+            inner: 'Chilempleo',
+            separator: '-',
+            complement: 'Acceso'
+        },      
+        meta: [
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { name: 'application-name', content: 'Chilempleo' },
+            { name: 'robots', content: 'index,follow'},
+            { name: 'keywords', content: 'chile empleos, empleos, trabajo, profesor, profesores,'},
+            { name: 'description', content: 'Chilempleo. Cientos de Empleos. Empleos todo Chile.', id: 'desc' }]
+    },
     mounted() {       
-    }
+        /*
+        this.$swal({
+            title: "ddsd", 
+            html: "<input type=text value = 01111></input>",  
+            confirmButtonText: "V redu", 
+            allowOutsideClick: "true" 
+        });
+        */
+       const inputOptions = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+            '1': 'CANDIDATO',
+            '2': 'EMPLEADOR'
+            })
+        }, 1000)
+        })
+        this.$swal.fire({
+            title: 'Ingresar a mi cuenta o Registrar una nueva cuenta como :',
+            input: 'radio',
+            inputOptions: inputOptions,
+            confirmButtonText: 'ACEPTAR SELECCIÓN',
+            cancelButtonText: 'VOLVER A INICIO',
+            showCancelButton: true,
+             allowOutsideClick: false,
+            allowEscapeKey: false,
+            width: '550px',
+            inputValidator: (value) => {
+                if (value==1){
+                    this.OpcionTipo='Candidato'
+                }else{
+                    this.OpcionTipo='Empleador'
+                }
+                if (!value) {
+                    return 'Necesitas seleccionar una opción'
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {                
+                this.VerLogin = true
+            }else if(result.isDismissed){
+                window.location.href = '/'            
+            }
+        })
+    },
+    methods: {
+        SeleccionarOpcion(){
+            if(this.OpcionTipo=='Candidato'){
+
+            }else{
+
+            }
+        },
+        async AccesoLogin(){
+            const user = await Auth.signIn(this.TxtEmailIngreso, this.TxtClaveIngreso);
+            console.log(user)
+        },
+        async AccesoGoogle(){
+            Auth.federatedSignIn({ provider: 'Google' })
+
+        },
+        async CrearCuenta(){
+             try {
+                console.log('entrada') 
+                const { user } = await Auth.signUp({username:this.TxtEmailRegistro,password:this.TxtClaveRegistro});                  
+                  
+                console.log(user);
+            } catch (error) {
+                console.log('error signing up:', error);
+            }        
+        },
+    },
+
 }
 </script>
 
@@ -215,7 +406,7 @@ a.logo_text span {
     color: #403838;
 }
 .login_wrapper .login-inner-form .details {
-    padding: 30px 30px;
+    padding: 15px 15px;
 }
 .login_wrapper .login_right {
     background-size: cover;
@@ -455,7 +646,6 @@ a.logo_text span {
 }
 
 
-
 /** Media Queries 
 -----------------------------------------------------------------------*/
 @media (max-width: 991px) {
@@ -487,11 +677,28 @@ a.logo_text span {
     padding: 40px 10px 30px;
 } 
 }
-
 @media (max-width: 479px) { 
     .login_wrapper .login-inner-form .details {
         padding: 30px 10px;
     }
 }
-
+.dHVBa-D::before, .dHVBa-D::after {
+    border-top: 1px solid rgb(189, 189, 189);
+    content: "";
+    display: table-cell;
+    position: relative;
+    top: 0.8em;
+    width: 42%;
+}
+.dHVBa-D {
+    display: table;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 2px;
+    margin: 0px auto 1em;
+    color: rgb(117, 117, 117);
+    position: relative;
+    text-align: center;
+    width: 92%;
+}
 </style>

@@ -18,7 +18,7 @@
             </div>
             <div class="col">
                 <ul class="unstyled text xsmall">
-                    <li><div class="text xsmall title bold">ANUNCIANTE</div></li>
+                    <li><div class="text xsmall title bold">EMPLEADOR</div></li>
                     <li><a href="/caregiver-forum">Caregiver Forum</a></li>
                     <li><a href="/ebooks">Senior Care Guides</a></li>
                     <li><a href="/local/elder-law-attorneys">Elder Law Attorneys</a></li>
@@ -28,8 +28,12 @@
             <div class="col">
                 <ul class="unstyled text xsmall">
                     <li><div class="text xsmall title bold">SIGUENOS</div></li>                    
-                    <li><a href="/signup">Create an Account</a></li>
-                    <li><a href="/aboutus">About AgingCare</a></li>
+                    <li>
+                        <a href="#" class="fa fa-facebook" aria-hidden="true"></a>  
+                        <a href="#" class="fa fa-twitter" aria-hidden="true"></a>  
+                        <a href="#" class="fa fa-linkedin" aria-hidden="true"></a>  
+                    </li>
+                    <li>contacto@chilempleo.cl</li> 
                 </ul>
             </div>
         </div>
