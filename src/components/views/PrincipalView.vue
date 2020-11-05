@@ -7,19 +7,23 @@
         <div v-show="mode==1">
             <h2 class="section-title">Perfiles destacados</h2>
             <div class="row col-md-12 margin_bottom">
-                <button class="btn btn-primary btn-principal-head pull-right"><i class="fa fa-star" aria-hidden="true"></i> Crear Perfil<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                <button class="btn btn-primary btn-principal-head pull-right button-desk"><i class="fa fa-search" aria-hidden="true"></i> Ver más Perfiles <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                <button class="btn btn-primary btn-principal-head pull-right margin-right button-desk"><i class="fa fa-star" aria-hidden="true"></i>  Crear Perfil Destacado  <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                 <button class="btn btn-primary btn-principal-head pull-right button-mobile"><i class="fa fa-search" aria-hidden="true"></i> Ver Perfiles <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                <button class="btn btn-primary btn-principal-head pull-right margin-right button-mobile"><i class="fa fa-star" aria-hidden="true"></i>  Crear Perfil  <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
             </div>
         </div>
-        <div v-show="mode==1" class="row">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="our-team">
+        <div class="row col-md-12" v-show="mode==1">
+            <VueSlickCarousel v-bind="carouselSettings">
+            <div>
+                <div class="our-team margin-right" >
                     <a href="#">
                         <div class="picture">
                             <img class="img-fluid" src="https://picsum.photos/130/130?image=1027" />
                         </div>
                     </a>
                     <div>
-                        15 años de experiencia en el ámbito tecnológico. Capacidad analítica, orientación a los resultados <a href="#" class="destacado">Ver Más</a>
+                        10 años de experiencia en el ámbito tecnológico. Capacidad analítica, orientación a los resultados <a href="#" class="destacado">Ver Más</a>
                     </div>
                     <div class="team-content">
                         <h3 class="name">Michele Miller</h3>
@@ -37,9 +41,8 @@
                     </ul>
                 </div>
             </div>
-
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="our-team">
+            <div>
+                <div class="our-team margin-right" style="margin-right:5px;">
                     <a href="#">
                         <div class="picture">
                             <img class="img-fluid" src="https://picsum.photos/130/130?image=1027" />
@@ -57,14 +60,14 @@
                     </div>
                    <ul class="social">
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>
-              <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a></li>
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-linkedin" aria-hidden="true"></a></li>
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-at" aria-hidden="true"></a></li>
                     </ul>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="our-team">
+            <div>
+                <div class="our-team margin-right">
                     <a href="#">
                         <div class="picture">
                             <img class="img-fluid" src="https://picsum.photos/130/130?image=1027" />
@@ -90,9 +93,8 @@
                     </ul>
                 </div>
             </div>
-
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="our-team">
+            <div>
+                <div class="our-team margin-right">
                     <a href="#">
                         <div class="picture">
                             <img class="img-fluid" src="https://picsum.photos/130/130?image=1027" />
@@ -110,18 +112,53 @@
                     </div>
                   <ul class="social">
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>
-              <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a></li>
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-linkedin" aria-hidden="true"></a></li>
                         <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-at" aria-hidden="true"></a></li>
                     </ul>
                 </div>
             </div>
+            <div>
+                <div class="our-team margin-right">
+                    <a href="#">
+                        <div class="picture">
+                            <img class="img-fluid" src="https://picsum.photos/130/130?image=1027" />
+                        </div>
+                    </a>
+                    <div>
+                        15 años de experiencia en el ámbito tecnológico. Capacidad analítica, orientación a los resultados <a href="#" class="destacado">Ver Más</a>
+                    </div>
+                    <div class="team-content">
+                        <h3 class="name">Francisca</h3>
+                        <h4 class="title">Vendedora</h4>
+                        <h4 class="destacado margin-top-5">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i> <span class="label-contenido1">Ver CV</span>
+                        </h4>
+                    </div>
+                  <ul class="social">
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                        <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-at" aria-hidden="true"></a></li>
+                    </ul>
+                </div>
+            </div>
+            </VueSlickCarousel>
+
         </div>
         <h2 class="section-title">Últimas ofertas</h2>
         <div class="content">
-            <div v-show="mode==1" class="row col-md-12 margin_bottom">
+            <div v-show="mode==1">
+                <a href="www.google.cl" class="card3" style="width: 150px;background-color: #E84C3D;color: #fff;font-weight: bolder;">
+                    <div style="margin:5px;">
+                        <img style="width:30px;height:auto;" src="/static/img/icon-teacher-v2.png">                        
+                        <span class="label-contenido1"> &nbsp;Profesores</span>
+                    </div>
+                </a>
+            </div>
+            <div v-show="mode==1" class="col-md-12 margin_bottom">                   
                 <button class="btn btn-primary btn-principal-head pull-right"><i class="fa fa-pencil" aria-hidden="true"></i> Publicar Oferta<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
-            </div>           
+            </div>                        
             <div>
             <form  action="/ofertas/" method="get">
                 <div v-if ="mode==1" class="row">
@@ -153,7 +190,7 @@
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-6">
-                        <button id="btnSearch" type="submit" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i></button>                        
+                        <button v-on:click="buscarOferta" type="button" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i></button>                        
                     </div>
                 </div>
                 <div v-else class="row">
@@ -163,7 +200,7 @@
                         </div>
                     </div>    
                     <div class="col-md-4">
-                        <button id="btnSearch" v-on:click="buscar" type="button" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                        <button v-on:click="buscarOferta" type="button" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i></button>                        
                         <button id="btnClean" v-on:click="limpiar" type="button" class="btn-sm btn-primary ">Limpiar </button>
                     </div>
                     <div class="col-md-12" v-show="!isLoading">
@@ -260,7 +297,7 @@
                       </div>                                         
                     </div>                   
                     <div style="width:100%;text-align:right;">                       
-                        <a v-show="mode==1" href="#" class="margin-left">
+                        <a v-show="mode==1" class="margin-left"  v-on:click="agregarOferta(item.oferta)">
                           <span class="link-detalle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Guardar</span> 
                         </a>
                         <a :href="item.oferta.UrlOferta" target="_blank" class="margin-left">
@@ -294,6 +331,20 @@
             </nav>            
         </div>
         </div>
+        <back-to-top bottom="50px" right="50px">
+            <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
+        </back-to-top>
+        <div v-show="mode==1" id="float-win">            
+            <div v-show="ofertasTemp.length>0" class="wrap-collabsible"> 
+               <input id="collapsible" class="toggle" type="checkbox"> 
+               <label for="collapsible" class="lbl-toggle">Ofertas Guardadas({{ofertasTemp.length}}) </label>
+               <div class="collapsible-content">
+                    <div class="content-inner">
+                       <div id="ListOferta"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 <!-- /.content -->
@@ -307,6 +358,9 @@ import InfoBox from '../widgets/InfoBox'
 import ProcessInfoBox from '../widgets/ProcessInfoBox'
 import api from '../../api'
 import config from '../../../src/config'
+
+import VueSlickCarousel from 'vue-slick-carousel'
+   
 export default {
   name: 'Principal',
   components: {
@@ -314,7 +368,7 @@ export default {
     InfoBox,
     ProcessInfoBox
   },
-
+  components: VueSlickCarousel ,
   data () {
     return {
         TotalOfertas:10,
@@ -323,7 +377,17 @@ export default {
         txtSearch : '',
         NUM_RESULTS: 20, // Numero de resultados por página
         pag: 1, // Página inicial
-        isLoading: true
+        isLoading: true,
+        ofertasTemp:[],
+        carouselSettings:{
+                "dots": false,
+                "focusOnSelect": true,
+                "infinite": true,
+                "speed": 1200,
+                "slidesToShow": 4,
+                "rows": 1,
+                "autoplay":true,               
+        }
 
     }
   },
@@ -348,8 +412,22 @@ export default {
         let txtFin = text
         let max=140
         if (text.length>max)
-            txtFin = text.substr(1,max) + '....'
+            txtFin = text.substr(0,max) + '....'
         return (txtFin)
+      },
+      buscarOferta(event){
+            this.isLoading = true
+            let f = new Date()
+            let fAux = new Date()
+            fAux.setDate(f.getDate()-3)
+            let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
+            let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())   
+            api.getSearchOffer(fechaAnt,fechaHoy,this.txtSearch) 
+            .then(response=> {                   
+                this.ofertas = response.data
+                this.isLoading = false
+            })
+            .catch((err) => console.log(err));  
       },
       buscar(event) {      
         let ofertas_aux = []
@@ -377,9 +455,10 @@ export default {
         let fAux = new Date()
         fAux.setDate(f.getDate()-3)
         let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
-        let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((f.getMonth()+1 ),2) + "/" + f.getFullYear())     
+        let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())     
         console.log(fechaAnt)
         console.log(fechaHoy)
+
         api.getOffer(fechaAnt,fechaHoy) 
         .then(response=> {                   
             this.ofertas = response.data
@@ -395,11 +474,95 @@ export default {
             return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
         }
         return number + ""; // siempre devuelve tipo cadena
+      },
+      cargarOfertasGuardadas(){
+        if("ofertas" in localStorage){
+            let ofertas =  JSON.parse(localStorage.getItem("ofertas"))
+            this.ofertasTemp = ofertas
+            let aux ="<ul>"
+            for(let i=0;i<ofertas.length;i++){
+                 aux+="<li style='font-size: smaller;font-weight: bold;'> <i style='color:#0084BF;' class='fa fa-bookmark' aria-hidden='true'></i> " + ofertas[i].titulo + " <a  onclick='eliminarOferta(" +  JSON.stringify(ofertas[i]) + ");' ><i style='color:#E84C3D' class='fa fa-minus-circle' aria-hidden='true'></i></a> </li>"
+            }
+            aux += "</ul>"
+            document.getElementById("ListOferta").innerHTML = aux;
+
+        }
+      },
+      agregarOferta(oferta){
+        let ofertas = JSON.parse(localStorage.getItem("ofertas"))
+        let insertarItem = true
+        if("ofertas" in localStorage){
+            for(let i=0;i<ofertas.length;i++){
+                if (ofertas[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
+                    insertarItem = false
+                    break
+                }
+            }
+        }
+        if (insertarItem){
+            this.ofertasTemp.push(oferta)
+            localStorage.setItem("ofertas", JSON.stringify(this.ofertasTemp));
+            this.cargarOfertasGuardadas()
+        }        
+      },
+      eliminarOferta(oferta){
+        /*
+        let ofertas = JSON.parse(localStorage.getItem("ofertas"))
+        let eliminarItem = false
+        if("ofertas" in localStorage){
+            for(let i=0;i<this.ofertas.length;i++){
+                if (ofertas[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
+                    eliminarItem = true
+                    break
+                }
+            }
+        }
+        */
+        let eliminarItem = false
+        for(let i=0;i<this.ofertasTemp.length;i++){
+            if (this.ofertasTemp[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
+                eliminarItem = true
+                this.ofertasTemp.splice(i, 1);
+                break
+            }
+        }
+        if(eliminarItem){
+            localStorage.setItem("ofertas", JSON.stringify(this.ofertasTemp));
+            this.cargarOfertasGuardadas()            
+        }
       }
   },
   mounted () {
     this.mode = config.mode  
+    window.eliminarOferta = this.eliminarOferta.bind(this);
     this.cargarOfertas()
+    this.cargarOfertasGuardadas()
   }
 }
 </script>
+<style>
+.btn-to-top {
+  width: 60px;
+  height: 60px;
+  padding: 10px 16px;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 22px;
+}
+.slick-prev:before {
+  font-family: "FontAwesome";
+  content: "\f0a8";
+  color: #E84C3D;
+  font-size: 30px;
+}
+
+.slick-next:before {
+  font-family: "FontAwesome";
+  content: "\f0a9";
+  color: #E84C3D;
+  font-size: 30px;
+}
+a:hover {
+ cursor:pointer;
+}
+</style>

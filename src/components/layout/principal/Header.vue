@@ -107,7 +107,7 @@
                             <br />
                             <h2 class="headline-span-small">Encuentra tu empleo de forma rápida y sencilla.</h2>
                         </div>
-                        <div v-show="mode==1" class="content">
+                        <div v-show="mode==1" class="content search-main">
                             <form action="/ofertas/" method="get">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
@@ -145,22 +145,51 @@
                                 </div>
                             </form>
                         </div>                                                             
-                        <div v-show="mode==1" class="row">
-                            <div class="col-md-12">                               
-                                    <div class="col-md-12">
-                                        <h4 class="titulo2">OFERTAS DESTACADAS</h4>  
-                                        <div class="col-md-3">
-                                            <div class="item margin-left">
-                                    <div class="control-group">
-                                        <h4>
-                                            Java Development Support
-                                        </h4>
-                                         <hr>
-                                        <div class="ld-job-details"><img alt="company logo" class="ld-logo" src="https://assets.landing.jobs/attachments/companies/logos/98a258cad1eaf570fbce3d629fb8de5a9963db86/small.png?1510095414"><div class="ld-right"><div class="ld-h5">Wunder</div><div class="ld-location">Hamburg, DE</div></div></div>
-                                    </div>  
-                                </div>
+                        <div v-show="mode==1" class="top-offers row">
+                            <div class="col-md-12">                 
+                                <!--   
+                                  <VueSlickCarousel v-bind="carouselSettings">
+                                        <div><h1>Test1</h1></div>
+                                        <div><h1>Test2</h1></div>
+                                        <div><h1>Test3</h1></div>
+                                         <div><h1>Test1</h1></div>
+                                        <div><h1>Test2</h1></div>
+                                        <div><h1>Test3</h1></div>
+                                    </VueSlickCarousel>
+                                <h4 class="titulo2">OFERTAS DESTACADAS</h4>  
+
+                                <VueSlickCarousel v-bind="carouselSettings">
+    
+                                    <div>
+                                        <div class="card-flat">
+                                                <h4>Java Development Support</h4>
+                                                <hr>
+                                                <div class="ld-job-details"><img alt="company logo" class="ld-logo" src="https://assets.landing.jobs/attachments/companies/logos/98a258cad1eaf570fbce3d629fb8de5a9963db86/small.png?1510095414"><div class="ld-right"><div class="ld-h5">Wunder</div></div></div>
                                         </div>
                                     </div>
+                                    <div>
+                                        <div class="card-flat">
+                                                <h4>Java Development Support</h4>
+                                                <hr>
+                                                <div class="ld-job-details"><img alt="company logo" class="ld-logo" src="https://assets.landing.jobs/attachments/companies/logos/98a258cad1eaf570fbce3d629fb8de5a9963db86/small.png?1510095414"><div class="ld-right"><div class="ld-h5">Wunder</div></div></div>
+                                        </div>
+                                    </div>
+                                     <div>
+                                        <div class="card-flat">
+                                                <h4>Java Development Support</h4>
+                                                <hr>
+                                                <div class="ld-job-details"><img alt="company logo" class="ld-logo" src="https://assets.landing.jobs/attachments/companies/logos/98a258cad1eaf570fbce3d629fb8de5a9963db86/small.png?1510095414"><div class="ld-right"><div class="ld-h5">Wunder</div></div></div>
+                                        </div>
+                                    </div>
+                                     <div>
+                                        <div  class="card-flat">
+                                                <h4>Java Development Support</h4>
+                                                <hr>
+                                                <div class="ld-job-details"><img alt="company logo" class="ld-logo" src="https://assets.landing.jobs/attachments/companies/logos/98a258cad1eaf570fbce3d629fb8de5a9963db86/small.png?1510095414"><div class="ld-right"><div class="ld-h5">Wunder</div></div></div>
+                                        </div>
+                                    </div>
+                                </VueSlickCarousel>
+                                   -->
 
                             </div>
 
@@ -178,11 +207,28 @@
 import { mapState } from 'vuex' 
 import $ from 'jquery'
 import config from '../../../../src/config'
+
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+
 export default {
   name: 'PrincipalHeader',
+  components: VueSlickCarousel ,
   data(){
       return{
-          mode : 0,
+            mode : 0,
+            carouselSettings:{
+                "dots": true,
+                "focusOnSelect": true,
+                "infinite": true,
+                "speed": 500,
+                "slidesToShow": 3,
+                "slidesToScroll": 3,
+                "touchThreshold": 5,
+                "rows": 1,
+                "autoplay":true,
+            }
       }
   },
   mounted(){

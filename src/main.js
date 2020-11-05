@@ -20,8 +20,12 @@ import VueSpinners from 'vue-spinners'
 import ToggleSwitch from 'vuejs-toggle-switch'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import BackToTop from 'vue-backtotop'
 
-// Import Helpers for filters
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+
 import { domain, count, prettyDate, pluralize } from './filters'
 
 // Import Views - Top level
@@ -32,6 +36,9 @@ Vue.use(VueHead)
 Vue.use(VueSpinners)
 Vue.use(ToggleSwitch)
 Vue.use(VueSweetalert2);
+Vue.use(BackToTop)
+
+Vue.component(VueSlickCarousel.name, VueSlickCarousel)
 
 // Import Install and register helper items
 Vue.filter('count', count)
