@@ -503,6 +503,7 @@ a.logo_text span {
     margin-bottom: 20px;
 }
 .login_wrapper .login-inner-form .input-text {
+    font-weight: 600;
     outline: none;
     width: 100%;
     padding: 10px 20px;
@@ -605,6 +606,9 @@ a.logo_text span {
     margin-left: 0;
     opacity: 0;
 }
+.slick-prev {
+    left: -32px;
+}
 .login_wrapper .login-inner-form .form-check label::before {
     content: "";
     display: inline-block;
@@ -642,7 +646,7 @@ a.logo_text span {
 .login_wrapper .login-inner-form .checkbox a {
     font-size: 14px;
     color: #403838;
-    float: right;
+    float: left;
 }
 
 

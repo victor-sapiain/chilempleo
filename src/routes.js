@@ -11,19 +11,14 @@ import NotFoundView from './components/404.vue'
 import DashboardView from './components/views/Dashboard.vue'
 import PrincipalView from './components/views/PrincipalView.vue'
 import OfertaPostulacionView from './components/views/OfertaPostulacionView.vue'
+import OfertasView from './components/views/OfertasView.vue'
+
 import AccesoView from './components/views/LoginView.vue'
 
 import FueraServicio from './components/FueraServicio.vue'
 //import config from '../config'
 
-/*
-import TablesView from './components/views/Tables.vue'
-import TasksView from './components/views/Tasks.vue'
-import SettingView from './components/views/Setting.vue'
-import AccessView from './components/views/Access.vue'
-import ServerView from './components/views/Server.vue'
-import ReposView from './components/views/Repos.vue'
-*/ 
+
 // Routes
 const routes = [      
   {
@@ -52,13 +47,26 @@ const routes = [
     component: FueraServicio
   },
   {
+    path: '/oferta/:id',
+    component:OfertaPostulacion,
+    children: [
+      {
+        path: 'oferta/:id',
+        alias: '',
+        component: OfertaPostulacionView,
+        name: 'Oferta',
+        meta: {description: ''}
+      }
+    ]
+  },
+  {
     path: '/ofertas',
     component:OfertaPostulacion,
     children: [
       {
         path: 'ofertas',
         alias: '',
-        component: OfertaPostulacionView,
+        component: OfertasView,
         name: 'Oferta',
         meta: {description: ''}
       }

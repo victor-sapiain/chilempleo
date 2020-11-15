@@ -683,3 +683,18 @@ input[type="checkbox"] {
   margin-bottom: 0;
 }
 /* fin ventana flotante*/
+
+/*  panel lateral */
+.container-card{
+  margin :10px;
+}
+
+.sbox-3-label-form{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  /*text-transform: uppercase;
+  letter-spacing: 1pt;*/
+  font-weight: 800;
+}
+/* fin panel lateral*/

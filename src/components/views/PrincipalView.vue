@@ -297,7 +297,7 @@
                       </div>                                         
                     </div>                   
                     <div style="width:100%;text-align:right;">                       
-                        <a v-show="mode==1" class="margin-left"  v-on:click="agregarOferta(item.oferta)">
+                        <a class="margin-left"  v-on:click="agregarOferta(item.oferta)">
                           <span class="link-detalle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Guardar</span> 
                         </a>
                         <a :href="item.oferta.UrlOferta" target="_blank" class="margin-left">
@@ -308,7 +308,7 @@
             </div>
         </div>      <!--Fin empleos-->  
         <div v-if="mode==1" style="width:100%;text-align:center;">
-            <button class="btn btn-secondary btn btn-principal-head margin-top" style="width:50%">Ver más Ofertas de Trabajo </button>
+            <button class="btn btn-secondary btn btn-principal-head margin-top"  style="width:50%" onclick="location.href = '/ofertas';">Ver más Ofertas de Trabajo </button>
         </div>
         <div v-else>
              <div style="text-align:right;">
@@ -334,12 +334,12 @@
         <back-to-top bottom="50px" right="50px">
             <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
         </back-to-top>
-        <div v-show="mode==1" id="float-win">            
+        <div id="float-win">            
             <div v-show="ofertasTemp.length>0" class="wrap-collabsible"> 
                <input id="collapsible" class="toggle" type="checkbox"> 
                <label for="collapsible" class="lbl-toggle">Ofertas Guardadas({{ofertasTemp.length}}) </label>
                <div class="collapsible-content">
-                    <div class="content-inner">
+                    <div class="content-inner" style="overflow-y: auto; height:150px; ">
                        <div id="ListOferta"></div>
                     </div>
                 </div>
@@ -358,7 +358,6 @@ import InfoBox from '../widgets/InfoBox'
 import ProcessInfoBox from '../widgets/ProcessInfoBox'
 import api from '../../api'
 import config from '../../../src/config'
-
 import VueSlickCarousel from 'vue-slick-carousel'
    
 export default {
@@ -380,13 +379,13 @@ export default {
         isLoading: true,
         ofertasTemp:[],
         carouselSettings:{
-                "dots": false,
-                "focusOnSelect": true,
-                "infinite": true,
-                "speed": 1200,
-                "slidesToShow": 4,
-                "rows": 1,
-                "autoplay":true,               
+            "dots": false,
+            "focusOnSelect": true,
+            "infinite": true,
+            "speed": 1200,
+            "slidesToShow": 4,
+            "rows": 1,
+            "autoplay":true,               
         }
 
     }
@@ -476,61 +475,49 @@ export default {
         return number + ""; // siempre devuelve tipo cadena
       },
       cargarOfertasGuardadas(){
-        if("ofertas" in localStorage){
-            let ofertas =  JSON.parse(localStorage.getItem("ofertas"))
-            this.ofertasTemp = ofertas
-            let aux ="<ul>"
-            for(let i=0;i<ofertas.length;i++){
-                 aux+="<li style='font-size: smaller;font-weight: bold;'> <i style='color:#0084BF;' class='fa fa-bookmark' aria-hidden='true'></i> " + ofertas[i].titulo + " <a  onclick='eliminarOferta(" +  JSON.stringify(ofertas[i]) + ");' ><i style='color:#E84C3D' class='fa fa-minus-circle' aria-hidden='true'></i></a> </li>"
+            if("ofertas" in localStorage){
+                let ofertas =  JSON.parse(localStorage.getItem("ofertas"))
+                this.ofertasTemp = ofertas
+                let aux ="<ul>"
+                for(let i=0;i<ofertas.length;i++){
+                    aux+="<a href= "+ofertas[i].UrlOferta + " target='_blank'><li style='font-size: smaller;font-weight: bold;'> <i style='color:#0084BF;' class='fa fa-bookmark' aria-hidden='true'></i> " + ofertas[i].titulo + " <a  onclick='eliminarOferta(" +  JSON.stringify(ofertas[i]) + ");' ><i style='color:#E84C3D' class='fa fa-minus-circle' aria-hidden='true'></i></a> </li></a>"
+                }
+                aux += "</ul>"
+                document.getElementById("ListOferta").innerHTML = aux;
             }
-            aux += "</ul>"
-            document.getElementById("ListOferta").innerHTML = aux;
-
-        }
-      },
-      agregarOferta(oferta){
-        let ofertas = JSON.parse(localStorage.getItem("ofertas"))
-        let insertarItem = true
-        if("ofertas" in localStorage){
-            for(let i=0;i<ofertas.length;i++){
-                if (ofertas[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
-                    insertarItem = false
-                    break
+        },
+        agregarOferta(oferta){            
+            let ofertas = JSON.parse(localStorage.getItem("ofertas"))
+            let insertarItem = true
+            if("ofertas" in localStorage){
+                for(let i=0;i<ofertas.length;i++){
+                    if (ofertas[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
+                        insertarItem = false
+                        break
+                    }
                 }
             }
-        }
-        if (insertarItem){
-            this.ofertasTemp.push(oferta)
-            localStorage.setItem("ofertas", JSON.stringify(this.ofertasTemp));
-            this.cargarOfertasGuardadas()
-        }        
-      },
-      eliminarOferta(oferta){
-        /*
-        let ofertas = JSON.parse(localStorage.getItem("ofertas"))
-        let eliminarItem = false
-        if("ofertas" in localStorage){
-            for(let i=0;i<this.ofertas.length;i++){
-                if (ofertas[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
+            if (insertarItem){
+                let ofertaJson = {'codigo' : oferta.codigo.toString().trim(), 'UrlOferta': oferta.UrlOferta, 'titulo': oferta.titulo}
+                this.ofertasTemp.push(ofertaJson)
+                localStorage.setItem("ofertas", JSON.stringify(this.ofertasTemp));
+                this.cargarOfertasGuardadas()
+            }        
+        },
+         eliminarOferta(oferta){
+            let eliminarItem = false
+            for(let i=0;i<this.ofertasTemp.length;i++){
+                if (this.ofertasTemp[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
                     eliminarItem = true
+                    this.ofertasTemp.splice(i, 1);
                     break
                 }
             }
-        }
-        */
-        let eliminarItem = false
-        for(let i=0;i<this.ofertasTemp.length;i++){
-            if (this.ofertasTemp[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
-                eliminarItem = true
-                this.ofertasTemp.splice(i, 1);
-                break
+            if(eliminarItem){
+                localStorage.setItem("ofertas", JSON.stringify(this.ofertasTemp));
+                this.cargarOfertasGuardadas()            
             }
-        }
-        if(eliminarItem){
-            localStorage.setItem("ofertas", JSON.stringify(this.ofertasTemp));
-            this.cargarOfertasGuardadas()            
-        }
-      }
+        },
   },
   mounted () {
     this.mode = config.mode  

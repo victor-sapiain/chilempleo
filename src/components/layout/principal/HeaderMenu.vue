@@ -34,7 +34,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right float-right">
                             <li class="right">
-                                <button class="btn btn-primary btn-sm btn-principal-head">Ingresar / Registrar</button>
+                                <button class="btn btn-primary btn-sm btn-principal-head"><i class="fa fa-user" aria-hidden="true"></i>  Ingresar / Registrar</button>
                             </li>                          
                         </ul>
                     </div>

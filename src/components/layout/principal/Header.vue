@@ -34,7 +34,7 @@
                         </ul>
                         <ul v-show="mode==1" class="nav navbar-nav navbar-right float-right">
                             <li class="right">
-                                <button v-on:click="login" class="btn btn-primary btn-sm btn-principal-head">Ingresar / Registrar</button>
+                                <button v-on:click="login" class="btn btn-primary btn-sm btn-principal-head"><i class="fa fa-user" aria-hidden="true"></i>  Ingresar / Registrar</button>
                             </li>                          
                         </ul>
                     </div>
