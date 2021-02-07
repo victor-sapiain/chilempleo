@@ -77,6 +77,11 @@
 <script>
 export default {
    name: 'Oferta',
-   
+   data(){
+
+   } ,
+   mounted() {
+
+   },  
 }
 </script>

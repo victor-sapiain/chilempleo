@@ -7,10 +7,10 @@
         <div v-show="mode==1">
             <h2 class="section-title">Perfiles destacados</h2>
             <div class="row col-md-12 margin_bottom">
-                <button class="btn btn-primary btn-principal-head pull-right button-desk"><i class="fa fa-search" aria-hidden="true"></i> Ver más Perfiles <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
-                <button class="btn btn-primary btn-principal-head pull-right margin-right button-desk"><i class="fa fa-star" aria-hidden="true"></i>  Crear Perfil Destacado  <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
-                 <button class="btn btn-primary btn-principal-head pull-right button-mobile"><i class="fa fa-search" aria-hidden="true"></i> Ver Perfiles <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
-                <button class="btn btn-primary btn-principal-head pull-right margin-right button-mobile"><i class="fa fa-star" aria-hidden="true"></i>  Crear Perfil  <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                <button class="btn btn-secondary btn-principal-head pull-right button-desk"><i class="fa fa-search" aria-hidden="true"></i> Ver más Perfiles <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                <button class="btn btn-secondary btn-principal-head pull-right margin-right button-desk"><i class="fa fa-star" aria-hidden="true"></i>  Crear Perfil Destacado  <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>                
+                <button class="btn btn-secondary btn-principal-head pull-right button-mobile"><i class="fa fa-search" aria-hidden="true"></i> Ver Perfiles <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                <button class="btn btn-secondary btn-principal-head pull-right margin-right button-mobile"><i class="fa fa-star" aria-hidden="true"></i>  Crear Perfil  <div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
             </div>
         </div>
         <div class="row col-md-12" v-show="mode==1">
@@ -144,11 +144,11 @@
                 </div>
             </div>
             </VueSlickCarousel>
-
         </div>
-        <h2 class="section-title">Últimas ofertas</h2>
+        
+        <h2 class="section-title">Ofertas destacadas </h2>
         <div class="content">
-            <div v-show="mode==1">
+            <div  style="display:none;">
                 <a href="www.google.cl" class="card3" style="width: 150px;background-color: #E84C3D;color: #fff;font-weight: bolder;">
                     <div style="margin:5px;">
                         <img style="width:30px;height:auto;" src="/static/img/icon-teacher-v2.png">                        
@@ -157,17 +157,17 @@
                 </a>
             </div>
             <div v-show="mode==1" class="col-md-12 margin_bottom">                   
-                <button class="btn btn-primary btn-principal-head pull-right"><i class="fa fa-pencil" aria-hidden="true"></i> Publicar Oferta<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                <button class="btn btn-secondary btn-principal-head pull-right"><i class="fa fa-pencil" aria-hidden="true"></i> Publicar Oferta<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
             </div>                        
             <div>
             <form  action="/ofertas/" method="get">
                 <div v-if ="mode==1" class="row">
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <input  name="txtSearch" v-model = "txtSearch" class="form-control-search" type="text" placeholder="EMPLEO A BUSCAR" />
+                            <input  v-model = "txtSearch" class="form-control-search" type="text" placeholder="EMPLEO A BUSCAR" />
                         </div>
                     </div>                  
-                    <div class="col-md-5 col-sm-6">
+                    <div class="col-md-5">
                         <div class="form-group selFrom-search" >
                             <select id="selFrom" class="dropdown-product selectpicker btn-default" data-live-search="true">
                                 <option value="-1">BUSCAR EN TODO CHILE</option>
@@ -189,8 +189,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-1 col-sm-6">
+                    <div class="col-md-1 text-center">
                         <button v-on:click="buscarOferta" type="button" class="btn-sm btn-primary "><i class="fa fa-search" aria-hidden="true"></i></button>                        
+                        <!--<button type="button" class="btn-sm btn-primary "><i class="fa fa-filter" aria-hidden="true"></i> Filtros</button>                        -->
+
                     </div>
                 </div>
                 <div v-else class="row">
@@ -298,7 +300,7 @@
                     </div>                   
                     <div style="width:100%;text-align:right;">                       
                         <a class="margin-left"  v-on:click="agregarOferta(item.oferta)">
-                          <span class="link-detalle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Guardar</span> 
+                          <span class="link-detalle"><i class="fa fa-bookmark" aria-hidden="true"></i> Guardar</span> 
                         </a>
                         <a :href="item.oferta.UrlOferta" target="_blank" class="margin-left">
                           <span class="link-detalle"><i class="fa fa-arrow-right" aria-hidden="true"></i>  Ver Detalle</span> 
@@ -374,7 +376,7 @@ export default {
         ofertas : [],
         mode:-1,
         txtSearch : '',
-        NUM_RESULTS: 20, // Numero de resultados por página
+        NUM_RESULTS: 70, // Numero de resultados por página
         pag: 1, // Página inicial
         isLoading: true,
         ofertasTemp:[],
@@ -407,74 +409,73 @@ export default {
     
   },
   methods: {
-      substr(text){
-        let txtFin = text
-        let max=140
-        if (text.length>max)
-            txtFin = text.substr(0,max) + '....'
-        return (txtFin)
-      },
-      buscarOferta(event){
+        substr(text){
+            let txtFin = text
+            let max=140
+            if (text.length>max)
+                txtFin = text.substr(0,max) + '....'
+            return (txtFin)
+        },
+        buscarOferta(event){
+                this.isLoading = true
+                let f = new Date()
+                let fAux = new Date()
+                fAux.setDate(f.getDate()-3)
+                let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
+                let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())   
+                api.getSearchOffer(fechaAnt,fechaHoy,this.txtSearch) 
+                .then(response=> {                   
+                    this.ofertas = response.data
+                    this.isLoading = false
+                })
+                .catch((err) => console.log(err));  
+        },
+        buscar(event) {      
+            let ofertas_aux = []
+            let entrada = false
+            if (this.txtSearch.trim()!=''){
+                for(let i=0;i<this.ofertas.length;i++){
+                    if (this.ofertas[i].oferta.titulo.toLowerCase().indexOf(this.txtSearch)>-1){
+                        ofertas_aux.push(this.ofertas[i])
+                        entrada = true
+                    }
+                }
+                if (entrada)
+                    this.ofertas = ofertas_aux
+            }else{
+                this.cargarOfertas()
+            }
+        },
+        limpiar(){
+            this.txtSearch = ""  
+            this.cargarOfertas()
+        },
+        cargarOfertas(){
             this.isLoading = true
             let f = new Date()
             let fAux = new Date()
             fAux.setDate(f.getDate()-3)
             let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
-            let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())   
-            api.getSearchOffer(fechaAnt,fechaHoy,this.txtSearch) 
+            let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())     
+            console.log(fechaAnt)
+            console.log(fechaHoy)
+            api.getOffer(fechaHoy,fechaHoy) 
             .then(response=> {                   
                 this.ofertas = response.data
                 this.isLoading = false
             })
-            .catch((err) => console.log(err));  
-      },
-      buscar(event) {      
-        let ofertas_aux = []
-        let entrada = false
-        if (this.txtSearch.trim()!=''){
-            for(let i=0;i<this.ofertas.length;i++){
-                if (this.ofertas[i].oferta.titulo.toLowerCase().indexOf(this.txtSearch)>-1){
-                    ofertas_aux.push(this.ofertas[i])
-                    entrada = true
-                }
-            }
-            if (entrada)
-                this.ofertas = ofertas_aux
-        }else{
-            this.cargarOfertas()
-        }
-      },
-      limpiar(){
-        this.txtSearch = ""  
-        this.cargarOfertas()
-      },
-      cargarOfertas(){
-        this.isLoading = true
-        let f = new Date()
-        let fAux = new Date()
-        fAux.setDate(f.getDate()-3)
-        let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
-        let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())     
-        console.log(fechaAnt)
-        console.log(fechaHoy)
-
-        api.getOffer(fechaAnt,fechaHoy) 
-        .then(response=> {                   
-            this.ofertas = response.data
-            this.isLoading = false
-        })
-        .catch((err) => console.log(err));      
-      },
-      zeroFill( number, width )
-      {
-        width -= number.toString().length;
-        if ( width > 0 )
+            .catch((err) => console.log(err));      
+        },
+        zeroFill( number, width )
         {
-            return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
-        }
-        return number + ""; // siempre devuelve tipo cadena
-      },
-      cargarOfertasGuardadas(){
+            width -= number.toString().length;
+            if ( width > 0 )
+            {
+                return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+            }
+            return number + ""; // siempre devuelve tipo cadena
+        },
+        cargarOfertasGuardadas(){
             if("ofertas" in localStorage){
                 let ofertas =  JSON.parse(localStorage.getItem("ofertas"))
                 this.ofertasTemp = ofertas
@@ -504,7 +505,7 @@ export default {
                 this.cargarOfertasGuardadas()
             }        
         },
-         eliminarOferta(oferta){
+        eliminarOferta(oferta){
             let eliminarItem = false
             for(let i=0;i<this.ofertasTemp.length;i++){
                 if (this.ofertasTemp[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
@@ -539,15 +540,15 @@ export default {
 .slick-prev:before {
   font-family: "FontAwesome";
   content: "\f0a8";
-  color: #E84C3D;
-  font-size: 30px;
+  color: #0084BF;
+  font-size: 40px;
 }
 
 .slick-next:before {
   font-family: "FontAwesome";
   content: "\f0a9";
-  color: #E84C3D;
-  font-size: 30px;
+  color: #0084BF;
+  font-size: 40px;
 }
 a:hover {
  cursor:pointer;

@@ -12,11 +12,12 @@ import DashboardView from './components/views/Dashboard.vue'
 import PrincipalView from './components/views/PrincipalView.vue'
 import OfertaPostulacionView from './components/views/OfertaPostulacionView.vue'
 import OfertasView from './components/views/OfertasView.vue'
-
 import AccesoView from './components/views/LoginView.vue'
-
 import FueraServicio from './components/FueraServicio.vue'
-//import config from '../config'
+
+/* postulante */
+import inicioPostulante from './components/postulante/Inicio.vue'
+import inicioPostulanteView from './components/views/postulante/InicioView.vue'
 
 
 // Routes
@@ -81,6 +82,19 @@ const routes = [
         alias: '',
         component: AccesoView,
         name: 'acceso',
+        meta: {description: ''}
+      }
+    ]
+  },
+  {
+    path: '/signin/callback',
+    component: inicioPostulante,
+    children: [
+      {
+        path: ' ',
+        alias: '',
+        component: inicioPostulanteView,
+        name: 'inicio',
         meta: {description: ''}
       }
     ]

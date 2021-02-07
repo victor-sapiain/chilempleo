@@ -34,7 +34,8 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right float-right">
                             <li class="right">
-                                <button class="btn btn-primary btn-sm btn-principal-head"><i class="fa fa-user" aria-hidden="true"></i>  Ingresar / Registrar</button>
+                                <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
+                                <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i>  EMPLEADOR</button>
                             </li>                          
                         </ul>
                     </div>
@@ -123,6 +124,12 @@ export default {
    
   computed: {
    
-  }
+  },
+  methods: {
+    login(tipoUsuario){
+        this.$store.dispatch('TipoUsuario', { tipo:tipoUsuario })
+        this.$router.push({ name: "acceso" });
+    }
+  },
 }
 </script>

@@ -34,7 +34,8 @@
                         </ul>
                         <ul v-show="mode==1" class="nav navbar-nav navbar-right float-right">
                             <li class="right">
-                                <button v-on:click="login" class="btn btn-primary btn-sm btn-principal-head"><i class="fa fa-user" aria-hidden="true"></i>  Ingresar / Registrar</button>
+                                <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
+                                <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i> EMPLEADOR</button>
                             </li>                          
                         </ul>
                     </div>
@@ -108,18 +109,18 @@
                             <h2 class="headline-span-small">Encuentra tu empleo de forma rápida y sencilla.</h2>
                         </div>
                         <div v-show="mode==1" class="content search-main">
-                            <form action="/ofertas/" method="get">
+                            <form  method="get">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <i class="fa fa-search" aria-hidden="true"></i>
-                                            <input id="txtSearch" name="txtSearch" class="form-control" type="text" placeholder="EMPLEO A BUSCAR" />
+                                            <input v-model="txtSearch" class="form-control" type="text" placeholder="EMPLEO A BUSCAR" />
                                         </div>
                                     </div>
                                     <div class="col-md-5 col-sm-6">
                                         <div class="form-group">
                                             <i class="fa fa-map-marker" aria-hidden="true" style="z-index: 999;"></i>
-                                            <select id="selFrom" class="dropdown-product selectpicker" data-live-search="true">
+                                            <select v-model = "cmbUbicacion" class="dropdown-product selectpicker" data-live-search="true">
                                                 <option value="-1">BUSCAR EN TODO CHILE</option>
                                                 <option value="1">I Tarapaca</option>
                                                 <option value="2">II Antofagasta</option>
@@ -140,7 +141,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-1 col-sm-6">
-                                        <button id="btnSearch" type="submit" class="btn btn-search-icon"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        <button v-on:click="redirect" type="button" class="btn btn-search-icon"><i class="fa fa-search" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -218,6 +219,8 @@ export default {
   data(){
       return{
             mode : 0,
+            cmbUbicacion:-1,
+            txtSearch : '',
             carouselSettings:{
                 "dots": true,
                 "focusOnSelect": true,
@@ -247,10 +250,17 @@ export default {
    
   },
   methods: {
-    login(evt){
-        evt.preventDefault();
+    login(tipoUsuario){
+        this.$store.dispatch('TipoUsuario', { tipo:tipoUsuario })
         this.$router.push({ name: "acceso" });
-    }
+    },
+    redirect(){
+        //this.$router.push({ path: 'ofertas', query: {s: this.txtSearch,l:this.cmbUbicacion,f:''}})
+        let url = ''
+        window.location.href = 'ofertas?s=' + this.txtSearch + '&l=' + this.cmbUbicacion       
+
+
+     }
   }
 }
 </script>

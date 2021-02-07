@@ -10,5 +10,8 @@ export default {
   },
   SET_TOKEN (state, token) {
     state.token = token
-  }
+  },
+  SET_TIPO_USUARIO (state, tipo) {
+    state.tipoUsuario = tipo
+  },
 }
