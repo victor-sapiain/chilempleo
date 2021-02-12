@@ -376,7 +376,7 @@ export default {
         ofertas : [],
         mode:-1,
         txtSearch : '',
-        NUM_RESULTS: 70, // Numero de resultados por página
+        NUM_RESULTS: 100, // Numero de resultados por página
         pag: 1, // Página inicial
         isLoading: true,
         ofertasTemp:[],
@@ -454,15 +454,26 @@ export default {
             this.isLoading = true
             let f = new Date()
             let fAux = new Date()
+            let fAuxAyer = new Date()
             fAux.setDate(f.getDate()-3)
+            fAuxAyer.setDate(f.getDate()-1)
             let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
             let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())     
+            let fechaAyer = (this.zeroFill(fAuxAyer.getDate(),2) + "/" + this.zeroFill((fAuxAyer.getMonth()+1 ),2) + "/" + fAuxAyer.getFullYear()) 
             console.log(fechaAnt)
             console.log(fechaHoy)
             api.getOffer(fechaHoy,fechaHoy) 
             .then(response=> {                   
-                this.ofertas = response.data
-                this.isLoading = false
+                this.ofertas = response.data                                
+                if (this.ofertas.length==0){
+                    api.getOffer(fechaAyer,fechaHoy) 
+                    .then(response=> {                   
+                        this.ofertas = response.data                                
+                        this.isLoading = false
+                    })
+                }else{
+                    this.isLoading = false
+                }
             })
             .catch((err) => console.log(err));      
         },

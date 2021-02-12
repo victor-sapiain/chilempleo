@@ -20,7 +20,7 @@
                             <i style="color:#E84C3D" class="fa fa-times" aria-hidden="true" v-on:click="delFilter(1)"></i>
                             </li>                      
                             <li  v-show="filtro2">
-                            <i  class="fa fa-check" aria-hidden="true"></i> <strong>ubicación:</strong> xxxxxxx  fddf  dfdf
+                            <i  class="fa fa-check" aria-hidden="true"></i> <strong>ubicación:</strong> {{lugar}}
                             <i style="color:#E84C3D" class="fa fa-times" aria-hidden="true" v-on:click="delFilter(2)"></i>
                             </li>
                             <li  v-show="filtro3">
@@ -47,7 +47,7 @@
                     <div>
                         <label class="sbox-3-label-form label-contenido1">UBICACIÓN</label>
                         <div class="form-group selFrom-search">
-                            <select v-model="cmbUbicacion" class="dropdown-product selectpicker btn-default" data-live-search="true">
+                            <select v-model="cmbUbicacion" class="dropdown-product selectpicker btn-default" data-live-search="true" v-on:change="onChangeSite($event)">
                                 <option value="-1">BUSCAR EN TODO CHILE</option>
                                 <option value="1">I Tarapaca</option>
                                 <option value="2">II Antofagasta</option>
@@ -293,8 +293,9 @@ export default {
             filtro3:true ,
             filtro4:false ,
             filtro5:false ,
+            lugar:'',
             txtSearch : '',
-            cmbUbicacion:'-1',
+            cmbUbicacion:"-1",
             ofertas : [], 
             NUM_RESULTS: 20, // Numero de resultados por página
             pag: 1, // Página inicial
@@ -328,6 +329,7 @@ export default {
         Datepicker
     },
     mounted () {
+        
         if (this.$route.query.s === undefined){
             this.txtSearch = ""
         }else{
@@ -337,7 +339,7 @@ export default {
             this.cmbUbicacion = "-1"
         }else{
             this.cmbUbicacion = this.$route.query.l
-        }  
+        }
         window.eliminarOferta = this.eliminarOferta.bind(this);
         this.cargarFiltros()
         this.cargarOfertas()
@@ -351,6 +353,9 @@ export default {
                 txtFin = text.substr(0,max) + '....'
             return (txtFin)
         },
+        onChangeSite(e){
+            this.lugar = e.target.options[e.target.options.selectedIndex].text;
+        },
         cargarFiltros(){
             if (this.txtSearch.trim()!="")
                 this.filtro1=true
@@ -358,32 +363,50 @@ export default {
                 this.filtro2=true
         },
         delFilter(numfilter){
-            if (numfilter==1)
+            if (numfilter==1){
                 this.filtro1=false
-            else if (numfilter==2)
+                this.txtSearch = ""
+            }
+            else if (numfilter==2){
                 this.filtro2=false
+                this.lugar  = ""
+                //this.cmbUbicacion = "-1"
+                this.cmbUbicacion = this.$route.query.l
+
+            }
             else if (numfilter==3)
                 this.filtro3=false
             else if (numfilter==4)
                 this.filtro4=false
             else if (numfilter==5)
                 this.filtro5=false                                
+            this.cmbUbicacion = -1
         },
         cargarOfertas(){
             this.isLoading = true
             let f = new Date()
             let fAux = new Date()
+            let fAuxAyer = new Date()
             fAux.setDate(f.getDate()-3)
+            fAuxAyer.setDate(f.getDate()-1)
             let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
-            //let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())         
-            let fechaAnt = fechaHoy
+            let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())         
+            let fechaAyer = (this.zeroFill(fAuxAyer.getDate(),2) + "/" + this.zeroFill((fAuxAyer.getMonth()+1 ),2) + "/" + fAuxAyer.getFullYear()) 
             if (this.rdb=="1")
                 fechaAnt = fechaHoy
 
             api.getOffer(fechaAnt,fechaHoy) 
             .then(response=> {                   
                 this.ofertas = response.data
-                this.isLoading = false
+                if (this.ofertas.length==0){
+                    api.getOffer(fechaAyer,fechaHoy) 
+                    .then(response=> {                   
+                        this.ofertas = response.data                                
+                        this.isLoading = false
+                    })
+                }else{
+                    this.isLoading = false
+                }
             })
             .catch((err) => console.log(err));      
         },
@@ -394,10 +417,15 @@ export default {
             fAux.setDate(f.getDate()-3)
             let fechaHoy = this.zeroFill(f.getDate(),2) + "/" + this.zeroFill((f.getMonth() +1),2) + "/" + f.getFullYear()  
             //let  fechaAnt =  (this.zeroFill(fAux.getDate(),2) + "/" + this.zeroFill((fAux.getMonth()+1 ),2) + "/" + fAux.getFullYear())         
+            if(this.txtSearch!="")
+                this.filtro1=true
             let fechaAnt = fechaHoy
             if (this.rdb=="1")
                 fechaAnt = fechaHoy        
-                
+
+            if (this.cmbUbicacion!="-1")
+                this.filtro2=true
+            
             api.getSearchOffer(fechaAnt,fechaHoy,this.txtSearch) 
             .then(response=> {                   
                 this.ofertas = response.data
