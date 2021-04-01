@@ -58,28 +58,41 @@ var router = new VueRouter({
   }
 })
 
+
+router.beforeResolve((to, from, next) => {
+  
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    let user;
+    Vue.prototype.$Amplify.Auth.currentAuthenticatedUser()
+      .then((data) => {
+        console.log(data)
+        console.log(data.signInUserSession)
+        if (data && data.signInUserSession) {
+          user = data;
+        }
+        next();
+      })
+      .catch((e) => {
+        next({
+          path: "/acceso",
+        });
+      });
+  }
+  next();
+});
+
+/*
 router.beforeEach((to, from, next) => {
+  
   if (to.meta.mantencion) {
     next('/enmantencion')
   }    
   else {
     next()
   }    
-  /*
-    if (
-      to.matched.some(record => record.meta.requiresAuth) &&
-      (!router.app.$store.state.token || router.app.$store.state.token === 'null')
-    ) {     
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    } else {
-      next()
-    }
-  */
     
 })
+*/
 
 sync(store, router)
 

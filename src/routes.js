@@ -18,6 +18,7 @@ import FueraServicio from './components/FueraServicio.vue'
 /* postulante */
 import inicioPostulante from './components/postulante/Inicio.vue'
 import inicioPostulanteView from './components/views/postulante/InicioView.vue'
+import VueRouter from "vue-router";
 
 
 // Routes
@@ -56,7 +57,7 @@ const routes = [
         alias: '',
         component: OfertaPostulacionView,
         name: 'Oferta',
-        meta: {description: ''}
+        meta: {description: '', requiresAuth: true}
       }
     ]
   },
@@ -119,5 +120,4 @@ const routes = [
     component: NotFoundView
   }
 ]
-
 export default routes

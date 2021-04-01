@@ -3,7 +3,18 @@
     <div class="login_wrapper" style="background-image: url('/static/img/login-background.jpg');">
       <div v-show="VerLogin"  class="container">
           <div class="col-md-12 pad-0">
-              <div class="row login-box-12">                           
+              <div v-show="verify">
+                <div v-if="OpcionTipo=='Postulante'">
+                    <div class="card" style="margin:10px;">                           
+                        <h4>Escriba el código que le hemos enviado a {{TxtEmailIngreso}} . Esto es para validar su cuenta.</h4>
+                        <input type="text" v-model="TxtCodigo" class="input-text" placeholder="">
+                        <button  type="submit" v-on:click="AccesoLogin" class="btn btn-primary"><i class="fa fa-user margin-left-25" aria-hidden="true" style="color:#fff"></i> ENTRAR</button>
+
+                    </div>
+                    
+                </div>
+              </div>
+              <div v-show="login" class="row login-box-12">                           
                   <!--
                   <div class="col-md-12">
                         <div class="alert alert-success">
@@ -29,11 +40,16 @@
                                         <input type="email" v-model="TxtEmailIngreso" class="input-text" placeholder="Correo electrónico postulante">
                                     </div>
                                     <div v-else>
-                                        <input type="email" v-model="TxtEmailIngreso" class="input-text" placeholder="Correo electrónico empleador">
+                                        <input type="email" v-model="TxtEmailIngresoEmpleador" class="input-text" placeholder="Correo electrónico empleador">
                                     </div>
                               </div>
                               <div class="form-group">
-                                  <input type="password"  v-model="TxtClaveIngreso"  class="input-text" placeholder="Contraseña">
+                                    <div v-if="OpcionTipo=='Postulante'">
+                                         <input type="password"  v-model="TxtClaveIngreso"  class="input-text" placeholder="Contraseña">
+                                    </div>
+                                    <div v-else>
+                                         <input type="password"  v-model="TxtClaveIngresoEmpleador"  class="input-text" placeholder="Contraseña">
+                                    </div>     
                               </div>
                               <div class="checkbox clearfix">                                      
                                   <a href="forgot-password.html">¿ Olvidó su contraseña ?</a>
@@ -62,11 +78,16 @@
                                         <input type="email" v-model="TxtEmailRegistro" class="input-text" placeholder="Correo electrónico postulante">
                                     </div>
                                     <div v-else>
-                                        <input type="email" v-model="TxtEmailRegistro" class="input-text" placeholder="Correo electrónico empleador">
+                                        <input type="email" v-model="TxtEmailRegistroEmpleador" class="input-text" placeholder="Correo electrónico empleador">
                                     </div>
                               </div>
                               <div class="form-group">
-                                  <input type="password"  v-model="TxtClaveRegistro"  class="input-text" placeholder="Contraseña">
+                                    <div v-if="OpcionTipo=='Postulante'">
+                                        <input type="password"  v-model="TxtClaveRegistro"  class="input-text" placeholder="Contraseña">
+                                    </div>
+                                    <div v-else>
+                                        <input type="password"  v-model="TxtClaveRegistroEmpleador"  class="input-text" placeholder="Contraseña">
+                                    </div>     
                               </div> 
                               <div class="form-group">
                                     <div v-if="OpcionTipo=='Postulante'">
@@ -118,11 +139,18 @@ export default {
     },
     data () {
         return {
+            verify:true,
+            login:false,
+            TxtCodigo:'',
             TxtEmailRegistro:'',
+            TxtEmailRegistroEmpleador:'',
             TxtPostulante : '',
             TxtEmailIngreso:'',
+            TxtEmailIngresoEmpleador:'',
             TxtClaveRegistro:'',
+            TxtClaveRegistroEmpleador:'',
             TxtClaveIngreso:'',
+            TxtClaveIngresoEmpleador:'',
             TxtNombreRegistro:'',
             OpcionTipo : '',
             VerLogin : true,

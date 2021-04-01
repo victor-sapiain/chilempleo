@@ -78,7 +78,7 @@
 export default {
    name: 'Oferta',
    data(){
-
+      return{}
    } ,
    mounted() {
 

@@ -24,7 +24,7 @@
                             <i style="color:#E84C3D" class="fa fa-times" aria-hidden="true" v-on:click="delFilter(2)"></i>
                             </li>
                             <li  v-show="filtro3">
-                            <i class="fa fa-check" aria-hidden="true"></i> <strong>fecha publicación:</strong> Hoy
+                            <i class="fa fa-check" aria-hidden="true"></i> <strong>fecha publicación:</strong> Cualquiera
                             <i style="color:#E84C3D" class="fa fa-times" aria-hidden="true" v-on:click="delFilter(3)"></i>
                             </li>
                             <li  v-show="filtro4">
@@ -70,6 +70,7 @@
                     <div>
                         <label class="sbox-3-label-form label-contenido1">FECHA PUBLICACIÓN</label>
                         <ul>
+                            <li><input type="radio" name="optradio" value="-1" v-model = "rdb" />Cualquiera</li>
                             <li><input type="radio" name="optradio" value="1" v-model = "rdb" /><a href = "www.google.cl">Hoy</a></li>
                             <li><input type="radio" name="optradio" value="2" v-model = "rdb" />Ayer</li>
                             <li><input type="radio" name="optradio" value="3" v-model = "rdb"/>Hace 3 días</li>
@@ -302,7 +303,7 @@ export default {
             isLoading: true,    
             ofertasTemp:[],    
             showDate:false,
-            rdb:"1",
+            rdb:"-1",
             cmbOcupacion:"-1",
             items: [
                 {
