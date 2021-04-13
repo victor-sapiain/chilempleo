@@ -3183,8 +3183,9 @@ blockquote p a:hover {
   background-color: #fff;
   border: 1px solid #fff;
 }
- 
-.form-control {
+
+
+.form-control-new {
   background-color: #FFF;
   border: 1px solid #ddd;
   border-radius: 0px;
@@ -3195,6 +3196,7 @@ blockquote p a:hover {
   padding: 15px 10px;
   width: 100%;
 }
+
 .form-control:focus {
   box-shadow: none;
 }
@@ -3284,12 +3286,14 @@ blockquote p a:hover {
   background: #fff;
   text-transform: none;
 }
+/*
 .btn-group.open > .dropdown-toggle.btn,
 .btn-group.open > .dropdown-toggle.btn.btn-default,
 .btn-group-vertical.open > .dropdown-toggle.btn,
 .btn-group-vertical.open > .dropdown-toggle.btn.btn-default {
   background: #fff;
 }
+*/
 .btn-group.open .dropdown-toggle {
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.125);
 }

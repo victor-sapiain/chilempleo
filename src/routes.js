@@ -18,6 +18,10 @@ import FueraServicio from './components/FueraServicio.vue'
 /* postulante */
 import inicioPostulante from './components/postulante/Inicio.vue'
 import inicioPostulanteView from './components/views/postulante/InicioView.vue'
+
+import panelPostulante from './components/postulante/panel.vue'
+import panelPostulanteView from './components/views/postulante/panelView.vue'
+ 
 import VueRouter from "vue-router";
 
 
@@ -34,7 +38,7 @@ const routes = [
         name: 'Principal',
         meta: {
           description: '',
-          mantencion:false,          
+          mantencion:false,requiresAuth: false          
         }
       }
     ]
@@ -46,7 +50,8 @@ const routes = [
   },*/
   {
     path: '/enmantencion',
-    component: FueraServicio
+    component: FueraServicio,
+    meta: {description: '', requiresAuth: false}
   },
   {
     path: '/oferta/:id',
@@ -70,7 +75,7 @@ const routes = [
         alias: '',
         component: OfertasView,
         name: 'Oferta',
-        meta: {description: ''}
+        meta: {description: '', requiresAuth: false}
       }
     ]
   },
@@ -83,7 +88,7 @@ const routes = [
         alias: '',
         component: AccesoView,
         name: 'acceso',
-        meta: {description: ''}
+        meta: {description: '',requiresAuth:false}
       }
     ]
   },
@@ -96,7 +101,20 @@ const routes = [
         alias: '',
         component: inicioPostulanteView,
         name: 'inicio',
-        meta: {description: ''}
+        meta: {description: '', requiresAuth:false}
+      }
+    ]
+  },
+  {
+    path: '/panel',
+    component:panelPostulante,
+    children: [
+      {
+        path: ' ',
+        alias: '',
+        component: panelPostulanteView,
+        name: 'PanelPostulante',
+        meta: {description: '', requiresAuth: false}
       }
     ]
   },

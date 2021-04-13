@@ -18,7 +18,12 @@
                         <!-- Start Navigation List -->
                         <ul class="nav navbar-nav">
                             <li class="drop">
-                                <a  v-bind:href="'/'">Inicio</a>
+                                <a  v-bind:href="'/'"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
+                            </li>
+                            <li class="drop">
+                                <a href="#">
+                                    Buscar oferta
+                                </a>
                             </li>
                             <li class="drop">
                                 <a href="#">
@@ -33,10 +38,28 @@
    
                         </ul>
                         <ul class="nav navbar-nav navbar-right float-right">
-                            <li class="right">
-                                <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
-                                <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i>  EMPLEADOR</button>
-                            </li>                          
+                            <div v-if="!loginUser">
+                                <li class="right">
+                                    <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
+                                    <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i>  EMPLEADOR</button>
+                                </li>                  
+                            </div>        
+                            <div v-else>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-danger"><i class="fa fa-user" aria-hidden="true"></i> victor.sapiain@sma.gob.cl</button>
+                                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Mi escritorio</a></li>
+                                        <li><a href="#">Mis mensajes</a></li>
+                                        <li><a href="#">Administrar tu cuenta</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a @click="closeSession()"> Cerrar sesión</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </ul>
                     </div>
                 </div>
@@ -114,9 +137,13 @@
   
 export default {
   name: 'HeaderMenu',
-  mounted(){
-      
-
+   data(){
+      return{ 
+        loginUser:false,
+      }
+  },
+  mounted(){      
+    this.verifyLogin()
   },
   components: {
    
@@ -129,7 +156,26 @@ export default {
     login(tipoUsuario){
         this.$store.dispatch('TipoUsuario', { tipo:tipoUsuario })
         this.$router.push({ name: "acceso" });
+    },
+    verifyLogin(){
+        if (this.$store.state.user!="")
+            this.loginUser = true
+        else
+            this.loginUser = false
+    },
+    closeSession(){
+        this.loginUser = false
+        this.$store.commit('SET_USER', null)
+        this.$store.commit('SET_TOKEN', null)
+        if (window.localStorage) {
+          window.localStorage.setItem('user', null)
+          window.localStorage.setItem('token', null)
+        }
+        Auth.signOut()
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
     }
+
   },
 }
 </script>

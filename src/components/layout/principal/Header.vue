@@ -3,6 +3,7 @@
     <!-- Start intro section -->
     <section id="intro" class="section-intro">
         <div class="logo-menu">
+            
             <nav class="navbar navbar-default affix-top" role="navigation" data-spy="affix" data-offset-top="50">
                 <div class="container">
                     <div class="navbar-header">
@@ -19,7 +20,12 @@
                         <ul class="nav navbar-nav">
                             <li class="drop">
                                 <!--<router-link to="/" active-class="active">Inicio</router-link>-->
-                                <a class="active" v-bind:href="'/'">Inicio</a>
+                                <a class="active" v-bind:href="'/'"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
+                            </li>
+                            <li class="drop">
+                                <a href="#">
+                                    Buscar oferta
+                                </a>
                             </li>
                             <li v-show="mode==1" class="drop">
                                 <a href="#">
@@ -33,10 +39,28 @@
                             </li>
                         </ul>
                         <ul v-show="mode==1" class="nav navbar-nav navbar-right float-right">
-                            <li class="right">
-                                <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
-                                <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i> EMPLEADOR</button>
-                            </li>                          
+                            <div v-if="!loginUser">
+                                <li class="right">
+                                    <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
+                                    <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i> EMPLEADOR</button>
+                                </li>
+                            </div>       
+                            <div v-else>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-danger"><i class="fa fa-user" aria-hidden="true"></i> victor.sapiain@sma.gob.cl</button>
+                                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a v-bind:href="'/panel'">Mi escritorio</a></li>
+                                        <li><a href="#">Mis mensajes</a></li>
+                                        <li><a href="#">Administrar tu cuenta</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a @click="closeSession()"> Cerrar sesión</a></li>
+                                    </ul>
+                                </div>
+                            </div>                   
                         </ul>
                     </div>
                 </div>
@@ -114,7 +138,7 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-group">
                                             <i class="fa fa-search" aria-hidden="true"></i>
-                                            <input v-model="txtSearch" class="form-control" type="text" placeholder="EMPLEO A BUSCAR" />
+                                            <input v-model="txtSearch" class="form-control form-control-new" type="text" placeholder="EMPLEO A BUSCAR" />
                                         </div>
                                     </div>
                                     <div class="col-md-5 col-sm-6">
@@ -212,6 +236,7 @@ import config from '../../../../src/config'
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import Auth from '@aws-amplify/auth';
 
 export default {
   name: 'PrincipalHeader',
@@ -219,6 +244,7 @@ export default {
   data(){
       return{
             mode : 0,
+            loginUser:false,
             cmbUbicacion:-1,
             txtSearch : '',
             carouselSettings:{
@@ -235,6 +261,7 @@ export default {
       }
   },
   mounted(){
+        this.verifyLogin()
         this.mode = config.mode
         $(document).ready(function () {
             //if (config.mode==1)
@@ -250,6 +277,12 @@ export default {
    
   },
   methods: {
+    verifyLogin(){          
+        if (this.$store.state.user!="")
+            this.loginUser = true
+        else
+            this.loginUser = false
+    },
     login(tipoUsuario){
         this.$store.dispatch('TipoUsuario', { tipo:tipoUsuario })
         this.$router.push({ name: "acceso" });
@@ -258,9 +291,19 @@ export default {
         //this.$router.push({ path: 'ofertas', query: {s: this.txtSearch,l:this.cmbUbicacion,f:''}})
         let url = ''
         window.location.href = 'ofertas?s=' + this.txtSearch + '&l=' + this.cmbUbicacion       
-
-
-     }
+    },
+    closeSession(){
+        this.loginUser = false
+        this.$store.commit('SET_USER', null)
+        this.$store.commit('SET_TOKEN', null)
+        if (window.localStorage) {
+          window.localStorage.setItem('user', null)
+          window.localStorage.setItem('token', null)
+        }
+        Auth.signOut()
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+    }
   }
 }
 </script>

@@ -2,19 +2,30 @@
 <div class="margen row">      
     <div class="login_wrapper" style="background-image: url('/static/img/login-background.jpg');">
       <div v-show="VerLogin"  class="container">
-          <div class="col-md-12 pad-0">
-              <div v-show="verify">
-                <div v-if="OpcionTipo=='Postulante'">
-                    <div class="card" style="margin:10px;">                           
-                        <h4>Escriba el código que le hemos enviado a {{TxtEmailIngreso}} . Esto es para validar su cuenta.</h4>
-                        <input type="text" v-model="TxtCodigo" class="input-text" placeholder="">
-                        <button  type="submit" v-on:click="AccesoLogin" class="btn btn-primary"><i class="fa fa-user margin-left-25" aria-hidden="true" style="color:#fff"></i> ENTRAR</button>
-
+          <div>              
+              <div v-show="verify">  
+                <div class="row" style="margin-top:-125px;">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="card-flat">
+                            <div class="container-card">
+                                <!--<p v-show="TxtEmailRegistro!=''" style="font-size:16px;">Escriba el código que le hemos enviado a {{TxtEmail}} . Esto es para validar su cuenta.</p>-->
+                                <h3><i class="fa fa-user" aria-hidden="true"></i> Verificación de cuenta de acceso</h3>          
+                                <hr>                    
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="txtEmail"  placeholder="Correo electrónico">
+                                </div>
+                                <p style="font-size:16px;">Escriba el código de verificación que le hemos enviado a su correo eletrónico</p>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="txtCodigo"  placeholder="Código de verificación">
+                                </div>
+                                <hr>
+                                <button v-on:click="ValidarCodigo" class="btn btn-primary">Ingresar Código</button>
+                            </div>    
+                        </div>
                     </div>
-                    
                 </div>
               </div>
-              <div v-show="login" class="row login-box-12">                           
+              <div v-show="login" class="row login-box-12">                                                 
                   <!--
                   <div class="col-md-12">
                         <div class="alert alert-success">
@@ -25,7 +36,7 @@
 						</div>
                   </div>
                   -->
-                  <div class="col-md-6">
+                  <div class="col-md-6" style="border-right-style: solid;border-right-width: 1px;border-right-color: #ccc;">
                       <div class="login-inner-form">
                           <div class="details">
                               <div v-if="OpcionTipo=='Postulante'">
@@ -139,9 +150,10 @@ export default {
     },
     data () {
         return {
-            verify:true,
-            login:false,
-            TxtCodigo:'',
+            verify:false,
+            login:true,
+            txtCodigo:'',
+            txtEmail:'',
             TxtEmailRegistro:'',
             TxtEmailRegistroEmpleador:'',
             TxtPostulante : '',
@@ -154,6 +166,7 @@ export default {
             TxtNombreRegistro:'',
             OpcionTipo : '',
             VerLogin : true,
+            usrAws : null,
             SwitchOptions:{
                  layout: {
                     color: '#fff',
@@ -198,10 +211,16 @@ export default {
             { name: 'keywords', content: 'chile empleos, empleos, trabajo, profesor, profesores,'},
             { name: 'description', content: 'Chilempleo. Cientos de Empleos. Empleos todo Chile.', id: 'desc' }]
     },
-    mounted() {       
-        this.SeleccionarOpcion(this.$store.state.tipoUsuario)
-       
-
+    mounted() {             
+        let urlParams = new URLSearchParams(window.location.search)
+        if (urlParams.has('type')){
+            if (urlParams.get('type')=='verify'){
+                this.verify=true
+                this.login=false  
+            }
+        }
+        
+        this.SeleccionarOpcion(this.$store.state.tipoUsuario)       
         /*
         this.$swal({
             title: "ddsd", 
@@ -267,8 +286,49 @@ export default {
                 this.OpcionTipo = "Postulante"
         },
         async AccesoLogin(){
-            const user = await Auth.signIn(this.TxtEmailIngreso, this.TxtClaveIngreso);
-            console.log(user)
+            try {
+                const user = await Auth.signIn(this.TxtEmailIngreso, this.TxtClaveIngreso);
+                if (!user.attributes['email_verified']){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Usuario no autorizado',
+                        text: 'Cuenta de usuario no autorizada.',
+                        confirmButtonText: "Aceptar", 
+                    });
+                }else{
+                    this.$store.commit('SET_USER', this.TxtEmailIngreso)
+                    this.$router.push('/panel') 
+
+                    //if(localStorage.hasOwnProperty('route')){
+
+                        //window.location.href = localStorage.getItem('route');
+                    //}
+                    //this.$store.state.user('')
+
+                    /*
+                    if (this.OpcionTipo == "Postulante"){
+                        alert(postulante)
+                    }
+                    */
+                }
+            } catch (error) {
+                console.log('error signing up:', error);
+                if (error.code=="NotAuthorizedException" || error.code=="UserNotFoundException"){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Usuario no autorizado',
+                        text: 'Usuario o clave de acceso incorrecta.',
+                        confirmButtonText: "Aceptar", 
+                    });
+                }else{
+                     this.$swal({
+                        icon: 'error',
+                        title: 'Error no controlado',
+                        text: error,
+                        confirmButtonText: "Aceptar", 
+                    });
+                }
+            }
         },
         async AccesoGoogle(){
             const user = Auth.federatedSignIn({ provider: 'Google' })
@@ -277,25 +337,49 @@ export default {
         },
         async CrearCuenta(){
              try {
-                console.log('entrada') 
-                const { user } = await Auth.signUp({username:this.TxtEmailRegistro,password:this.TxtClaveRegistro});                  
-                  
-                console.log(user);
+                this.verify=true
+                this.login=false  
+
+                this.usrAws = await Auth.signUp({username:this.TxtEmailRegistro,password:this.TxtClaveRegistro});                                  
+                this.txtEmail = this.TxtEmailRegistro
+                //this.$router.push({ name: 'acceso?type=verify' })
+                //console.log(this.usrAws.user['username']);
             } catch (error) {
                 console.log('error signing up:', error);
             }        
+        },
+        async confirmarCuenta(username,code){
+            try {
+                await Auth.confirmSignUp(username, code);
+                this.$swal({
+                        icon: 'success',
+                        title: 'Confirmación',
+                        text: 'Cuenta de usuario verificada correctamente',
+                        confirmButtonText: "Aceptar", 
+                    });
+                this.$router.push({ name: "callback" });
+
+                //console.log(respuesta);
+            } catch (error) {
+                console.log('error confirming sign up', error);              
+            }
+        },        
+        ValidarCodigo(){
+            //this.confirmarCuenta(this.usrAws.user['username'],this.TxtCodigo)
+            this.confirmarCuenta(this.txtEmail,this.txtCodigo)
         },
         signOut() {
             Auth.signOut()
                 .then(data => console.log(data))
                 .catch(err => console.log(err))
-        }
+        },
+        
     },
 
 }
 </script>
 
-<style>
+<style scoped>
 .margen{
   margin-top:0px;
 }
@@ -316,9 +400,6 @@ export default {
   border-width: 1px;
   border-color: darkgray;
 }
-
-
-
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap');
 

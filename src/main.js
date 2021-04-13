@@ -60,15 +60,16 @@ var router = new VueRouter({
 
 
 router.beforeResolve((to, from, next) => {
-  
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    let user;
     Vue.prototype.$Amplify.Auth.currentAuthenticatedUser()
       .then((data) => {
-        console.log(data)
-        console.log(data.signInUserSession)
-        if (data && data.signInUserSession) {
-          user = data;
+        if (data && data.signInUserSession && data.attributes['email_verified']) {
+          user = data;          
+          localStorage.setItem('user', data.attributes['email'])
+          localStorage.setItem('token', data.signInUserSession['accessToken'])
+        }else{
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
         }
         next();
       })
@@ -77,8 +78,40 @@ router.beforeResolve((to, from, next) => {
           path: "/acceso",
         });
       });
+  }else{
+    Vue.prototype.$Amplify.Auth.currentAuthenticatedUser()
+    .then((data) => {      
+        if(data.attributes['email_verified']){
+          let expireTimeSeconds = data.signInUserSession['accessToken']['payload']['exp']      
+          let currentTimeSeconds = Math.round(+new Date() / 1000)
+          //console.log(expireTimeSeconds)
+          //console.log(currentTimeSeconds)
+          if (expireTimeSeconds>currentTimeSeconds){
+            localStorage.setItem('user', data.attributes['email'])
+            localStorage.setItem('token', JSON.stringify(data.signInUserSession['accessToken']))
+          }else{
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            Vue.prototype.$Amplify.Auth.signOut()
+            .then(data => console.log(data))
+            .catch(err => console.log(err))            
+          }
+        }else{         
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          Vue.prototype.$Amplify.Auth.signOut()
+          .then(data => console.log(data))
+          .catch(err => console.log(err))
+        }
+    })
+    .catch((e) => {
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      next();
+    });
+    next();
   }
-  next();
+  
 });
 
 /*
@@ -99,12 +132,18 @@ sync(store, router)
 // Check local storage to handle refreshes
 if (window.localStorage) {
   var localUserString = window.localStorage.getItem('user') || 'null'
-  var localUser = JSON.parse(localUserString)
-
-  if (localUser && store.state.user !== localUser) {
-    store.commit('SET_USER', localUser)
+  //var localUser = JSON.parse(localUserString)
+  //var localUser = localUserString
+  if (localUserString!='null') {
+    store.commit('SET_USER', localUserString)
     store.commit('SET_TOKEN', window.localStorage.getItem('token'))
+  }else{
+    store.commit('SET_USER', "")
+    store.commit('SET_TOKEN', "")
   }
+}else{
+    store.commit('SET_USER', "")
+    store.commit('SET_TOKEN', "")
 }
 new Vue({
   el: '#root',

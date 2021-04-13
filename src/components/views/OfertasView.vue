@@ -330,7 +330,7 @@ export default {
         Datepicker
     },
     mounted () {
-        
+        this.currentPage()
         if (this.$route.query.s === undefined){
             this.txtSearch = ""
         }else{
@@ -488,6 +488,9 @@ export default {
                 this.cargarOfertasGuardadas()            
             }
         },      
+        currentPage(){
+            localStorage.setItem('route',"ofertas")
+        },
     },   
 }
 </script>
@@ -500,7 +503,9 @@ export default {
   font-size: 22px;
   line-height: 22px;
 }
+/*
 .form-control{
     padding: 0px;
 }
+*/
 </style>

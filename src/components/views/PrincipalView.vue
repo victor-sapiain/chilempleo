@@ -530,10 +530,14 @@ export default {
                 this.cargarOfertasGuardadas()            
             }
         },
+        currentPage(){
+            localStorage.setItem('route',"/")
+        },
   },
-  mounted () {
+  mounted () {      
     this.mode = config.mode  
     window.eliminarOferta = this.eliminarOferta.bind(this);
+    this.currentPage()
     this.cargarOfertas()
     this.cargarOfertasGuardadas()
   }
@@ -563,5 +567,15 @@ export default {
 }
 a:hover {
  cursor:pointer;
+}
+.dropdown-menu .divider {
+    background-color: transparent;
+}
+.navbar-default.affix .float-right li a {
+    color:#333333 !important;
+    border: none;
+}
+.dropdown-menu > li > a {
+    margin-bottom: 0px;
 }
 </style>
