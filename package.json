@@ -29,6 +29,7 @@
     "vue-head": "^2.2.0",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.2.0",
+    "vue-sidebar-menu": "^4.7.4",
     "vue-slick-carousel": "^1.0.6",
     "vue-spinners": "^1.0.2",
     "vue-sweetalert2": "^3.0.8",

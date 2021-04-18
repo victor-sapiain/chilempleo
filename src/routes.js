@@ -114,11 +114,11 @@ const routes = [
         alias: '',
         component: panelPostulanteView,
         name: 'PanelPostulante',
-        meta: {description: '', requiresAuth: false}
+        meta: {description: '', requiresAuth: true}
       }
     ]
   },
-  /*
+  /*  
   {
     path: '/dashboard',
     component: DashView,

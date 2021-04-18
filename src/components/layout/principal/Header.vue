@@ -303,6 +303,8 @@ export default {
         Auth.signOut()
             .then(data => console.log(data))
             .catch(err => console.log(err))
+        window.location.href = "/";
+
     }
   }
 }

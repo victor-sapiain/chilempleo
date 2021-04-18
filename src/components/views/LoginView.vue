@@ -2,7 +2,10 @@
 <div class="margen row">      
     <div class="login_wrapper" style="background-image: url('/static/img/login-background.jpg');">
       <div v-show="VerLogin"  class="container">
-          <div>              
+          <div v-if="isLoading">
+            <square></square>
+          </div>   
+          <div v-else>              
               <div v-show="verify">  
                 <div class="row" style="margin-top:-125px;">
                     <div class="col-md-8 col-md-offset-2">
@@ -150,6 +153,7 @@ export default {
     },
     data () {
         return {
+            isLoading:false,
             verify:false,
             login:true,
             txtCodigo:'',
@@ -287,6 +291,7 @@ export default {
         },
         async AccesoLogin(){
             try {
+                this.isLoading=true
                 const user = await Auth.signIn(this.TxtEmailIngreso, this.TxtClaveIngreso);
                 if (!user.attributes['email_verified']){
                     this.$swal({
@@ -299,11 +304,6 @@ export default {
                     this.$store.commit('SET_USER', this.TxtEmailIngreso)
                     this.$router.push('/panel') 
 
-                    //if(localStorage.hasOwnProperty('route')){
-
-                        //window.location.href = localStorage.getItem('route');
-                    //}
-                    //this.$store.state.user('')
 
                     /*
                     if (this.OpcionTipo == "Postulante"){
@@ -311,8 +311,8 @@ export default {
                     }
                     */
                 }
+                this.isLoading=false
             } catch (error) {
-                console.log('error signing up:', error);
                 if (error.code=="NotAuthorizedException" || error.code=="UserNotFoundException"){
                     this.$swal({
                         icon: 'error',
@@ -328,6 +328,7 @@ export default {
                         confirmButtonText: "Aceptar", 
                     });
                 }
+                this.isLoading=false
             }
         },
         async AccesoGoogle(){

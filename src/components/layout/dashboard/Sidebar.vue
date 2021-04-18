@@ -28,7 +28,6 @@ export default {
   props: ['user'],
   components: { SidebarMenu },
   mounted: function() {
-  
   }
 }
 </script>
