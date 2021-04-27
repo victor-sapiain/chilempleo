@@ -21,7 +21,8 @@ import inicioPostulanteView from './components/views/postulante/InicioView.vue'
 
 import panelPostulante from './components/postulante/panel.vue'
 import panelPostulanteView from './components/views/postulante/panelView.vue'
- 
+import panelEmpleador from './components/empleador/panel.vue'
+import panelEmpleadorView from './components/views/empleador/panelView.vue' 
 import VueRouter from "vue-router";
 
 
@@ -114,25 +115,24 @@ const routes = [
         alias: '',
         component: panelPostulanteView,
         name: 'PanelPostulante',
-        meta: {description: '', requiresAuth: true}
+        meta: {description: '', requiresAuth: true,postulante:true,empleador:false}
       }
     ]
   },
-  /*  
   {
-    path: '/dashboard',
-    component: DashView,
+    path: '/empleador/panel',
+    component:panelEmpleador,
     children: [
       {
-        path: 'dashboard',
+        path: ' ',
         alias: '',
-        component: DashboardView,
-        name: 'Panel de Control',
-        meta: {description: ''}
+        component: panelEmpleadorView,
+        name: 'PanelEmpleador',
+        meta: {description: '', requiresAuth: true,postulante:false,empleador:true}
       }
     ]
-  }*/
-  , {
+  },
+  {
     // not found handler
     path: '*',
     component: NotFoundView

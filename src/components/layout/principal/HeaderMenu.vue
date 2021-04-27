@@ -45,8 +45,22 @@
                                 </li>                  
                             </div>        
                             <div v-else>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-danger"><i class="fa fa-user" aria-hidden="true"></i> victor.sapiain@sma.gob.cl</button>
+                                <div v-if="loginPostulante" class="btn-group">
+                                    <button type="button" class="btn btn-danger"><i class="fa fa-user" aria-hidden="true"></i> {{user}}</button>
+                                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Mi escritorio</a></li>
+                                        <li><a href="#">Mis mensajes</a></li>
+                                        <li><a href="#">Administrar tu cuenta</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a @click="closeSession()"> Cerrar sesión</a></li>
+                                    </ul>
+                                </div>
+                                <div v-else-if="loginEmpleador" class="btn-group">
+                                    <button type="button" class="btn btn-danger"><i class="fa fa-user" aria-hidden="true"></i> {{user}}</button>
                                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="caret"></span>
                                         <span class="sr-only">Toggle Dropdown</span>
@@ -130,16 +144,16 @@
     </section>
 </div>   
 </template>
-
- 
-
 <script>
 import Auth from '@aws-amplify/auth';
 export default {
   name: 'HeaderMenu',
    data(){
       return{ 
+        user:window.localStorage.getItem('user'),
         loginUser:false,
+        loginPostulante:false,
+        loginEmpleador:false,
       }
   },
   mounted(){      
@@ -158,10 +172,16 @@ export default {
         this.$router.push({ name: "acceso" });
     },
     verifyLogin(){
-        if (this.$store.state.user!="")
+        if (this.$store.state.user!=""){
             this.loginUser = true
-        else
+            if (localStorage.getItem('perfil')=='postulante')
+                this.loginPostulante=true
+            else if(localStorage.getItem('perfil')=='empleador')
+                this.loginEmpleador=true            
+        }
+        else{
             this.loginUser = false
+        }
     },
     closeSession(){
         this.loginUser = false

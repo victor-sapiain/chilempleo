@@ -1,6 +1,6 @@
 <template>
 <div class="margen row">      
-    <div class="login_wrapper" style="background-image: url('/static/img/login-background.jpg');">
+    <div class="login_wrapper" :style="{ backgroundImage: `url(${background})` }"   >
       <div v-show="VerLogin"  class="container">
           <div v-if="isLoading">
             <square></square>
@@ -28,6 +28,40 @@
                     </div>
                 </div>
               </div>
+              <!--
+              <div v-show="forgotPass">  
+                <div class="row" style="margin-top:-125px;">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="card-flat">
+                            <div class="container-card">
+                                <h3><i class="fa fa-user" aria-hidden="true"></i> Recuperar contraseña de acceso</h3>          
+                                <hr>                    
+                                <div class="form-group">
+                                    <input type="text" class="form-control" v-model="txtEmailForgot"  placeholder="Correo electrónico">
+                                </div>                  
+                                <button v-on:click="ValidarCodigo" class="btn btn-primary">Recuperar contraseña</button>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+              </div>-->
+              <div class="row" style="max-width: 750px; margin: 0 auto">
+                <div  v-if="OpcionTipo=='Postulante'" class="alert alert-info">
+                    <h5><span><img style="width:80px;" src = "/static/img/che.png"/> </span>
+                    <span><strong style="font-size:20px;margin-left:10px;vertical-align:bottom;">ACCESO POSTULANTE</strong></span></h5>
+                    <i class="fa fa-check" aria-hidden="true"></i> Postulación de Ofertas Laborales               
+                    <i class="fa fa-check" aria-hidden="true"></i> Subir CV 
+                    <i class="fa fa-check" aria-hidden="true"></i> Subir video presentación 
+                     <i class="fa fa-check" aria-hidden="true"></i> Acceso a entrevistas online
+                </div>  
+                <div v-else  class="alert alert-info">
+                    <h5><span><img style="width:80px;" src = "/static/img/che.png"/> </span>
+                    <span><strong style="font-size:20px;margin-left:10px;vertical-align:bottom;">ACCESO EMPLEADOR</strong></span></h5>
+                    <i class="fa fa-check" aria-hidden="true"></i> Publicación de Ofertas Laborales               
+                    <i class="fa fa-check" aria-hidden="true"></i> Acceso a CV 
+                     <i class="fa fa-check" aria-hidden="true"></i> Entrevista online
+                </div>
+              </div>  
               <div v-show="login" class="row login-box-12">                                                 
                   <!--
                   <div class="col-md-12">
@@ -51,10 +85,10 @@
                               <div style="min-height:200px;">            
                               <div class="form-group">
                                     <div v-if="OpcionTipo=='Postulante'">
-                                        <input type="email" v-model="TxtEmailIngreso" class="input-text" placeholder="Correo electrónico postulante">
+                                        <input type="email" v-model="TxtEmailIngreso" class="input-text" placeholder="Correo electrónico">
                                     </div>
                                     <div v-else>
-                                        <input type="email" v-model="TxtEmailIngresoEmpleador" class="input-text" placeholder="Correo electrónico empleador">
+                                        <input type="email" v-model="TxtEmailIngresoEmpleador" class="input-text" placeholder="Correo electrónico">
                                     </div>
                               </div>
                               <div class="form-group">
@@ -66,12 +100,12 @@
                                     </div>     
                               </div>
                               <div class="checkbox clearfix">                                      
-                                  <a href="forgot-password.html">¿ Olvidó su contraseña ?</a>
+                                  <a @click="olvidoContrasena()">¿ Olvidó su contraseña ?</a>
                               </div>
                               </div>
                               <div class="form-group row">
                                     <div class="col-md-12 margin_bottom">
-                                        <button  type="submit" v-on:click="AccesoLogin" class="btn btn-block btn-lg btn-primary"><i class="fa fa-user margin-left-25" aria-hidden="true" style="color:#fff"></i> ENTRAR</button>
+                                        <button  type="submit" v-on:click="Login" class="btn btn-block btn-lg btn-primary"><i class="fa fa-user margin-left-25" aria-hidden="true" style="color:#fff"></i> ENTRAR</button>
                                     </div>                                                                                    
                               </div>
                           </div>
@@ -83,16 +117,16 @@
                               <div v-if="OpcionTipo=='Postulante'">
                                 <h3> <span>Crear cuenta postulante</span></h3>                                                       
                               </div>
-                              <div v-else>
+                              <div v-else>                                  
                                 <h3> <span>Crear cuenta empleador</span></h3>                                                       
                               </div>
                               <div style="min-height:200px;"> 
                               <div class="form-group">
                                     <div v-if="OpcionTipo=='Postulante'">
-                                        <input type="email" v-model="TxtEmailRegistro" class="input-text" placeholder="Correo electrónico postulante">
+                                        <input type="email" v-model="TxtEmailRegistro" class="input-text" placeholder="Correo electrónico">
                                     </div>
                                     <div v-else>
-                                        <input type="email" v-model="TxtEmailRegistroEmpleador" class="input-text" placeholder="Correo electrónico empleador">
+                                        <input type="email" v-model="TxtEmailRegistroEmpleador" class="input-text" placeholder="Correo electrónico">
                                     </div>
                               </div>
                               <div class="form-group">
@@ -108,12 +142,17 @@
                                         <input type="text"  v-model="TxtNombreRegistro"  class="input-text" placeholder="Nombre">
                                     </div>
                                     <div v-else>
-                                        <input type="text"  v-model="TxtNombreRegistro"  class="input-text" placeholder="Nombre o Razón social">
+                                        <input type="text"  v-model="TxtNombreRegistroEmpleador"  class="input-text" placeholder="Nombre o Nombre fantasía">
                                     </div>    
                               </div>                              
                               </div>
                               <div class="form-group">
-                                  <button type="submit" v-on:click="CrearCuenta" class="btn btn-block btn-lg btn-secondary"><i class="fa fa-pencil margin-left" aria-hidden="true" style="color:#fff"></i> CREAR CUENTA</button>
+                                    <div v-if="OpcionTipo=='Postulante'">
+                                        <button type="submit" v-on:click="CrearCuenta" class="btn btn-block btn-lg btn-secondary"><i class="fa fa-pencil margin-left" aria-hidden="true" style="color:#fff"></i> CREAR CUENTA</button>
+                                    </div>
+                                    <div v-else>
+                                        <button type="submit" v-on:click="CrearCuentaEmpleador" class="btn btn-block btn-lg btn-secondary"><i class="fa fa-pencil margin-left" aria-hidden="true" style="color:#fff"></i> CREAR CUENTA</button>
+                                    </div>    
                               </div>
                           </div>
                     </div>                  
@@ -144,6 +183,9 @@
 </template>
 <script>
 import Auth from '@aws-amplify/auth';
+import {CognitoUserAttribute} from 'amazon-cognito-identity-js'
+//import * as AWS from 'aws-sdk';
+
 export default {
     name: 'LoginView',
     watch:{
@@ -154,6 +196,8 @@ export default {
     data () {
         return {
             isLoading:false,
+            forgotPass:false,
+            txtEmailForgot:'',
             verify:false,
             login:true,
             txtCodigo:'',
@@ -168,6 +212,7 @@ export default {
             TxtClaveIngreso:'',
             TxtClaveIngresoEmpleador:'',
             TxtNombreRegistro:'',
+            TxtNombreRegistroEmpleador:'',
             OpcionTipo : '',
             VerLogin : true,
             usrAws : null,
@@ -271,6 +316,11 @@ export default {
         })
         */
     },
+    computed: {
+        background () {
+            return this.OpcionTipo == 'Postulante' ? '/static/img/login-background.jpg' : '/static/img/login-empl.jpg'
+        }
+    },
     methods: {
         limpiarFormPostulante(){
             this.TxtEmailIngreso=""
@@ -289,27 +339,28 @@ export default {
             else if(tipoUsuario==1)
                 this.OpcionTipo = "Postulante"
         },
-        async AccesoLogin(){
+        async Login(){
+            if (this.OpcionTipo == "Postulante")
+                this.AccesoLogin(this.TxtEmailIngreso, this.TxtClaveIngreso)
+            else
+                this.AccesoLoginEmpleador(this.TxtEmailIngresoEmpleador, this.TxtClaveIngresoEmpleador)
+        },
+        async AccesoLoginEmpleador(emailIngreso, claveIngreso){
             try {
                 this.isLoading=true
-                const user = await Auth.signIn(this.TxtEmailIngreso, this.TxtClaveIngreso);
-                if (!user.attributes['email_verified']){
+                const user = await Auth.signIn(emailIngreso, claveIngreso);              
+                if (user.attributes['custom:perfil'] != 'empleador' || !user.attributes['email_verified']){
                     this.$swal({
                         icon: 'error',
                         title: 'Usuario no autorizado',
                         text: 'Cuenta de usuario no autorizada.',
                         confirmButtonText: "Aceptar", 
                     });
-                }else{
-                    this.$store.commit('SET_USER', this.TxtEmailIngreso)
-                    this.$router.push('/panel') 
-
-
-                    /*
-                    if (this.OpcionTipo == "Postulante"){
-                        alert(postulante)
-                    }
-                    */
+                }else{ 
+                    this.$store.commit('SET_USER', this.TxtEmailIngresoEmpleador)
+                    localStorage.setItem('user', this.TxtEmailIngresoEmpleador)
+                    localStorage.setItem('perfil',user.attributes['custom:perfil'])
+                    this.$router.push('/empleador/panel') 
                 }
                 this.isLoading=false
             } catch (error) {
@@ -323,7 +374,44 @@ export default {
                 }else{
                      this.$swal({
                         icon: 'error',
-                        title: 'Error no controlado',
+                        title: 'Error',
+                        text: error,
+                        confirmButtonText: "Aceptar", 
+                    });
+                }
+                this.isLoading=false
+            }
+        },
+        async AccesoLogin(emailIngreso, claveIngreso){
+            try {
+                this.isLoading=true
+                const user = await Auth.signIn(emailIngreso, claveIngreso);              
+                if (user.attributes['custom:perfil'] != 'postulante' || !user.attributes['email_verified']){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Usuario no autorizado',
+                        text: 'Cuenta de usuario no autorizada.',
+                        confirmButtonText: "Aceptar", 
+                    });
+                }else{ 
+                    this.$store.commit('SET_USER', this.TxtEmailIngreso)
+                    localStorage.setItem('user', this.TxtEmailIngreso)
+                    localStorage.setItem('perfil',user.attributes['custom:perfil'])
+                    this.$router.push('/panel') 
+                }
+                this.isLoading=false
+            } catch (error) {
+                if (error.code=="NotAuthorizedException" || error.code=="UserNotFoundException"){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Usuario no autorizado',
+                        text: 'Usuario o clave de acceso incorrecta.',
+                        confirmButtonText: "Aceptar", 
+                    });
+                }else{
+                     this.$swal({
+                        icon: 'error',
+                        title: 'Error',
                         text: error,
                         confirmButtonText: "Aceptar", 
                     });
@@ -336,18 +424,79 @@ export default {
             console.log(user)
 
         },
+        async CrearCuentaEmpleador(){
+            try{
+                this.verify=true
+                this.login=false  
+                this.usrAws = await Auth.signUp({
+                    username:this.TxtEmailRegistroEmpleador,password:this.TxtClaveRegistroEmpleador,
+                    attributes: {
+                        'custom:perfil': 'empleador'
+                    }
+                })
+                let user = this.usrAws.user.username
+                this.txtEmail = user
+            }catch(error){
+                console.log('error signing up:', error);
+            }
+        },
         async CrearCuenta(){
              try {
                 this.verify=true
                 this.login=false  
-
-                this.usrAws = await Auth.signUp({username:this.TxtEmailRegistro,password:this.TxtClaveRegistro});                                  
-                this.txtEmail = this.TxtEmailRegistro
+                this.usrAws = await Auth.signUp({
+                    username:this.TxtEmailRegistro,password:this.TxtClaveRegistro,
+                    attributes: {
+                        'custom:perfil': 'postulante'
+                    }
+                })
+                let user = this.usrAws.user.username
+                this.txtEmail = user
+            
+                /*
+                let userPool = this.usrAws.user.pool.userPoolId
+                let user = this.usrAws.user.username
+                this.txtEmail = user
+               
+                try{
+                    const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider()
+                    const addUserParams = {
+                        GroupName: "postulante",
+                        UserPoolId: userPool,
+                        Username: user,
+                    };
+                    await cognitoidentityserviceprovider.adminAddUserToGroup(addUserParams)
+                
+                }catch(error){
+                    console.log('error', error);
+                }
+                */
                 //this.$router.push({ name: 'acceso?type=verify' })
-                //console.log(this.usrAws.user['username']);
             } catch (error) {
                 console.log('error signing up:', error);
             }        
+        },
+        async confirmarCuentaEmpleador(username,code){
+             try {
+                await Auth.confirmSignUp(username, code);
+                this.$swal({
+                        icon: 'success',
+                        title: 'Confirmación',
+                        text: 'Cuenta de usuario empleadror verificada correctamente. A continuación vuelva a ingresar su clave y correo electrónico.',
+                        confirmButtonText: "Aceptar", 
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.verify=false
+                            this.login=true  
+                            this.TxtEmailRegistroEmpleador = ""
+                            this.TxtClaveRegistroEmpleador = ""
+                            this.TxtNombreRegistroEmpleador = ""
+                            this.SeleccionarOpcion(2)
+                        } 
+                    })
+            } catch (error) {
+                console.log('error confirming sign up', error);              
+            }
         },
         async confirmarCuenta(username,code){
             try {
@@ -355,10 +504,26 @@ export default {
                 this.$swal({
                         icon: 'success',
                         title: 'Confirmación',
-                        text: 'Cuenta de usuario verificada correctamente',
+                        text: 'Cuenta de usuario postulante verificada correctamente. A continuación vuelva a ingresar su clave y correo electrónico.',
                         confirmButtonText: "Aceptar", 
-                    });
-                this.$router.push({ name: "callback" });
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.verify=false
+                            this.login=true 
+                            this.TxtEmailIngreso=""
+                            this.TxtClaveIngreso=""
+                            this.txtCodigo=""
+                            this.txtEmail=""
+                            this.TxtEmailRegistro = ""
+                            this.TxtClaveRegistro = ""
+                            this.TxtNombreRegistro = ""
+                            this.SeleccionarOpcion(1)
+                            //this.$router.push('/panel') 
+                        } 
+                    })
+                
+
+                //this.$router.push({ name: "callback" });
 
                 //console.log(respuesta);
             } catch (error) {
@@ -366,13 +531,71 @@ export default {
             }
         },        
         ValidarCodigo(){
-            //this.confirmarCuenta(this.usrAws.user['username'],this.TxtCodigo)
-            this.confirmarCuenta(this.txtEmail,this.txtCodigo)
+            if (this.OpcionTipo == "Postulante")
+                this.confirmarCuenta(this.txtEmail,this.txtCodigo)
+            else
+                this.confirmarCuentaEmpleador(this.txtEmail,this.txtCodigo)
+
         },
+        enviarNuevoCodigoClave(userName){
+            try{
+                Auth.forgotPassword(username)
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
+            }catch(error){
+            }   
+        },
+        confirmarNuevoCodigoClave(userName,code,newPass){
+            try{
+                Auth.forgotPasswordSubmit(userName, code, newPass)
+                .then(data => console.log(data))
+                .catch(err => console.log(err));    
+            }catch(error){
+            }   
+        },  
         signOut() {
             Auth.signOut()
                 .then(data => console.log(data))
                 .catch(err => console.log(err))
+        },
+        olvidoContrasena(){
+            //this.txtEmailForgot=""
+            //this.forgotPass = true
+            this.$swal.fire({
+                title: 'Recuperar contraseña de acceso',
+                text: "Ingresar correo electrónico",
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                width: '400px',
+                showCancelButton: true,
+                confirmButtonText: 'Recuperar contraseña',
+                cancelButtonText: 'Cancelar',
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                    return fetch(`//api.github.com/users/${login}`)
+                    .then(response => {
+                        if (!response.ok) {
+                        throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .catch(error => {
+                        Swal.showValidationMessage(
+                        `Request failed: ${error}`
+                        )
+                    })
+                },
+                allowOutsideClick: () => !this.$wal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.$swal.fire({
+                        title: `${result.value.login}'s avatar`,
+                        imageUrl: result.value.avatar_url
+                        })
+                    }
+                })
         },
         
     },

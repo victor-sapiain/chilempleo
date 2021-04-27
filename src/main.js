@@ -62,26 +62,50 @@ var router = new VueRouter({
 router.beforeResolve((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     Vue.prototype.$Amplify.Auth.currentAuthenticatedUser()
-      .then((data) => {
+      .then((data) => {    
+        if (data.attributes['custom:perfil']!=''){
+          let perfil  = "" 
+          if (to.matched.some((record) => record.meta.postulante))
+            perfil = 'postulante'
+          else
+            perfil = 'empleador'
+          if (data.attributes['custom:perfil']!=perfil){      
+            next({
+              path: "/",
+            });
+          }
+        }
         if (data && data.signInUserSession && data.attributes['email_verified']) {
-          localStorage.setItem('user', data.attributes['email'])
-          localStorage.setItem('token', data.signInUserSession['accessToken'])
+          let expireTimeSeconds = (data.signInUserSession['accessToken']['payload']['auth_time']) +((600)*6)*4      
+          let currentTimeSeconds = Math.round(+new Date() / 1000)
+          if (expireTimeSeconds>currentTimeSeconds){
+            localStorage.setItem('user', data.attributes['email'])
+            localStorage.setItem('token', JSON.stringify(data.signInUserSession['accessToken']))
+          }else{
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            Vue.prototype.$Amplify.Auth.signOut()
+            .then(data => console.log(data))
+            .catch(err => console.log(err))            
+          }
         }else{
           localStorage.removeItem('user');
           localStorage.removeItem('token');
+          Vue.prototype.$Amplify.Auth.signOut()
+          .then(data => console.log(data))
+          .catch(err => console.log(err))
         }
         next();
       })
       .catch((e) => {
         next({
-          path: "/acceso",
+          path: "/",
         });
       });
   }else{
+    console.log('111')
     Vue.prototype.$Amplify.Auth.currentAuthenticatedUser()
-    .then((data) => {    
-        console.log('entrada')
-        console.log(data)
+    .then((data) => {  
         if(data.attributes['email_verified']){
           //expira en 4 hrs
           let expireTimeSeconds = (data.signInUserSession['accessToken']['payload']['auth_time']) +((600)*6)*4      
@@ -107,8 +131,9 @@ router.beforeResolve((to, from, next) => {
         }
     })
     .catch((e) => {
-      //localStorage.removeItem('user');
-      //localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      Vue.prototype.$Amplify.Auth.signOut()
       next();
     });
     next();

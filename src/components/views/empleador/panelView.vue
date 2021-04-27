@@ -39,7 +39,7 @@ const hr = {
     template: '<hr style="border-color:#4F4F4F;">'
 }
 export default {
-    name: 'PanelPostulanteView',
+    name: 'PanelEmpleadorView',
     components: {
         SidebarMenu,
     },
@@ -67,50 +67,57 @@ export default {
                     icon: 'fa fa-info'
                 },
                 {
-                    title: 'Postulación',
+                    title: 'Mis ofertas laborales',
                     icon: 'fa fa-th-list',
                     child: [
                         {
                             href: '/charts/sublink',
-                            title: 'Ir a postulación'
+                            title: 'Publicar oferta'
                         },
                         {
                             href: '/charts/sublink',
-                            title: 'Mis postulaciones'
-                        },
-                        {
-                            href: '/charts/sublink',
-                            title: 'Mis entrevistas'
+                            title: 'Mis ofertas publicadas'
                         }
                     ]
                 },  
                 {
-                    href: '/',
-                    title: 'Mi CV',
-                    icon: 'fa fa-file-o'
+                    title: 'CV y otros medios',
+                    icon: 'fa fa-th-list',
+                    child: [
+                        {
+                            href: '/charts/sublink',
+                            title: 'Buscar CV'
+                        },
+                        {
+                            href: '/charts/sublink',
+                            title: 'Video presentaciones'
+                        }
+                    ]
                 },  
-              
+                {
+                    title: 'Entrevistas',
+                    icon: 'fa fa-th-list',
+                    child: [
+                        {
+                            href: '/charts/sublink',
+                            title: 'Realizar entrevista online'
+                        },
+                        {
+                            href: '/charts/sublink',
+                            title: 'Buscar entrevistas'
+                        }
+                    ]
+                },    
                 {
                     href: '/',
-                    title: 'Destacar mi perfil',
+                    title: 'Buscar perfil',
                     icon: 'fa fa-star-o'
-                },                                  
-                {
-                    href: '/',
-                    title: 'Configuración',
-                    icon: 'fa fa-cog'
-                },        
+                },                                       
                 {
                     header: true,
                     title: 'Mi cuenta',
                     hiddenOnCollapse: true
-                },
-                /*
-                {
-                    href: '/props',
-                    title: 'Información general',
-                    icon: 'fa fa-user'
-                },*/
+                }, 
                 {
                     href: '/events',
                     title: 'Cambiar clave',
