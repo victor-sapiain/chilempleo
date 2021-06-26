@@ -21,8 +21,15 @@ import inicioPostulanteView from './components/views/postulante/InicioView.vue'
 
 import panelPostulante from './components/postulante/panel.vue'
 import panelPostulanteView from './components/views/postulante/panelView.vue'
-import panelEmpleador from './components/empleador/panel.vue'
+import menuEmpleador from './components/empleador/menu.vue'
 import panelEmpleadorView from './components/views/empleador/panelView.vue' 
+import infoEmpleadorView from './components/views/empleador/informacionView.vue' 
+
+ 
+import OfertaIngreso from './components/oferta/Ingreso.vue'
+import OfertaIngresoView from './components/views/IngresoOfertaView.vue'
+
+
 import VueRouter from "vue-router";
 
 
@@ -63,7 +70,7 @@ const routes = [
         alias: '',
         component: OfertaPostulacionView,
         name: 'Oferta',
-        meta: {description: '', requiresAuth: true}
+        meta: {description: '', requiresAuth: false}
       }
     ]
   },
@@ -121,7 +128,7 @@ const routes = [
   },
   {
     path: '/empleador/panel',
-    component:panelEmpleador,
+    component:menuEmpleador,
     children: [
       {
         path: ' ',
@@ -132,6 +139,46 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/empleador/info',
+    component:menuEmpleador,
+    children: [
+      {
+        path: ' ',
+        alias: '',
+        component: infoEmpleadorView,
+        name: 'PanelEmpleador',
+        meta: {description: '', requiresAuth: true,postulante:false,empleador:true}
+      }
+    ]
+  },
+  {
+    path: '/ofertas/publicacion',
+    component:menuEmpleador,
+    children: [
+      {
+        path: ' ',
+        alias: '',
+        component: OfertaIngresoView,
+        name: 'PanelEmpleador',
+        meta: {description: '', requiresAuth: false,postulante:false,empleador:false}
+      }
+    ]
+  },
+  /*
+  {
+    path: '/ofertas/publicacion',
+    component:OfertaIngreso,
+    children: [
+      {
+        path: ' ',
+        alias: '',
+        component: OfertaIngresoView,
+        name: 'PanelEmpleador',
+        meta: {description: '', requiresAuth: false,postulante:false,empleador:false}
+      }
+    ]
+  },*/
   {
     // not found handler
     path: '*',

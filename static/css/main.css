@@ -251,7 +251,7 @@ a:focus {
   border-color: #ccc;
   color: #ff4f57;
   border-radius: 3px;
-  background: #fff;
+  background: aliceblue;
   padding: 8px;
   z-index: 1;
 }
@@ -1053,10 +1053,10 @@ label {
    ========================================================================== */
 
 .find-job {
-  background: #f5f8fa;
+  background: #FCFDFF;
 }
 .find-job .tabs-container {
-  background: #F0F3FA;
+  background: #FCFDFF;
   padding: 15px;
   border: 1px solid #ddd;
 }

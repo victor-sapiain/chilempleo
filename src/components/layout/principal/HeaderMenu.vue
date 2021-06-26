@@ -26,7 +26,7 @@
                                 </a>
                             </li>
                             <li class="drop">
-                                <a href="#">
+                                <a v-bind:href="'/ofertas/publicacion'">
                                     Publicar oferta
                                 </a>
                             </li>

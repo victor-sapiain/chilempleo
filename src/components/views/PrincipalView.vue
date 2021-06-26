@@ -157,7 +157,7 @@
                 </a>
             </div>
             <div v-show="mode==1" class="col-md-12 margin_bottom">                   
-                <button class="btn btn-secondary btn-principal-head pull-right"><i class="fa fa-pencil" aria-hidden="true"></i> Publicar Oferta<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
+                <button   @click="publicar()" class="btn btn-secondary btn-principal-head pull-right"><i class="fa fa-pencil" aria-hidden="true"></i> Publicar Oferta<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 75.7188px; top: -1px; background-color: rgb(255, 255, 255); transform: scale(3.34034);"></div></div></button>
             </div>                        
             <div>
             <form  action="/ofertas/" method="get">
@@ -532,6 +532,9 @@ export default {
         },
         currentPage(){
             localStorage.setItem('route',"/")
+        },
+        publicar(){
+            this.$router.push('/ofertas/publicacion')
         },
   },
   mounted () {      
