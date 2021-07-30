@@ -137,6 +137,12 @@
   color:#777;
   font-weight: 500;
 }
+.label-destacado2 {
+  font-family: Sans-serif,arial,sans-serif !important;
+  font-size: 15px;
+  color:#777;
+  font-weight: 600;
+}
 .label-contenido1{
   font-family: Sans-serif,arial,sans-serif !important;
   font-size: 14px;
@@ -227,6 +233,17 @@
   border: 1px solid #dbdbdb;
   border-radius: .2857142857rem;
 }
+.card4 {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: #cce5ff;
+  border: 1px solid #b8daff;
+  border-width:3px;
+  color:#004085;
+ }
 .card-flat {
     margin: 3px;
     border: none;

@@ -3426,3 +3426,22 @@ blockquote p a:hover {
 	background: #7b7b7b;
 }
 /*fin radio css*/
+
+.Hr-Titulo{
+  color: #FF4B3A !important;
+  margin-top: 4px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.btn-info {
+  color: #fff;
+  background-color: #aaa !important;
+  border-color: #aaa !important;
+}
+
+.alert-info {
+  color: #31708f !important;
+  background-color: #d9edf7 !important;
+  border-color: #31708f !important;
+}

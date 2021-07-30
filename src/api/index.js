@@ -15,4 +15,11 @@ export default {
       headers:{'content-type': 'application/json','x-api-key': config.keyApiSearchOffer}
     })
   },
+  getPlanUsers (UUID) {
+    return axios({
+      url: config.serverURIPlanUsers + '/v1/planes?UUID=' + UUID,
+      method: 'get',
+      headers:{'content-type': 'application/json','x-api-key': config.keyApiPlanUsers}
+    })
+  },
 }

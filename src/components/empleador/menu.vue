@@ -1,10 +1,10 @@
 <template lang="">
     <div>
-        <principal-header></principal-header> 
+        <principal-header ref="headerMenu"></principal-header> 
         <div v-if="loginUser" class="row">    
             <section>
                 <div v-if="!collapsed" >
-                    <div class="find-job col-md-3">
+                    <div class="find-job col-md-2">
                         <div id="sidebar-container" >
                                 <sidebar-menu
                                     :menu="menu"
@@ -16,7 +16,7 @@
                                 />
                         </div>
                     </div>
-                    <div class="find-job col-md-9">
+                    <div class="find-job col-md-10">
                         <router-view></router-view>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ const logoImg = {
             src: '/static/img/card.png',
         }
     },
-    template: '<img style="width:80px;margin-left:5px;margin-top:10px;margin-bottom:10px;" :src="src">'
+    template: '<img style="width:80px;margin-left:25%;margin-top:10px;margin-bottom:10px;" :src="src">'
 }
 const userText = {
     data() {
@@ -103,11 +103,11 @@ export default {
                 {
                     href: '/',
                     title: 'Resumen',
-                    icon: 'fa fa-info'
+                    icon: 'fa fa-pie-chart'
                 },
                 {
                     href: '/',
-                    title: 'Información Empleador',
+                    title: 'Mi Información',
                     icon: 'fa fa-info'
                 },
                 {
@@ -126,7 +126,7 @@ export default {
                 },  
                 {
                     title: 'CV y otros medios',
-                    icon: 'fa fa-th-list',
+                    icon: 'fa fa-file',
                     child: [
                         {
                             href: '/charts/sublink',
@@ -140,7 +140,7 @@ export default {
                 },  
                 {
                     title: 'Entrevistas',
-                    icon: 'fa fa-th-list',
+                    icon: 'fa fa-video-camera',
                     child: [
                         {
                             href: '/charts/sublink',
@@ -151,17 +151,17 @@ export default {
                             title: 'Buscar entrevistas'
                         }
                     ]
-                },    
-                {
-                    href: '/',
-                    title: 'Buscar perfil',
-                    icon: 'fa fa-star-o'
-                },                                       
+                },                                         
                 {
                     header: true,
                     title: 'Mi cuenta',
                     hiddenOnCollapse: true
                 }, 
+                {
+                    href: '/events',
+                    title: 'Mejorar plan',
+                    icon: 'fa fa-coffee'
+                },
                 {
                     href: '/events',
                     title: 'Cambiar clave',
@@ -170,7 +170,7 @@ export default {
                 {
                     href: '/events',
                     title: 'Darme de baja',
-                    icon: 'fa fa-minus-square'
+                    icon: 'fa fa-trash'
                 },
                 {
                     href: '/',
@@ -196,18 +196,14 @@ export default {
     mounted () {
         this.onResize()
         window.addEventListener('resize', this.onResize)
-        if (this.$store.state.user!="" && window.localStorage.getItem('user')!="")
-            this.loginUser = true
-        else
-            this.loginUser = false 
+        this.verifyLogin()
     },
      methods: {
         onToggleCollapse (collapsed) {
-            console.log(collapsed)
             this.collapsed = collapsed
         },
          onItemClick (event, item, node) {
-            console.log('onItemClick')
+            //console.log('onItemClick')
             // console.log(event)
             // console.log(item)
             // console.log(node)
@@ -220,6 +216,13 @@ export default {
                 this.isOnMobile = false
                 this.collapsed = false
             }
+        },
+        verifyLogin(){
+            if (this.$store.state.user!="" && window.localStorage.getItem('user')!="")
+                this.loginUser = true
+            else
+                this.loginUser = false 
+            this.$refs.headerMenu.verifyLogin()
         }
     }
 }
@@ -245,7 +248,7 @@ pre {
   overflow: auto;
 }   
 .v-sidebar-menu {
-    background-color: #2a2a2e imp !important; 
+    background-color: #2a2a2e  !important; 
 	height:100% !important;
     position:relative  !important;
 }
@@ -256,4 +259,10 @@ pre {
 .v-sidebar-menu .vsm--arrow:after {
     font-family: 'FontAwesome' !important;
 }    
+.v-sidebar-menu .vsm--link_level-1 .vsm--icon {
+    background-color: #4F4F4F !important;
+}
+.v-sidebar-menu .vsm--link {
+    font-size: 15px !important;
+}
 </style>

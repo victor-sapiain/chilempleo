@@ -42,7 +42,10 @@
                                 <li class="right">
                                     <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
                                     <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i>  EMPLEADOR</button>
-                                </li>                  
+                                </li>   
+                                <li style="margin-left:50px;">
+                                    Inicia sesión o crea una cuenta
+                                </li>               
                             </div>        
                             <div v-else>
                                 <div v-if="loginPostulante" class="btn-group">
@@ -177,7 +180,9 @@ export default {
             if (localStorage.getItem('perfil')=='postulante')
                 this.loginPostulante=true
             else if(localStorage.getItem('perfil')=='empleador')
-                this.loginEmpleador=true            
+                this.loginEmpleador=true
+            this.user = window.localStorage.getItem('user')
+            
         }
         else{
             this.loginUser = false

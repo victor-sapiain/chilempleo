@@ -31,12 +31,15 @@ import { domain, count, prettyDate, pluralize } from './filters'
 // Import Views - Top level
 import AppView from './components/App.vue'
 
+import Vuelidate from 'vuelidate'
+
 
 Vue.use(VueHead)
 Vue.use(VueSpinners)
 Vue.use(ToggleSwitch)
 Vue.use(VueSweetalert2);
 Vue.use(BackToTop)
+Vue.use(Vuelidate)
 
 Vue.component(VueSlickCarousel.name, VueSlickCarousel)
 
@@ -123,6 +126,8 @@ router.beforeResolve((to, from, next) => {
           //console.log(currentTimeSeconds)
           if (expireTimeSeconds>currentTimeSeconds){
             console.log(8881)
+            console.log(data.signInUserSession['accessToken'])
+
             localStorage.setItem('user', data.attributes['email'])
             localStorage.setItem('token', JSON.stringify(data.signInUserSession['accessToken']))
           }else{
@@ -155,20 +160,6 @@ router.beforeResolve((to, from, next) => {
   }
   
 });
-
-/*
-router.beforeEach((to, from, next) => {
-  
-  if (to.meta.mantencion) {
-    next('/enmantencion')
-  }    
-  else {
-    next()
-  }    
-    
-})
-*/
-
 sync(store, router)
 
 // Check local storage to handle refreshes

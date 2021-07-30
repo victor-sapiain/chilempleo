@@ -8,11 +8,11 @@
                 <li class="breadcrumb-item active" aria-current="page">Ofertas</li>
             </ol>
         </nav>
-        <div class="col-md-12 row"> <label class="titulo4">Ofertas de trabajo en Chile</label></div>
+        
         <div class="col-md-3 row">
             <div class="card-flat">
                 <div class="container-card">
-                    <h4><i style="color:#ff4f57" class="fa fa-filter" aria-hidden="true"></i> FILTROS APLICADOS</h4>                    
+                    <h4>FILTROS APLICADOS</h4>                    
                     <div v-show="filtro1 || filtro2 || filtro3 || filtro4 || filtro5" class="alert alert-info" role="alert">
                         <ul>
                             <li v-show="filtro1">
@@ -132,7 +132,14 @@
                 <square></square>
              </div>    
              <div v-else>
+             <div class="col-md-12">
+                    <label class="titulo4">
+                        <i style="color:#FF4B3A" class="fa fa-tag" aria-hidden="true"></i> Ofertas de trabajo en Chile
+                    </label>
+                    <hr class="Hr-Titulo">
+             </div>       
              <div class="col-md-6">
+                
                 <div class="form-group" style="text-align:left;">
                     <label for="exampleFormControlSelect1">Ordenar por</label>
                      <div class="form-group">

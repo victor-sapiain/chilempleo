@@ -4,10 +4,23 @@
         <nav aria-label="breadcrumb" v-show="!loginUser">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Ofertas</li>
+                <li class="breadcrumb-item active" aria-current="page">Publicar oferta</li>
             </ol>
         </nav>
-        <div class="col-md-12 row"><label class="titulo4">Publicar oferta de trabajo</label></div>  
+        <div class="col-md-12 row" style="margin-bottom:15px;" v-show="loginUser" >
+            <div class="card4" >
+                <div class="container-card">  
+                    <h5 style="margin-bottom:10px;color:mediumseagreen;">PLAN ACTUAL : <span>{{tipoPlan.toUpperCase()}}</span>.<span style="color:#004085;font-weight: 500;"> Disponible {{publicacionesPlan}} publicaciones de trabajo. Última actualización {{UltimaFechaRenovacion}} </span></h5>  
+                    <button v-on:click="planes()" data-toggle="modal" data-target="#modalPlanes"  class="btn btn-primary btn-sm  col-md-3" ><i class="fa fa-search" aria-hidden="true"></i> Ver planes disponibles</button>
+                </div> 
+            </div>
+        </div>
+        <div class="col-md-12 row">
+            <label class="titulo4">
+                <i style="color:#FF4B3A" class="fa fa-tag" aria-hidden="true"></i> Publicar oferta de trabajo
+            </label>
+            <hr class="Hr-Titulo">
+        </div>  
         <div v-show="!loginUser" class="col-md-3 row">
             <div class="card-flat">
                  <div class="container-card">
@@ -16,10 +29,10 @@
                             <h3> <span>Ingreso empleador</span></h3>   
                              <div style="min-height:200px;">            
                               <div class="form-group">
-                                    <input type="email" v-model="TxtEmailIngresoEmpleador" class="input-text" placeholder="Correo electrónico">
+                                    <input ref="refEmail" type="email" v-model="TxtEmailIngresoEmpleador" v-on:keyup.enter="onEnterEmailClick"  class="input-text" placeholder="Correo electrónico">
                               </div>
                               <div class="form-group">
-                                    <input type="password"  v-model="TxtClaveIngresoEmpleador"  class="input-text" placeholder="Contraseña">
+                                    <input ref="refPassword"  type="password"  v-model="TxtClaveIngresoEmpleador"   v-on:keyup.enter="onEnterPassClick"  class="input-text" placeholder="Contraseña">
                               </div>
                               <div class="checkbox clearfix">                                      
                                   <a @click="olvidoContrasena()">¿ Olvidó su contraseña ?</a>
@@ -39,101 +52,318 @@
                 </div> 
             </div>  
         </div>
-        <div v-bind:class="ajusteColumna">
+        <div v-if="isLoading">
+            <square></square>
+        </div>   
+        <div v-else v-bind:class="ajusteColumna">
+            <form @submit.prevent="handleSubmit">
             <div class="card-flat">
                 <div class="container-card">
+                    <div class="col-md-12">
+                        <div v-show = "!loginUser" class="alert alert-info">
+                            <h4> <img style="width:35px;" src="../../../static/img/login.png" /> Para publicar una oferta de trabajo debe de iniciar sesión en "Ingreso empleador" </h4>
+                        </div>
+                    </div>
                     <h3 class="titulo6"> <span>Datos oferta</span></h3>   
                     <div>
                         <div class="col-md-6">
                             <div class="col-md-12">
-                                <label class="label-destacado">Puesto / Título</label>
+                                <label class="label-destacado2">Puesto / Título(*)</label>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control"    placeholder="Titulo">
+                                    <input type="text"  v-model="txtTitulo" id="txtTitulo" class="form-control"  :class="{ 'is-invalid': submitted && $v.txtTitulo.$error }">
+                                    <div v-if="submitted && !$v.txtTitulo.required" ><span class="badge badge-danger"> Campo requerido</span></div>
                                 </div>    
                             </div>        
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-12">
-                                <label class="label-destacado">Clasificación</label>
+                                <label class="label-destacado2">Clasificación(*)</label>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control"    placeholder="Titulo">
-                                </div>    
+                                <div class="form-group  selFrom-search">
+                                    <select class="dropdown-product selectpicker" data-live-search="true" v-model="cmbClasificacion">
+                                        <option selected value=-1> SELECCIONAR</option>                                
+                                        <option value=1> Arte/Diseño</option>
+                                        <option value=2>Economía</option>
+                                        <option value=3>Informática</option>                 
+                                        <option value=4>Telecomunicaciones</option>                 
+                                        <option value=5>Educación y Psicopedagogía</option>                 
+                                        <option value=6>Contabilidad</option>     
+                                        <option value=7>Estética</option>                 
+                                        <option value=8>Hotelería Turismo y Gastronomía</option>                 
+                                        <option value=9>Logística</option>                 
+                                        <option value=10>Marketing y Publicidad</option>                 
+                                        <option value=11>Salud</option>                 
+                                        <option value=12 >Operarios</option>                 
+                                        <option value=13>Profesionales y Técnicos</option>                 
+                                        <option value=14>Prácticas profesionales</option>                 
+                                        <option value=15>Recepción / Secretaria</option>                 
+                                        <option value=16>Recursos Humanos</option>                 
+                                        <option value=17>Seguridad</option>                 
+                                        <option value=18>Servicios Domésticos</option>                 
+                                        <option value=19>Trabajos Universitarios</option>                 
+                                        <option value=20>Ventas</option>                 
+                                        <option value=21>Comercial</option>                 
+                                        <option value=22>Otros</option>                                     
+                                    </select>
+                                    <div v-if="submitted && !$v.cmbClasificacion.between" ><span class="badge badge-danger"> Debe de seleccionar una opción</span></div>
+                                 </div>    
                             </div>        
                         </div>
                         <div  class="col-md-12">
                             <div class="col-md-12">
-                                <label class="label-destacado">Descripción</label>
+                                <label class="label-destacado2">Descripción(*)</label>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <textarea name="textarea" class="form-control"  rows="8" cols="50"></textarea>
-
+                                    <textarea v-model = "txtDescripcion" name="textarea" class="form-control"  rows="8" cols="50" placeholder ="Descripción de la Oferta, Beneficios "></textarea>
+                                    <div v-if="submitted && !$v.txtDescripcion.required" ><span class="badge badge-danger"> Campo requerido</span></div>
                                 </div>    
                             </div>      
                         </div>
-                         <h3 class="titulo6"> <span>Ubicación</span></h3>   
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="label-destacado2">Duración contrato</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <select class="form-control input-sm" v-model="cmbDuracionContrato">
+                                        <option selected value="-1"> NO ES RELEVANTE</option>                                
+                                        <option value="1">Plazo fijo</option>
+                                        <option value="2">Indefinido</option>
+                                        <option value="3">Por obra o faena</option>          
+                                        <option value="3">Part time</option>          
+                                        <option value="4">Práctica profesional</option>     
+                                        <option value="4">Otro</option>                 
+            
+                                    </select>
+                                 </div> 
+                            </div>        
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="label-destacado2">Tipo</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <select class="form-control input-sm" v-model="cmbDuracionContrato">
+                                        <option selected value="-1"> NO ES RELEVANTE</option>                                
+                                        <option value="1">Tiempo completo</option>
+                                        <option value="2">Part time </option>
+                                        <option value="3">Tiempo completo + Part time</option>          
+                                    </select>
+                                 </div> 
+                            </div>        
+                        </div>
+                         <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="label-destacado2">Jornada</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <select class="form-control input-sm" v-model="cmbTipoContrato">
+                                        <option selected value="-1"> NO ES RELEVANTE</option>                                
+                                        <option value="1">Presencial</option>
+                                        <option value="2">Trabajo remoto</option>
+                                        <option value="3">Presencial + Trabajo remoto</option>          
+                                    </select>
+                                 </div> 
+                            </div>        
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="label-destacado2">Sueldo</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder = "--">
+                                </div>    
+                            </div>        
+                        </div>
+                        <h3 class="titulo6 col-md-12 row"> <span>Ubicación</span></h3>   
                         <div class="col-md-12">
                             <div class="col-md-12">
-                                <label class="label-destacado">Dirección</label>
+                                <label class="label-destacado2">Dirección(*)</label>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control"    placeholder="Titulo">
+                                    <input v-model="txtDireccion" type="text" class="form-control">
+                                    <div v-if="submitted && !$v.txtDireccion.required" ><span class="badge badge-danger"> Campo requerido</span></div>
                                 </div>    
                             </div>        
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-12">
-                                <label  class="label-destacado">Ubicación</label>
+                                <label  class="label-destacado2">Ubicación(*)</label>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control"    placeholder="Titulo">
+                                <div class="form-group selFrom-search">
+                                    <select v-model = "cmbUbicacion" class="dropdown-product selectpicker" data-live-search="true">
+                                        <option value="-1">SELECCIONAR</option>
+                                        <option value="1">I Tarapaca</option>
+                                        <option value="2">II Antofagasta</option>
+                                        <option value="3">III Atacama</option>
+                                        <option value="4">IV coquimbo</option>
+                                        <option value="5">V Valparaíso</option>
+                                        <option value="6">VI O'Higgins</option>
+                                        <option value="7">VII Maule</option>
+                                        <option value="8">VIII Bio Bio</option>
+                                        <option value="9">IX La Auraucanía</option>
+                                        <option value="10">X Los Lagos</option>
+                                        <option value="11">XI Aysén</option>
+                                        <option value="12">XII Magallanes y Antárt.</option>
+                                        <option value="13">XIII Metropolitana Santiago</option>
+                                        <option value="14">XIV Los Ríos</option>
+                                        <option value="15">XV Arica y Parinacota </option>
+                                    </select>
+                                    <div v-if="submitted && !$v.cmbUbicacion.between" ><span class="badge badge-danger"> Debe de seleccionar una opción</span></div>
                                 </div>    
                             </div>        
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-12">
-                                <label  class="label-destacado">Comuna</label>
+                                <label  class="label-destacado2">Comuna(*)</label>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control"    placeholder="Titulo">
+                                    <input type="text" class="form-control"  >
                                 </div>    
                             </div>        
                         </div>
                     </div>
-                    <h3 class="titulo6"> <span>Requisitos</span></h3>   
-                        <ul>
-                            <li><input type="radio" name="optradio" value="-1" v-model = "rdb" />Cualquiera</li>
-                            <li><input type="radio" name="optradio" value="1" v-model = "rdb" /><a href = "www.google.cl">Hoy</a></li>
-                            <li><input type="radio" name="optradio" value="2" v-model = "rdb" />Ayer</li>
-                            <li><input type="radio" name="optradio" value="3" v-model = "rdb"/>Hace 3 días</li>
-                            <li><input type="radio" name="optradio" value="4" v-model = "rdb"/>Hace una semana</li>
-                            <li><input type="radio" name="optradio" value="5" v-model = "rdb"/>Otra fecha</li>                            
-                            <li v-show="rdb==5"><datepicker></datepicker></li>
-                            <li v-show="rdb==5"><datepicker></datepicker></li>
-                        </ul>
+                    <h3 class="titulo6"> <span>Otra información</span></h3>   
+                    <div>
+                      
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="label-destacado2">Educación mínima</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <select class="form-control input-sm" v-model="cmbEducacion">
+                                        <option selected value="-1"> NO ES RELEVANTE</option>                                
+                                        <option value="1">Educación media</option>
+                                        <option value="2">Educación técnica</option>
+                                        <option value="3">Educación universitaria</option>  
+                                        <option value="3">Educación técnica o universitaria</option>          
+                                        <option value="4">Magister</option>          
+                                        <option value="4">Doctorado</option>          
+                                    </select>                                
+                                </div>    
+                            </div>        
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="label-destacado2">Años de experiencia</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <select class="form-control input-sm" v-model="cmbExperiencia">
+                                        <option selected value="-1"> SIN AÑOS DE EXPERIENCIA</option>                                
+                                        <option value="1">Menos de 1 año</option>
+                                        <option value="2">2 años</option>
+                                        <option value="3">3 años</option>          
+                                        <option value="4">Más de 4 años</option>          
+                                    </select>                                      
+                                </div>    
+                            </div>        
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="label-destacado2">Disponibilidad viaje</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <select class="form-control input-sm" v-model="cmbViaje">
+                                        <option value="1">No</option>
+                                        <option value="2">Si</option>
+                                    </select>                                      
+                                </div>    
+                            </div>        
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-12" v-show="loginUser">
+                        <label v-bind:class="ajusteColumnaBoton" >(*) Ingreso obligatorio</label>
+                        <button  v-on:click="publicar()" class="btn-sm btn-primary col-md-3"><i class="fa fa-briefcase" aria-hidden="true"></i>  Publicar trabajo</button>
+                        <button  class="btn-sm btn-info col-md-3 " style="margin-left: 10px;"><i class="fa fa-eye" aria-hidden="true"></i>  Ver antes de publicar</button>
+                    </div>
+                     <br>
                 </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- modales -->
+    <div class="modal fade"  id="modalPlanes" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Planes Disponibles</h3>
+             </div>
+            <div class="modal-body">
+                 <planes-disponibles></planes-disponibles> 
+             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+            </div>
             </div>
         </div>
     </div>
-
-    
 </section>
-
 </template>
 <script>
+import Auth from '@aws-amplify/auth';
+import {CognitoUserAttribute} from 'amazon-cognito-identity-js'
+import { required, email, minLength, sameAs,between  } from "vuelidate/lib/validators";
+import PlanesDisponibles from '../../components/layout/planes/planes'
+import api from '../../api'
 export default {
+    components: {
+        PlanesDisponibles,
+    }, 
     data() {
         return {
+            plan:'',
+            tipoPlan:'',
+            publicacionesPlan:0,
+            UltimaFechaRenovacion:'',
+            submitted: false,
+            txtTitulo:'',
+            txtDescripcion:'',
+            txtDireccion:'',
+            cmbViaje:'1',
+            cmbIdioma:'-1',
+            cmbEducacion:'-1',
+            cmbExperiencia:'-1',
+            cmbClasificacion:-1,
+            cmbDuracionContrato:'-1',
+            cmbTipoContrato:'-1',
+            cmbUbicacion:'-1',
             loginUser:false,
             TxtEmailIngresoEmpleador:'',
             TxtClaveIngresoEmpleador:'',
+            isLoading:false,
+        }
+    },
+    validations: {
+        txtTitulo: {
+            required        
+        },
+        txtDescripcion:{
+            required
+        },
+        txtDireccion:{
+            required
+        },
+        cmbClasificacion:{
+            between: between(1, 22)
+        },
+        cmbUbicacion:{
+            between: between(1, 15)
         }
     },
     mounted () {
@@ -141,10 +371,102 @@ export default {
             this.loginUser = true
         else
             this.loginUser = false
+        $('.selectpicker').selectpicker('refresh');
+        let token = localStorage.getItem('token')
+        if(token !== null) {
+              api.getPlanUsers(JSON.parse(token)['payload']['sub']) 
+            .then(response=> {                   
+                this.plan = response.data[0]    
+                this.tipoPlan  =  this.plan['plan']['nombre']           
+                this.publicacionesPlan = this.plan['plan']['publicaciones']        
+                this.UltimaFechaRenovacion   = this.plan['plan']['UltimaFechaRenovacion'] 
+      
+             })
+             .catch(err => {
+                console.log(err)
+             })
+
+        }
+                     
+
     },
     methods: {
+        handleSubmit(e) {
+            this.submitted = true;
+            this.$v.$touch();
+            if (this.$v.$invalid) {
+                return;
+            }
+        },    
+        onEnterEmailClick(){
+            this.$refs.refPassword.focus();
+        },
+        onEnterPassClick(){
+            this.Login();
+        },
+        cargarPlan(){
+            api.getPlanUsers('') 
+            .then(response=> {                   
+                let plan = response.data
+            })
+            .catch((err) => console.log(err));    
+        },
+        planes(){
+            //console.log(this.$refs['modalPlanes'])
+            //this.$refs['modalPlanes'].show()           
+        },
+        publicar(){
+            if (!this.loginUser){
+                this.$refs.refEmail.focus();
+                this.$swal({
+                    icon: 'error',
+                    title: 'Usuario no identificado',
+                    text: 'Debe de ingresar a su cuenta de usuario para postular a esta oferta.',
+                    confirmButtonText: "Aceptar", 
+                }) 
+            }
+        },
         Login(){
-            alert(1)
+            this.AccesoLoginEmpleador(this.TxtEmailIngresoEmpleador, this.TxtClaveIngresoEmpleador)
+        },
+        async AccesoLoginEmpleador(emailIngreso, claveIngreso){
+            try {
+                this.isLoading=true
+                const user = await Auth.signIn(emailIngreso, claveIngreso);     
+                if (user.attributes['custom:perfil'] != 'empleador' || !user.attributes['email_verified']){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Usuario no autorizado',
+                        text: 'Cuenta de usuario no autorizada.',
+                        confirmButtonText: "Aceptar", 
+                    });
+                }else{ 
+                    this.$store.commit('SET_USER', this.TxtEmailIngresoEmpleador)
+                    localStorage.setItem('user', this.TxtEmailIngresoEmpleador)
+                    localStorage.setItem('perfil',user.attributes['custom:perfil'])
+                    localStorage.setItem('token', JSON.stringify(user.signInUserSession['accessToken']))
+                    this.loginUser = true
+                    this.$parent.verifyLogin();
+                }
+                this.isLoading=false
+            } catch (error) {
+                if (error.code=="NotAuthorizedException" || error.code=="UserNotFoundException"){
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Usuario no autorizado',
+                        text: 'Usuario o clave de acceso incorrecta.',
+                        confirmButtonText: "Aceptar", 
+                    });
+                }else{
+                     this.$swal({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error,
+                        confirmButtonText: "Aceptar", 
+                    });
+                }
+                this.isLoading=false
+             }
         },
         async CrearCuentaEmpleador(){
             const { value: formValues } =  await this.$swal.fire({
@@ -187,6 +509,9 @@ export default {
     computed:{
         ajusteColumna() {
             return this.loginUser ? 'col-md-12 row' : 'col-md-9 row';
+        },
+        ajusteColumnaBoton() {
+            return this.loginUser ? 'col-md-5 row' : 'col-md-7 row';
         }
     },
 }
@@ -616,4 +941,27 @@ a.logo_text span {
 ul li {
   display:inline;
 }
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #ff4f57;
+    border-radius: 10px;
+}
+.modal-dialog {
+    /*top: 10vh;*/
+    left: 4%;
+    width: auto !important;
+}
+ .modal-xl {
+    max-width: 1140px !important;
+}
+  
 </style>

@@ -85,18 +85,18 @@
                               <div style="min-height:200px;">            
                               <div class="form-group">
                                     <div v-if="OpcionTipo=='Postulante'">
-                                        <input type="email" v-model="TxtEmailIngreso" class="input-text" placeholder="Correo electrónico">
+                                        <input type="email" ref="refEmailPersona" v-model="TxtEmailIngreso" v-on:keyup.enter="onEnterEmailPersonaClick"  class="input-text"   placeholder="Correo electrónico">
                                     </div>
                                     <div v-else>
-                                        <input type="email" v-model="TxtEmailIngresoEmpleador" class="input-text" placeholder="Correo electrónico">
+                                        <input type="email" ref="refEmail" v-model="TxtEmailIngresoEmpleador" v-on:keyup.enter="onEnterEmailClick"   class="input-text" placeholder="Correo electrónico">
                                     </div>
                               </div>
                               <div class="form-group">
                                     <div v-if="OpcionTipo=='Postulante'">
-                                         <input type="password"  v-model="TxtClaveIngreso"  class="input-text" placeholder="Contraseña">
+                                         <input type="password"  ref="refPasswordPersona" v-model="TxtClaveIngreso"  v-on:keyup.enter="onEnterPassPersonaClick" class="input-text" placeholder="Contraseña">
                                     </div>
                                     <div v-else>
-                                         <input type="password"  v-model="TxtClaveIngresoEmpleador"  class="input-text" placeholder="Contraseña">
+                                         <input type="password" ref="refPassword" v-model="TxtClaveIngresoEmpleador"  v-on:keyup.enter="onEnterPassClick" class="input-text" placeholder="Contraseña">
                                     </div>     
                               </div>
                               <div class="checkbox clearfix">                                      
@@ -322,6 +322,18 @@ export default {
         }
     },
     methods: {
+        onEnterEmailClick(){
+            this.$refs.refPassword.focus();
+        },
+        onEnterPassClick(){
+            this.Login();
+        },
+        onEnterEmailPersonaClick(){
+            this.$refs.refPasswordPersona.focus();
+        },
+        onEnterPassPersonaClick(){
+            this.Login();
+        },
         limpiarFormPostulante(){
             this.TxtEmailIngreso=""
             this.TxtClaveRegistro=""

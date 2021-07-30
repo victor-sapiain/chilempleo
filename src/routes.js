@@ -24,12 +24,10 @@ import panelPostulanteView from './components/views/postulante/panelView.vue'
 import menuEmpleador from './components/empleador/menu.vue'
 import panelEmpleadorView from './components/views/empleador/panelView.vue' 
 import infoEmpleadorView from './components/views/empleador/informacionView.vue' 
-
- 
 import OfertaIngreso from './components/oferta/Ingreso.vue'
 import OfertaIngresoView from './components/views/IngresoOfertaView.vue'
-
-
+import planes from './components/plan/Planes.vue'
+import PlanesView from './components/views/PlanesView.vue'
 import VueRouter from "vue-router";
 
 
@@ -161,6 +159,19 @@ const routes = [
         alias: '',
         component: OfertaIngresoView,
         name: 'PanelEmpleador',
+        meta: {description: '', requiresAuth: false,postulante:false,empleador:false}
+      }
+    ]
+  },
+  {
+    path: '/planes',
+    component:planes,
+    children: [
+      {
+        path: ' ',
+        alias: '',
+        component: PlanesView,
+        name: 'planes',
         meta: {description: '', requiresAuth: false,postulante:false,empleador:false}
       }
     ]

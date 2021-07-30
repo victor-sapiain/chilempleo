@@ -44,6 +44,9 @@
                                     <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
                                     <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i> EMPLEADOR</button>
                                 </li>
+                                <li style="margin-left:50px;">
+                                    Inicia sesión o crea una cuenta
+                                </li>
                             </div>       
                             <div v-else>
                                  <div v-if="loginPostulante" class="btn-group">
