@@ -233,6 +233,7 @@
                             </div>        
                         </div>
                     </div>
+                    
                     <h3 class="titulo6" v-show = "loginUser"> <span>Requisitos</span></h3>   
                     <div v-show = "loginUser">
                         <div class="col-md-4">
