@@ -27,25 +27,25 @@
                     <div class="login-inner-form">
                         <div class="details">
                             <h3> <span>Ingreso empleador</span></h3>   
-                             <div style="min-height:200px;">            
-                              <div class="form-group">
-                                    <input ref="refEmail" type="email" v-model="TxtEmailIngresoEmpleador" v-on:keyup.enter="onEnterEmailClick"  class="input-text" placeholder="Correo electrónico">
-                              </div>
-                              <div class="form-group">
-                                    <input ref="refPassword"  type="password"  v-model="TxtClaveIngresoEmpleador"   v-on:keyup.enter="onEnterPassClick"  class="input-text" placeholder="Contraseña">
-                              </div>
-                              <div class="checkbox clearfix">                                      
-                                  <a @click="olvidoContrasena()">¿ Olvidó su contraseña ?</a>
-                              </div>
+                              <div style="min-height:200px;">            
+                                <div class="form-group">
+                                        <input ref="refEmail" type="email" v-model="TxtEmailIngresoEmpleador" v-on:keyup.enter="onEnterEmailClick"  class="input-text" placeholder="Correo electrónico">
+                                </div>
+                                <div class="form-group">
+                                        <input ref="refPassword"  type="password"  v-model="TxtClaveIngresoEmpleador"   v-on:keyup.enter="onEnterPassClick"  class="input-text" placeholder="Contraseña">
+                                </div>
+                                <div class="checkbox clearfix">                                      
+                                    <a @click="olvidoContrasena()">¿ Olvidó su contraseña ?</a>
+                                </div>
                               </div>      
                               <div class="form-group row">
-                                    <div class="col-md-12 margin_bottom">
-                                        <button  type="submit" v-on:click="Login" class="btn btn-block btn-lg btn-primary"><i class="fa fa-user margin-left-25" aria-hidden="true" style="color:#fff"></i> ENTRAR</button>
+                                <div class="col-md-12 margin_bottom">
+                                    <button  type="submit" v-on:click="Login" class="btn btn-block btn-lg btn-primary"><i class="fa fa-user margin-left-25" aria-hidden="true" style="color:#fff"></i> ENTRAR</button>
 
-                                    </div>               
-                                     <div class="col-md-12 margin_bottom">
-                                        <button type="submit" v-on:click="CrearCuentaEmpleador" class="btn btn-block btn-lg btn-secondary"><i class="fa fa-smile-o margin-left-25" aria-hidden="true" style="color:#fff"></i> SOY NUEVO</button>
-                                    </div>                                                                       
+                                </div>               
+                                    <div class="col-md-12 margin_bottom">
+                                    <button type="submit" v-on:click="CrearCuentaEmpleador" class="btn btn-block btn-lg btn-secondary"><i class="fa fa-smile-o margin-left-25" aria-hidden="true" style="color:#fff"></i> SOY NUEVO</button>
+                                </div>                                                                       
                               </div>                     
                         </div>
                     </div>    
@@ -64,15 +64,15 @@
                             <h4> <img style="width:35px;" src="../../../static/img/login.png" /> Para publicar una oferta de trabajo debe de iniciar sesión en "Ingreso empleador" </h4>
                         </div>
                     </div>
-                    <h3 class="titulo6"> <span>Datos oferta</span></h3>   
-                    <div>
+                    <h3 class="titulo6" v-show = "loginUser"> <span>Descripción oferta</span></h3>   
+                    <div v-show = "loginUser">
                         <div class="col-md-6">
                             <div class="col-md-12">
                                 <label class="label-destacado2">Puesto / Título(*)</label>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text"  v-model="txtTitulo" id="txtTitulo" class="form-control"  :class="{ 'is-invalid': submitted && $v.txtTitulo.$error }">
+                                    <input type="text"  v-model="txtTitulo" id="txtTitulo" class="form-control"  :class="{ 'is-invalid': submitted && $v.txtTitulo.$error }" :readonly = "!loginUser">
                                     <div v-if="submitted && !$v.txtTitulo.required" ><span class="badge badge-danger"> Campo requerido</span></div>
                                 </div>    
                             </div>        
@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group  selFrom-search">
-                                    <select class="dropdown-product selectpicker" data-live-search="true" v-model="cmbClasificacion">
+                                    <select class="dropdown-product selectpicker" data-live-search="true" v-model="cmbClasificacion" :disabled="!loginUser">
                                         <option selected value=-1> SELECCIONAR</option>                                
                                         <option value=1> Arte/Diseño</option>
                                         <option value=2>Economía</option>
@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <textarea v-model = "txtDescripcion" name="textarea" class="form-control"  rows="8" cols="50" placeholder ="Descripción de la Oferta, Beneficios "></textarea>
+                                    <textarea v-model = "txtDescripcion" name="textarea" class="form-control"  rows="8" cols="50" placeholder ="Descripción de la Oferta, Beneficios " :readonly = "!loginUser"></textarea>
                                     <div v-if="submitted && !$v.txtDescripcion.required" ><span class="badge badge-danger"> Campo requerido</span></div>
                                 </div>    
                             </div>      
@@ -129,7 +129,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <select class="form-control input-sm" v-model="cmbDuracionContrato">
+                                    <select class="form-control input-sm" v-model="cmbDuracionContrato" :disabled = "!loginUser">
                                         <option selected value="-1"> NO ES RELEVANTE</option>                                
                                         <option value="1">Plazo fijo</option>
                                         <option value="2">Indefinido</option>
@@ -148,7 +148,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <select class="form-control input-sm" v-model="cmbDuracionContrato">
+                                    <select class="form-control input-sm" v-model="cmbDuracionContrato" :disabled = "!loginUser">
                                         <option selected value="-1"> NO ES RELEVANTE</option>                                
                                         <option value="1">Tiempo completo</option>
                                         <option value="2">Part time </option>
@@ -163,7 +163,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <select class="form-control input-sm" v-model="cmbTipoContrato">
+                                    <select class="form-control input-sm" v-model="cmbTipoContrato" :disabled = "!loginUser">
                                         <option selected value="-1"> NO ES RELEVANTE</option>                                
                                         <option value="1">Presencial</option>
                                         <option value="2">Trabajo remoto</option>
@@ -178,7 +178,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder = "--">
+                                    <input type="text" class="form-control" placeholder = "NO ES RELEVANTE" :readonly = "!loginUser">
                                 </div>    
                             </div>        
                         </div>
@@ -189,7 +189,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input v-model="txtDireccion" type="text" class="form-control">
+                                    <input v-model="txtDireccion" type="text" class="form-control" :readonly = "!loginUser">
                                     <div v-if="submitted && !$v.txtDireccion.required" ><span class="badge badge-danger"> Campo requerido</span></div>
                                 </div>    
                             </div>        
@@ -200,7 +200,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group selFrom-search">
-                                    <select v-model = "cmbUbicacion" class="dropdown-product selectpicker" data-live-search="true">
+                                    <select v-model = "cmbUbicacion" class="dropdown-product selectpicker" data-live-search="true" :disabled = "!loginUser">
                                         <option value="-1">SELECCIONAR</option>
                                         <option value="1">I Tarapaca</option>
                                         <option value="2">II Antofagasta</option>
@@ -228,21 +228,20 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control"  >
+                                    <input type="text" class="form-control"  :readonly = "!loginUser">
                                 </div>    
                             </div>        
                         </div>
                     </div>
-                    <h3 class="titulo6"> <span>Otra información</span></h3>   
-                    <div>
-                      
+                    <h3 class="titulo6" v-show = "loginUser"> <span>Requisitos</span></h3>   
+                    <div v-show = "loginUser">
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <label class="label-destacado2">Educación mínima</label>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <select class="form-control input-sm" v-model="cmbEducacion">
+                                    <select class="form-control input-sm" v-model="cmbEducacion" :disabled = "!loginUser">
                                         <option selected value="-1"> NO ES RELEVANTE</option>                                
                                         <option value="1">Educación media</option>
                                         <option value="2">Educación técnica</option>
@@ -260,7 +259,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <select class="form-control input-sm" v-model="cmbExperiencia">
+                                    <select class="form-control input-sm" v-model="cmbExperiencia" :disabled = "!loginUser">
                                         <option selected value="-1"> SIN AÑOS DE EXPERIENCIA</option>                                
                                         <option value="1">Menos de 1 año</option>
                                         <option value="2">2 años</option>
@@ -276,13 +275,14 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <select class="form-control input-sm" v-model="cmbViaje">
+                                    <select class="form-control input-sm" v-model="cmbViaje" :disabled = "!loginUser">
                                         <option value="1">No</option>
                                         <option value="2">Si</option>
                                     </select>                                      
                                 </div>    
                             </div>        
                         </div>
+                          
                     </div>
                     <hr>
                     <div class="col-md-12" v-show="loginUser">
