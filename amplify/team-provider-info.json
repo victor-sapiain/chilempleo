@@ -19,9 +19,8 @@
         }
       },
       "auth": {
-        "webed8f77b8": {
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"1078544805949-ndsa2k5isco4vb6lltbhkrv5i20a2ml2.apps.googleusercontent.com\",\"client_secret\":\"O3FgZfrbjlRglQdyseIPPbfT\"}]"
-        }
+        "webed8f77b8": {},
+        "true": {}
       }
     }
   }

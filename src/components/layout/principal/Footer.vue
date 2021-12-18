@@ -42,9 +42,8 @@
                 <ul class="unstyled text xsmall">
                     <li><div class="text xsmall title bold">SIGUENOS</div></li>                    
                     <li>
-                        <a href="#" class="fa fa-facebook" aria-hidden="true"></a>  
-                        <a href="#" class="fa fa-twitter" aria-hidden="true"></a>  
-                        <a href="#" class="fa fa-linkedin" aria-hidden="true"></a>  
+                        <a href="https://www.facebook.com/chilempleo/" class="fa fa-facebook" aria-hidden="true"></a>  
+                        <a href="https://twitter.com/chilempleo_" class="fa fa-twitter" aria-hidden="true"></a>  
                     </li>
                     <li>contacto@chilempleo.cl</li> 
                 </ul>

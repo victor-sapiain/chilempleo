@@ -17,20 +17,23 @@
                     <div class="collapse navbar-collapse" id="navbar">
                         <!-- Start Navigation List -->
                         <ul class="nav navbar-nav">
-                            <li class="drop">
+                            <li class="drop" v-show="mode==1">
                                 <a  v-bind:href="'/'"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
                             </li>
-                            <li class="drop">
-                                <a href="#">
+                            <li class="drop" v-show="mode==2">
+                                <a class="active"   v-bind:href="'/'"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
+                            </li>
+                            <li class="drop" v-show="mode==1">
+                                <a href="#" >
                                     Buscar oferta
                                 </a>
                             </li>
-                            <li class="drop">
+                            <li class="drop" v-show="mode==1">
                                 <a v-bind:href="'/ofertas/publicacion'">
                                     Publicar oferta
                                 </a>
                             </li>
-                            <li class="drop">
+                            <li class="drop" v-show="mode==1">
                                 <a href="#">
                                     Crear CV
                                 </a>
@@ -38,7 +41,7 @@
    
                         </ul>
                         <ul class="nav navbar-nav navbar-right float-right">
-                            <div v-if="!loginUser">
+                            <div v-if="!loginUser" v-show="mode==1">
                                 <li class="right">
                                     <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(1)"><i class="fa fa-user" aria-hidden="true"></i> POSTULANTE</button>
                                     <button class="btn btn-primary btn-sm btn-principal-head" v-on:click="login(2)"><i class="fa fa-briefcase" aria-hidden="true"></i>  EMPLEADOR</button>
@@ -148,11 +151,13 @@
 </div>   
 </template>
 <script>
+import config from '../../../../src/config'
 import Auth from '@aws-amplify/auth';
 export default {
   name: 'HeaderMenu',
    data(){
       return{ 
+        mode:-1,
         user:window.localStorage.getItem('user'),
         loginUser:false,
         loginPostulante:false,
@@ -160,6 +165,7 @@ export default {
       }
   },
   mounted(){      
+    this.mode = config.mode  
     this.verifyLogin()
   },
   components: {

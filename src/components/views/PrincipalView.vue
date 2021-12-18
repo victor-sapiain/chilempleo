@@ -145,7 +145,13 @@
             </div>
             </VueSlickCarousel>
         </div>
-        
+        <div  class="alert alert-info">
+             <h5><span><img style="width:80px;" src = "/static/img/che.png"/> </span>
+            <span><strong style="font-size:20px;margin-left:5px;vertical-align:bottom;">INFORMACIÓN COMUNIDAD CHILEMPLEO</strong></span></h5>
+            <p style="font-size:16px">Para enviar sus ofertas de trabajo escribir al correo <strong >contacto@chilempleo.cl </strong >asunto "Publicación Empleo"   
+            . Debe de indicar en detalle la oferta, nombre de la empresa o instituación y un correo de contacto para envío de atecendentes.</p>            
+          
+        </div>      
         <h2 class="section-title">Ofertas destacadas </h2>
         <div class="content">
             <div  style="display:none;">
@@ -254,25 +260,34 @@
                               align-items: flex-start;
                           "
                       >
-                          <div
-                              class="gc_ si69"
-                              style="
-                                  -ms-flex-direction: row;
-                                  -webkit-box-orient: horizontal;
-                                  -webkit-flex-direction: row;
-                                  flex-direction: row;
-                                  -ms-flex-pack: center;
-                                  -webkit-box-pack: center;
-                                  -webkit-justify-content: center;
-                                  justify-content: center;
-                                  -ms-flex-align: center;
-                                  -webkit-box-align: center;
-                                  -webkit-align-items: center;
-                                  align-items: center;
-                              "
-                          >                             
+                        <div  v-if="item.externo==1"
+                                class="gc_ si69"
+                                style="
+                                    -ms-flex-direction: row;
+                                    -webkit-box-orient: horizontal;
+                                    -webkit-flex-direction: row;
+                                    flex-direction: row;
+                                    -ms-flex-pack: center;
+                                    -webkit-box-pack: center;
+                                    -webkit-justify-content: center;
+                                    justify-content: center;
+                                    -ms-flex-align: center;
+                                    -webkit-box-align: center;
+                                    -webkit-align-items: center;
+                                    align-items: center;
+                                "
+                            >                             
                             <img :src="item.empresa.UrlLogotipo" />
-                          </div>
+                        </div>
+                        <div v-else class="gc_ si39" style="background-color: #E84C3D;margin-right:0;">
+                            <label style="
+                                font-size: 28px;
+                                font-family: 'Nunito Sans';
+                                color: #FFFFFF;
+                                margin: 33px;
+                                font-weight: bolder;
+                            ">{{item.empresa.nombre.substr(0,1) | uppercase }}</label>
+                            </div>    
                       </div>                    
                     </div>
                     <div class="col-md-11">
@@ -280,7 +295,7 @@
                         <div class="col-md-12">            
                           <div class="row">              
                             <a :href="item.oferta.UrlOferta" target="_blank"> <h3 class="col-md-9">{{item.oferta.titulo}}</h3></a>
-                            <div class="col-md-3">                               
+                            <div class="col-md-3" v-show="mode==1">                               
                                 <div id="social-shared" class="pull-right"><a class="facebookBtn smGlobalBtn" href="#" ></a>
                                     <a class="twitterBtn smGlobalBtn" href="#" ></a>
                                     <a class="linkedinBtn smGlobalBtn" href="#" ></a>                                
@@ -289,7 +304,7 @@
                           </div>
                           <div class="row">
                             <h4 class="col-md-12">
-                                {{item.empresa.nombre}} - {{item.oferta.ubicacion.comuna}}, {{item.oferta.ubicacion.region}} <span class="badge badge-danger" style="font-size: 14px;margin-top:-5px;background-color:#0084BF;"> {{item.FechaCreacion}} </span>
+                                {{item.empresa.nombre}} - {{item.oferta.ubicacion.comuna}} <span class="badge badge-danger" style="font-size: 14px;margin-top:-5px;background-color:#0084BF;"> {{item.FechaCreacion}} </span>
                             </h4>
                           </div>
                         </div>                       
@@ -302,10 +317,15 @@
                         <a class="margin-left"  v-on:click="agregarOferta(item.oferta)">
                           <span class="link-detalle"><i class="fa fa-bookmark" aria-hidden="true"></i> Guardar</span> 
                         </a>
-                        <a :href="item.oferta.UrlOferta" target="_blank" class="margin-left">
+
+                        <a v-if="item.externo==1" :href="item.oferta.UrlOferta" target="_blank" class="margin-left">
+                          <span class="link-detalle"><i class="fa fa-arrow-right" aria-hidden="true"></i>  Ver Detalle</span> 
+                        </a>
+                        <a v-else  class="margin-left" v-on:click="verDetalle(item)">
                           <span class="link-detalle"><i class="fa fa-arrow-right" aria-hidden="true"></i>  Ver Detalle</span> 
                         </a>
                     </div>
+                    
                 </div>
             </div>
         </div>      <!--Fin empleos-->  
@@ -376,7 +396,7 @@ export default {
         ofertas : [],
         mode:-1,
         txtSearch : '',
-        NUM_RESULTS: 100, // Numero de resultados por página
+        NUM_RESULTS: 25, // Numero de resultados por página
         pag: 1, // Página inicial
         isLoading: true,
         ofertasTemp:[],
@@ -462,7 +482,7 @@ export default {
             let fechaAyer = (this.zeroFill(fAuxAyer.getDate(),2) + "/" + this.zeroFill((fAuxAyer.getMonth()+1 ),2) + "/" + fAuxAyer.getFullYear()) 
             console.log(fechaAnt)
             console.log(fechaHoy)
-            api.getOffer(fechaHoy,fechaHoy) 
+            api.getOffer(fechaAnt,fechaHoy) 
             .then(response=> {                   
                 this.ofertas = response.data                                
                 if (this.ofertas.length==0){
@@ -491,14 +511,43 @@ export default {
                 let ofertas =  JSON.parse(localStorage.getItem("ofertas"))
                 this.ofertasTemp = ofertas
                 let aux ="<ul>"
-                for(let i=0;i<ofertas.length;i++){
-                    aux+="<a href= "+ofertas[i].UrlOferta + " target='_blank'><li style='font-size: smaller;font-weight: bold;'> <i style='color:#0084BF;' class='fa fa-bookmark' aria-hidden='true'></i> " + ofertas[i].titulo + " <a  onclick='eliminarOferta(" +  JSON.stringify(ofertas[i]) + ");' ><i style='color:#E84C3D' class='fa fa-minus-circle' aria-hidden='true'></i></a> </li></a>"
+                if (this.mode==1){
+                    for(let i=0;i<ofertas.length;i++){
+                        aux+="<a href= "+ofertas[i].UrlOferta + " target='_blank'><li style='font-size: smaller;font-weight: bold;'> <i style='color:#0084BF;' class='fa fa-bookmark' aria-hidden='true'></i> " + ofertas[i].titulo + " <a  onclick='eliminarOferta(" +  JSON.stringify(ofertas[i]) + ");' ><i style='color:#E84C3D' class='fa fa-minus-circle' aria-hidden='true'></i></a> </li></a>"
+                    }
+                }else{
+                    for(let i=0;i<ofertas.length;i++){
+                        aux+="<a href= "+ofertas[i].UrlOferta + " target='_blank'><li style='font-size: smaller;font-weight: bold;'> <i style='color:#0084BF;' class='fa fa-bookmark' aria-hidden='true'></i> " + ofertas[i].titulo + " <a  onclick='eliminarOferta(" +  JSON.stringify(ofertas[i]) + ");' ><i style='color:#E84C3D' class='fa fa-minus-circle' aria-hidden='true'></i></a> </li></a>"
+                    } 
                 }
                 aux += "</ul>"
                 document.getElementById("ListOferta").innerHTML = aux;
             }
         },
+        verDetalle(item){
+            let toJson = JSON.stringify(item)
+            sessionStorage.setItem("ofertaItem", toJson);
+            this.$router.push({ path: 'oferta/' + item.sk.split("#")[0]})
+        },
         agregarOferta(oferta){            
+            let ofertas = JSON.parse(localStorage.getItem("ofertas"))
+            let insertarItem = true
+            if("ofertas" in localStorage){
+                for(let i=0;i<ofertas.length;i++){
+                    if (ofertas[i].codigo.toString().trim() == oferta.codigo.toString().trim()){
+                        insertarItem = false
+                        break
+                    }
+                }
+            }
+            if (insertarItem){
+                let ofertaJson = {'codigo' : oferta.codigo.toString().trim(), 'UrlOferta': oferta.UrlOferta, 'titulo': oferta.titulo}
+                this.ofertasTemp.push(ofertaJson)
+                localStorage.setItem("ofertas", JSON.stringify(this.ofertasTemp));
+                this.cargarOfertasGuardadas()
+            }        
+        },
+        agregarOfertaChe(item,oferta){            
             let ofertas = JSON.parse(localStorage.getItem("ofertas"))
             let insertarItem = true
             if("ofertas" in localStorage){
@@ -580,5 +629,10 @@ a:hover {
 }
 .dropdown-menu > li > a {
     margin-bottom: 0px;
+}
+.btn-info {
+    color: #fff;
+    background-color: #5bc0de !important;;
+    border-color: #46b8da !important;;
 }
 </style>

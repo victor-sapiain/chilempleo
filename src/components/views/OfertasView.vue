@@ -194,7 +194,7 @@
                                 align-items: flex-start;
                             "
                         >
-                            <div
+                            <div v-if="item.externo==1"
                                 class="gc_ si69"
                                 style="
                                     -ms-flex-direction: row;
@@ -212,6 +212,14 @@
                                 "
                             >                             
                                 <img :src="item.empresa.UrlLogotipo" />
+                            </div>
+                            <div v-else class="gc_ si39" style="background-color: #E84C3D;margin-right:0;"><label style="
+                                font-size: 28px;
+                                font-family: 'Nunito Sans';
+                                color: #FFFFFF;
+                                margin: 36px;
+                                font-weight: bolder;
+                            ">E</label>
                             </div>
                         </div>                    
                         </div>
@@ -509,6 +517,11 @@ export default {
   border-radius: 50%;
   font-size: 22px;
   line-height: 22px;
+}
+.btn-info {
+    color: #fff;
+    background-color: #5bc0de !important;
+    border-color: #46b8da !important;;
 }
 /*
 .form-control{

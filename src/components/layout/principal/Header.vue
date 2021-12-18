@@ -22,7 +22,7 @@
                                 <!--<router-link to="/" active-class="active">Inicio</router-link>-->
                                 <a class="active" v-bind:href="'/'"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
                             </li>
-                            <li class="drop">
+                            <li v-show="mode==1" class="drop">
                                 <a href="#">
                                     Buscar oferta
                                 </a>
